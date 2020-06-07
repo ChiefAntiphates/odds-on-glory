@@ -14,6 +14,8 @@ def pushInfoToJSON(arena):
 		}
 	
 	for tile_row in arena.grid:
+		tile_row = {"tiles": []}
+		tile_row["row_no"] = tile_row[0].y_pos
 		for tile in tile_row:
 			json_tile = {}
 			json_tile["x_co"] = [tile.x_pos]
@@ -27,7 +29,8 @@ def pushInfoToJSON(arena):
 				json_tile["trap"] = tile.trap.owner.name
 			else:
 				json_tile["trap"] = False
-			arena_info["tiles"].append(json_tile)
+			tile_row["tiles"].append(json_tile)
+		arena_info["tiles"].append(tile_row)
 	
 	for glad in arena.gladiators:
 		json_glad = {}
