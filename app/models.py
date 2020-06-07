@@ -65,7 +65,14 @@ class User(UserMixin, db.Model):
 		return followed.union(own).order_by(Post.timestamp.desc())
 	
 	def get_friends(self):
-		return set(self.followed) and set(self.followers)
+		return set(self.followed) & set(self.followers)
+	
+	def get_followed(self):
+		return set(self.followed)
+	
+	def get_followers(self):
+		return set(self.followers)
+		
 
 
 class Post(db.Model):
