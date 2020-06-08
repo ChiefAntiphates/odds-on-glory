@@ -1,4 +1,4 @@
-2020-06-07 15:23:31,282 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-07 15:25:53,990 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -31,10 +31,10 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 30, in top-level template code
     {% block content %}{% endblock %}
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 12, in block "content"
-    <p>{{ user.get_friends(user).count() }} friends</p>
-TypeError: get_friends() takes 1 positional argument but 2 were given
-2020-06-07 15:23:50,186 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
-2020-06-07 15:23:53,775 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+    <p>{{ user.get_friends().count() }} friends</p>
+jinja2.exceptions.UndefinedError: 'set object' has no attribute 'count'
+2020-06-07 15:26:15,334 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 15:26:17,194 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -69,8 +69,9 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 12, in block "content"
     <p>{{ user.get_friends().count() }} friends</p>
 TypeError: count() takes exactly one argument (0 given)
-2020-06-07 15:24:45,658 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
-2020-06-07 15:24:47,851 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-07 15:26:32,565 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 15:27:05,965 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 15:27:08,013 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -103,7 +104,14 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 30, in top-level template code
     {% block content %}{% endblock %}
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 12, in block "content"
-    <p>{{ (user.get_friends()).count() }} friends</p>
-TypeError: count() takes exactly one argument (0 given)
-2020-06-07 15:25:13,498 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
-2020-06-07 15:25:51,117 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+    <p>{{ len(user.get_friends()) }} friends</p>
+jinja2.exceptions.UndefinedError: 'len' is undefined
+2020-06-07 15:28:10,280 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 15:28:46,024 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 15:33:34,065 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 15:34:43,566 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 15:35:06,654 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 15:59:55,524 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 16:00:10,047 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 16:01:59,772 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+2020-06-07 16:02:31,381 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
