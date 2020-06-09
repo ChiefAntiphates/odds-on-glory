@@ -3,6 +3,20 @@
 
 
 {% block app_content %}	
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    
+	<script type="text/javascript"> var param = '{{ game_code }}'</script>
+	<script src="{{ url_for('static', filename='application.js') }}" + "?v=1"></script>
 	<h1>Hello!{{ game_code }}</h1>
+	
+	<div class="container" id="content">
+    <div class="row">
+        <p>Asynchronous page updates will appear here:</p>
+        <h3>Number list:</h3>
+        <div id="log">
+        </div> <!-- /#log -->
+    </div>
+</div>
 	
 {% endblock %}

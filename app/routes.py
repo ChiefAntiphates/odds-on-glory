@@ -2,11 +2,15 @@ from flask import render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
-from app import app, db#,socketio
+from flask_socketio import SocketIO, emit
+from threading import Thread
+from app import app, db, socketio
 from app.models import User, Post, Tournament
 from app.email import send_password_reset_email
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, \
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
+						
+from app.game_files.functionUp import randomNumberGenerator						
 #Use . to go through directories, so app.game_files.arena etc.
 
 
@@ -130,6 +134,10 @@ def host_game():
 	game = current_user.hosted_games.order_by(Tournament.id.desc()).first()
 	game.set_code()
 	db.session.commit()
+	
+	thread = Thread()
+	thread = socketio.start_background_task(randomNumberGenerator, socketio=socketio, param=game.code)
+	
 	flash('Congratulations, you hosted a game!')
 	return redirect(url_for('game', game_id=game.id))
 

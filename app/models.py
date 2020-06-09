@@ -20,7 +20,7 @@ class Tournament(db.Model):
 		return '<Game {}>'.format(self.id)
 		
 	def set_code(self):
-		self.code = ("g"+str(self.id))
+		self.code = ('/gsockname'+str(self.id))
 	
 		
 
