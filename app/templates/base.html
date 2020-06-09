@@ -26,6 +26,8 @@
 	</nav>
 {% endblock %}
 
+
+
 {% block content %}
 	<div class="container">
 		{% with messages = get_flashed_messages() %}
@@ -36,4 +38,9 @@
 		{% endif %}
 		{% endwith %}
         {% block app_content %}{% endblock %}
+{% endblock %}
+
+{% block scripts %}
+	{{ super() }}
+	{{ moment.include_moment() }}
 {% endblock %}

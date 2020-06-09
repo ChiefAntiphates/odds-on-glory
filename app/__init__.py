@@ -1,15 +1,16 @@
-from flask import Flask
+from flask import Flask, request
 from config import Config
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 
-app = Flask(__name__)
+application = app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -17,7 +18,8 @@ login = LoginManager(app)
 login.login_view = 'login'
 mail = Mail(app)
 bootstrap = Bootstrap(app)
-##pip install eventlet?????
+moment = Moment(app)
+
 
 if not app.debug:
 	if app.config['MAIL_SERVER']:

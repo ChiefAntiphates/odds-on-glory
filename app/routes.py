@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app import app, db#,socketio
-from app.models import User, Post
+from app.models import User, Post, Tournament
 from app.email import send_password_reset_email
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, \
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
@@ -119,6 +119,27 @@ def edit_profile():
 		form.about_me.data = current_user.about_me
 	return render_template('edit_profile.html', title='Edit Profile', form=form)
 
+
+
+@app.route('/host_game', methods=['GET','POST'])
+@login_required
+def host_game():
+	game = Tournament(host=current_user)
+	db.session.add(game)
+	db.session.commit()
+	game = current_user.hosted_games.order_by(Tournament.id.desc()).first()
+	game.set_code()
+	db.session.commit()
+	flash('Congratulations, you hosted a game!')
+	return redirect(url_for('game', game_id=game.id))
+
+@app.route('/game/<game_id>')
+def game(game_id):
+	game = Tournament.query.filter_by(id=game_id).first_or_404()
+	return render_template('game.html', game_code=game.code)
+	
+	
+	
 
 @app.route('/follow/<username>', methods=['POST'])
 @login_required

@@ -9,12 +9,25 @@ from hashlib import md5
 @login.user_loader
 def load_user(id):
 	return User.query.get(int(id))
+	
+
+class Tournament(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	code = db.Column(db.String(120), index=True, unique=True)
+	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+	def __repr__(self):
+		return '<Game {}>'.format(self.id)
+		
+	def set_code(self):
+		self.code = ("g"+str(self.id))
+	
+		
 
 followers = db.Table('followers',
 			db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
 			db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 			)
-
 
 class User(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +38,7 @@ class User(UserMixin, db.Model):
 	last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 	
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
+	hosted_games = db.relationship('Tournament', backref='host', lazy='dynamic')
 	followed = db.relationship(
 		'User', secondary=followers,
 		primaryjoin=(followers.c.follower_id == id),
