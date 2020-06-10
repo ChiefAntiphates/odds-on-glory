@@ -26,6 +26,7 @@ class Tile:
 		if self.trap_present:#Have a maybe modifier
 			if gladiator != self.trap.owner: #cant be damaged by own trap
 				self.trapTripped(gladiator)
+		
 	
 	def removeGladiator(self, gladiator):
 		self.occupants.remove(gladiator)

@@ -234,6 +234,7 @@ class Gladiator:
 					
 			tile = r.choice(tile_list)
 			self.moveToTile(tile)
+			print("MOVING")
 		except IndexError as e:
 			print("%s can't move anywhere!")
 		self.state = Gladiator.MOVE
@@ -308,6 +309,7 @@ class Gladiator:
 		self.tile.removeGladiator(self)
 		self.setPosition(move_tile.x_pos, move_tile.y_pos)
 		self.arena.grid[move_tile.y_pos][move_tile.x_pos].setGladiatorToTile(self)
+	
 		
 		
 	#Put further health recovery conditions here

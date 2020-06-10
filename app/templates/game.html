@@ -12,21 +12,16 @@
 		var start_url = "{{ url_for('bm_starting_game', game_code=game_code) }}";
 	</script>
 	<script src="{{ url_for('static', filename='application.js') }}" + "?v=1"></script>
-	<div id="testbut"></div>
-	<h1>Hello!{{ game_code }}</h1>
 	
 	
-	
-	
-	<div class="container">
-    <div class="row">
-        <div id="log">
-        </div> 
-    </div>
-	
-	<table id="arena_grid"></table>
-	
+	<div class="oog_flex_container">
+		<div id="glad_info"></div>
+		<table id="arena_grid"></table>
+		<div id="activity_feed"></div>
+	</div>
 	<p>{{ game_code }}</p>
+	<div id="testbut"></div>
+	<div id="log">
 	
 </div>
 	

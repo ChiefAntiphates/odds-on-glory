@@ -18,7 +18,7 @@ class GameHandler:
 		self.socketio = socketio
 		self.nspace = nspace
 		self.game_id = game_id
-		self.arena = Arena(6, 6) ##add size params
+		self.arena = Arena(8, 8, socketio, nspace) ##add size params
 	
 	
 		for _ in range(4):
@@ -39,5 +39,28 @@ class GameHandler:
 			#self.socketio.sleep(3)
 	
 	def preGameDisplay(self):
+		#Perhaps do a while loop here lasting over 30 1 second increments before starting games
 		json_obj = pushInfoToJSON(self.arena)
 		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
+	
+	def startGames(self):
+		while len(self.arena.gladiators) > 1:
+			self.arena.nextTurn()
+		
+		print("game over")
+		if len(self.arena.gladiators) > 0:
+			self.arena.af.updateActivityFeed("WINNER", "%s wins!" % self.arena.gladiators[0].name)
+			#betting stuff
+		else:
+			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

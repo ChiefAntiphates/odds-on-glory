@@ -1,21 +1,22 @@
 import time
 import random as r
 from threading import Thread
-import tkinter as tk
+#import tkinter as tk
 from app.game_files.tile import *
 from app.game_files.gladiator import *
 from app.game_files.bank import *
 from functools import partial
 from app.game_files.tk_file import interfacePrintGrid
 from app.game_files.nameslist import *
+from app.game_files.convertToJSON import pushInfoToJSON
 import sys
 
-TIMER = 500
+TIMER = 0.5
 
 class Arena:
 	
 	'''CONSTRUCTOR'''
-	def __init__(self, width, height):
+	def __init__(self, width, height, socketio, nspace):
 		self.height = height
 		self.width = width
 		self.duration = 12 # Units of 30 minutes - 48 units in one day
@@ -28,6 +29,8 @@ class Arena:
 		self.active_battles = []
 		self.scorch_level = 0
 		self.edge_tiles = []
+		self.socketio = socketio
+		self.nspace = nspace
 		
 		self.grid = [[Tile(a,b) for a in range(self.width)] for b in range(self.height)]	
 		for row in self.grid:
@@ -40,6 +43,7 @@ class Arena:
 		
 		#################
 		###Tk Activity###
+		'''
 		self.window = tk.Tk()
 		
 		self.frame = tk.Frame(self.window)
@@ -69,13 +73,13 @@ class Arena:
 		
 		#End Tk Activity#
 		#################
-		
-		self.af = ActivityFeed(self.activity_frame) # semi tk related because Activity requires frame
+		'''
+		self.af = ActivityFeed() # semi tk related because Activity requires frame
 		
 		
 	#########################	
 	################TK STUFF##
-	def reset(self):##tk stuff
+	'''def reset(self):##tk stuff
 		self.window.destroy()
 		try:
 			del sys.modules["main"]
@@ -85,7 +89,7 @@ class Arena:
 	def advance(self):
 		#while pause:
 			#pass
-		self.window.quit()
+		self.window.quit()'''
 	#########################
 	#########################
 	
@@ -122,10 +126,14 @@ class Arena:
 		
 		##Add to a queue with game ID?????? Use get function to pop from queue 
 		###########################tk stuff##
-		self.window.after(TIMER, self.advance)#timer
-		self.window.mainloop()
-		interfacePrintGrid(self)
+		#self.window.after(TIMER, self.advance)#timer
+		#self.window.mainloop()
+		#interfacePrintGrid(self)
 		########################
+			json_obj = pushInfoToJSON(self)
+			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
+			self.socketio.sleep(TIMER)
+		####################################################
 			
 		for gladiator in sorted(self.gladiators, key=lambda x: x.speed, reverse=True):
 			##Maybe when high volume do a couple of turns simultaneuosly
@@ -133,11 +141,14 @@ class Arena:
 			#time.sleep(0.4)
 			
 			###tk stuff## here if update after each glad action##
-			self.window.after(TIMER, self.advance)#timer
-			self.window.mainloop()
-			interfacePrintGrid(self)
-			print(self.odds_on)
+			#self.window.after(TIMER, self.advance)#timer
+			#self.window.mainloop()
+			#interfacePrintGrid(self)
+			#print(self.odds_on)
 			############################################
+			json_obj = pushInfoToJSON(self)
+			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
+			self.socketio.sleep(TIMER)
 			
 		self.odds_on = calculateOdds(self.gladiators)
 		self.duration += 1

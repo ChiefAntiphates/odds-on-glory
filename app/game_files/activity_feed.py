@@ -1,4 +1,4 @@
-import tkinter as tk
+#import tkinter as tk
 
 class ActivityFeed:
 	
@@ -43,16 +43,17 @@ class ActivityFeed:
 	]
 	
 	'''CONSTRUCTOR'''##Lots of Tk throughout this file
-	def __init__(self, activity_frame):
-		self.activity_frame = activity_frame
+	def __init__(self):
+	#def __init__(self, activity_frame):
+		#self.activity_frame = activity_frame
 		self.activity = []
 		
 	def updateActivityFeed(self, header, message):
 		self.activity.append([header, message])
-		self.tkStuff()
+		#self.tkStuff()
 	
 			
-	
+	'''
 	###TK
 	def tkStuff(self):
 		tk.Label(self.activity_frame, text=self.activity[-1][1]+"\n", wraplength=200).pack(side="bottom")
@@ -76,7 +77,7 @@ class ActivityFeed:
 			activity_widgets[5].destroy()
 		self.activity_frame.update()
 		
-		
+	'''	
 		
 		
 		

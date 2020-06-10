@@ -41,8 +41,6 @@ def host_game():
 	
 	#thread = Thread()
 	#thread = socketio.start_background_task(game_handler.tempGoForThis)
-	
-	flash('Congratulations, you hosted a game!')
 	return redirect(url_for('game', game_id=game.id))
 
 @app.route('/game/<game_id>', methods=['GET', 'POST'])
@@ -61,7 +59,7 @@ def bm_starting_game(game_code):
 	global active_games
 	game_code_key = "/"+game_code
 	game = active_games[game_code_key]
-	game.preGameDisplay()
+	game.startGames()
 	return "done"
 	
 	
