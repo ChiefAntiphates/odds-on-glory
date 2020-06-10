@@ -10,15 +10,61 @@ from app.email import send_password_reset_email
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, \
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
 						
-from app.game_files.functionUp import randomNumberGenerator						
+from app.game_files.functionUp import randomNumberGenerator
+from app.game_files.game_handler import GameHandler						
 #Use . to go through directories, so app.game_files.arena etc.
 
+active_games = {}##REMEMBER TO REMOVE FROM ACTIVE GAMES ONCE COMPLETE
 
 @app.before_request
 def before_request():
 	if current_user.is_authenticated:
 		current_user.last_seen = datetime.utcnow()
 		db.session.commit()
+
+
+
+
+@app.route('/host_game', methods=['GET','POST'])
+@login_required
+def host_game():
+	game = Tournament(host=current_user)
+	db.session.add(game)
+	db.session.commit()
+	game = current_user.hosted_games.order_by(Tournament.id.desc()).first()
+	game.set_code()
+	db.session.commit()
+	
+	global active_games
+	game_handler = GameHandler(socketio, game.code, game.id)
+	active_games[game.code] = game_handler
+	
+	#thread = Thread()
+	#thread = socketio.start_background_task(game_handler.tempGoForThis)
+	
+	flash('Congratulations, you hosted a game!')
+	return redirect(url_for('game', game_id=game.id))
+
+@app.route('/game/<game_id>', methods=['GET', 'POST'])
+def game(game_id):
+	game = Tournament.query.filter_by(id=game_id).first_or_404()
+	global active_games
+	if game.code not in active_games:
+		return render_template('404.html')#Maybe put custom error here
+	game_obj = active_games[game.code]
+	json_arena = game_obj.getJSON()
+	return render_template('game.html', game_code=game.code, json_arena=json_arena)
+
+##hmm whats this
+@app.route('/bm_starting_game/<game_code>', methods=['POST'])
+def bm_starting_game(game_code):
+	global active_games
+	game_code_key = "/"+game_code
+	game = active_games[game_code_key]
+	game.preGameDisplay()
+	return "done"
+	
+	
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -124,30 +170,6 @@ def edit_profile():
 	return render_template('edit_profile.html', title='Edit Profile', form=form)
 
 
-
-@app.route('/host_game', methods=['GET','POST'])
-@login_required
-def host_game():
-	game = Tournament(host=current_user)
-	db.session.add(game)
-	db.session.commit()
-	game = current_user.hosted_games.order_by(Tournament.id.desc()).first()
-	game.set_code()
-	db.session.commit()
-	
-	thread = Thread()
-	thread = socketio.start_background_task(randomNumberGenerator, socketio=socketio, param=game.code)
-	
-	flash('Congratulations, you hosted a game!')
-	return redirect(url_for('game', game_id=game.id))
-
-@app.route('/game/<game_id>')
-def game(game_id):
-	game = Tournament.query.filter_by(id=game_id).first_or_404()
-	return render_template('game.html', game_code=game.code)
-	
-	
-	
 
 @app.route('/follow/<username>', methods=['POST'])
 @login_required

@@ -6,17 +6,28 @@
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     
-	<script type="text/javascript"> var param = '{{ game_code }}'</script>
+	<script type="text/javascript">
+		var game_code = '{{ game_code }}';
+		var json_arena = JSON.parse({{ json_arena|tojson }});
+		var start_url = "{{ url_for('bm_starting_game', game_code=game_code) }}";
+	</script>
 	<script src="{{ url_for('static', filename='application.js') }}" + "?v=1"></script>
+	<div id="testbut"></div>
 	<h1>Hello!{{ game_code }}</h1>
 	
-	<div class="container" id="content">
+	
+	
+	
+	<div class="container">
     <div class="row">
-        <p>Asynchronous page updates will appear here:</p>
-        <h3>Number list:</h3>
         <div id="log">
-        </div> <!-- /#log -->
+        </div> 
     </div>
+	
+	<table id="arena_grid"></table>
+	
+	<p>{{ game_code }}</p>
+	
 </div>
 	
 {% endblock %}

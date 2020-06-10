@@ -1,10 +1,10 @@
 import time
 import random as r
-from gladiator import *
-from arena import *
+from app.game_files.gladiator import *
+from app.game_files.arena import *
 import tkinter as tk
-from nameslist import *
-from bank import *
+from app.game_files.nameslist import *
+from app.game_files.bank import *
 from fractions import Fraction
 
 def interfacePrintGrid(arena1):

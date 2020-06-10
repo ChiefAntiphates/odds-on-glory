@@ -1,10 +1,10 @@
 import time
 import random as r
 from numpy.random import choice as np_choice
-from tile import *
-from battle import *
-from trap import *
-from activity_feed import *
+from app.game_files.tile import *
+from app.game_files.battle import *
+from app.game_files.trap import *
+from app.game_files.activity_feed import *
 
 class Gladiator:
 	

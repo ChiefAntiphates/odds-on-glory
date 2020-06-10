@@ -1,14 +1,13 @@
 import time
-from convertToJSON import pushInfoToJSON
 import random as r
 from threading import Thread
 import tkinter as tk
-from tile import *
-from gladiator import *
-from bank import *
+from app.game_files.tile import *
+from app.game_files.gladiator import *
+from app.game_files.bank import *
 from functools import partial
-from tk_file import interfacePrintGrid
-from nameslist import *
+from app.game_files.tk_file import interfacePrintGrid
+from app.game_files.nameslist import *
 import sys
 
 TIMER = 500
@@ -20,6 +19,7 @@ class Arena:
 		self.height = height
 		self.width = width
 		self.duration = 12 # Units of 30 minutes - 48 units in one day
+		self.active = False
 		self.gladiators = []
 		self.runners = []
 		self.dead_gladiators = []
@@ -107,7 +107,7 @@ class Arena:
 		runner.setArena(self)
 		runner.setPosition(tile.x_pos, tile.y_pos)
 	
-	def getReady(self):
+	def prepareOdds(self):
 		self.odds_on = calculateOdds(self.gladiators)
 		
 	
@@ -119,10 +119,7 @@ class Arena:
 			runner.executeTurn()
 		##Move all runners simultaneuosly (in perception)
 		#time.sleep(0.4)
-		print(pushInfoToJSON(self))
-		f = open("json_file.json", "w")
-		f.write(pushInfoToJSON(self))
-		f.close()
+		
 		##Add to a queue with game ID?????? Use get function to pop from queue 
 		###########################tk stuff##
 		self.window.after(TIMER, self.advance)#timer
@@ -134,10 +131,7 @@ class Arena:
 			##Maybe when high volume do a couple of turns simultaneuosly
 			gladiator.executeTurn()
 			#time.sleep(0.4)
-			print(pushInfoToJSON(self))
-			f = open("json_file.json", "w")
-			f.write(pushInfoToJSON(self))
-			f.close()
+			
 			###tk stuff## here if update after each glad action##
 			self.window.after(TIMER, self.advance)#timer
 			self.window.mainloop()

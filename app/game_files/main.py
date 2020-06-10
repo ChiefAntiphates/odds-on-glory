@@ -1,12 +1,12 @@
 import time
 import random as r
-from gladiator import *
-from arena import *
+from app.game_files.gladiator import *
+from app.game_files.arena import *
 import tkinter as tk
-from nameslist import *
-from bank import *
+from app.game_files.nameslist import *
+from app.game_files.bank import *
 from fractions import Fraction
-from tk_file import interfacePrintGrid
+from app.game_files.tk_file import interfacePrintGrid
 ##visibly roughly 26 max particpants for tkinter
 
 ####################################
@@ -78,7 +78,7 @@ arena1.start_button = tk.Button(arena1.activity_frame, text="Start Game",
 arena1.start_button.pack()
 
 
-arena1.getReady()
+arena1.prepareOdds()
 
 
 interfacePrintGrid(arena1)

@@ -1,8 +1,8 @@
 import time
 import random
-from gladiator import *
-from trap import *
-from activity_feed import *
+from app.game_files.gladiator import *
+from app.game_files.trap import *
+from app.game_files.activity_feed import *
 
 class Tile:
 	

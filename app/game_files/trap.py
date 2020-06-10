@@ -1,6 +1,6 @@
-from gladiator import *
+from app.game_files.gladiator import *
 from numpy.random import choice as np_choice
-from activity_feed import *
+from app.game_files.activity_feed import *
 import random
 
 class Trap:

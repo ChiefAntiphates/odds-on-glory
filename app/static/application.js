@@ -1,24 +1,43 @@
 
 $(document).ready(function(){
 	console.log("bing")
-	console.log(param)
+	console.log(game_code)
     //connect to the socket server.
-    var socket = io.connect('http://' + document.domain + ':' + location.port + param);
-    var numbers_received = [];
+    var socket = io.connect('http://' + document.domain + ':' + location.port + game_code);
+    
+	
+	var table = document.getElementById("arena_grid");
+	var arena_build = json_arena;
+	
+	for (let tile_row in arena_build.tile_rows) {
+		console.log(tile_row, arena_build.tile_rows[tile_row])
+	}
+	//for tiles_row in arena_build:
+	//	console.log(tiles_row);
+
+
+	var button = document.createElement("button");
+	button.innerHTML = "Do Something";
+	document.getElementById("testbut").appendChild(button)
+	
+	button.addEventListener("click", function() {
+		$.ajax({
+			type : "POST",
+			url : start_url
+		});
+	});
+	
+	
 
     //receive details from server
-    socket.on('newnumber', function(msg) {
-        console.log("Received number" + msg.number);
-        //maintain a list of ten numbers
-        if (numbers_received.length >= 10){
-            numbers_received.shift()
-        }            
-        numbers_received.push(msg.number);
-        numbers_string = '';
-        for (var i = 0; i < numbers_received.length; i++){
-            numbers_string = numbers_string + '<p>' + numbers_received[i].toString() + '</p>';
-        }
-        $('#log').html(numbers_string);
+    socket.on('arenaupdate', function(msg) {
+		var arena = JSON.parse(msg.json_obj);
+		console.log(arena)
+        var table = document.getElementById("arena_grid");
+        //for (var i = 0; i < numbers_received.length; i++){
+         //   numbers_string = numbers_string + '<p>' + numbers_received[i].toString() + '</p>';
+       //}
+        $('#log').html("<p>"+arena+"</p>");
     });
 
 });

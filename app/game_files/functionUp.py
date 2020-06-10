@@ -12,5 +12,5 @@ def randomNumberGenerator(socketio, param):
     while True:
         number = round(random()*10, 3)
         print(number)
-        socketio.emit('newnumber', {'number': number}, namespace=param)
+        socketio.emit('arenaupdate', {'json_obj': number}, namespace=param)
         socketio.sleep(3)

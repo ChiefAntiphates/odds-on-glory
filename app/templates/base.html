@@ -1,8 +1,15 @@
 {% extends 'bootstrap/base.html' %}
 
-{% block title %}
-	{% if title %}{{ title }} - Odds On{% else %}Welcome to Odds On Glory{% endif %}
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}
+
+
+{% block title %}
+	{% if title %}{{ title }} - OoG{% else %}Odds On Glory{% endif %}
+{% endblock %}
+
 
 {% block navbar %}
 	<!-- look at bootstrap documentation and change the nav bar-->

@@ -1,4 +1,4 @@
-2020-06-07 15:17:32,047 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-09 11:11:57,740 ERROR: Exception on /host_game [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,27 +14,46 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 82, in user
-    return render_template('user.html', user=user, posts=posts, form=form)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 137, in render_template
-    return _render(
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 120, in _render
-    rv = template.render(context)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 1090, in render
-    self.environment.handle_exception()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 832, in handle_exception
-    reraise(*rewrite_traceback_stack(source=source))
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\_compat.py", line 28, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 30, in top-level template code
-    {% block content %}{% endblock %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 12, in block "content"
-    <p>{{ list(set(user.followers) and set(users.followed)).count() }} friends</p>
-jinja2.exceptions.UndefinedError: 'set' is undefined
-2020-06-07 15:22:45,604 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
-2020-06-07 15:22:49,847 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 130, in host_game
+    user = User.query.filter_by(username=current_user).first_or_404()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 1893, in filter_by
+    clauses = [
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 1894, in <listcomp>
+    _entity_descriptor(self._joinpoint_zero(), key) == value
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\attributes.py", line 219, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\properties.py", line 367, in operate
+    return op(self.__clause_element__(), *other, **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\annotation.py", line 104, in __eq__
+    return self.__element.__class__.__eq__(self, other)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 759, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "<string>", line 1, in <lambda>
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\type_api.py", line 67, in operate
+    return o[0](self.expr, op, *(other + o[1:]), **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\default_comparator.py", line 105, in _boolean_compare
+    obj = _check_literal(expr, op, obj)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\default_comparator.py", line 373, in _check_literal
+    return expr._bind_param(operator, other, type_=bindparam_type)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 4219, in _bind_param
+    return BindParameter(
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 1230, in __init__
+    self.type = _compared_to_type.coerce_compared_value(
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\type_api.py", line 578, in coerce_compared_value
+    _coerced_type = _resolve_value_to_type(value)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3024, in _resolve_value_to_type
+    raise exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Object <User Harry> is not legal as a SQL literal value
+2020-06-09 11:13:00,919 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:47]
+2020-06-09 11:13:19,925 ERROR: Exception on /host_game [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -50,59 +69,42 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 82, in user
-    return render_template('user.html', user=user, posts=posts, form=form)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 137, in render_template
-    return _render(
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 120, in _render
-    rv = template.render(context)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 1090, in render
-    self.environment.handle_exception()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 832, in handle_exception
-    reraise(*rewrite_traceback_stack(source=source))
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\_compat.py", line 28, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 30, in top-level template code
-    {% block content %}{% endblock %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 12, in block "content"
-    <p>{{ user.get_friends.count() }} friends</p>
-jinja2.exceptions.UndefinedError: 'method object' has no attribute 'count'
-2020-06-07 15:23:02,847 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
-2020-06-07 15:23:04,942 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 82, in user
-    return render_template('user.html', user=user, posts=posts, form=form)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 137, in render_template
-    return _render(
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 120, in _render
-    rv = template.render(context)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 1090, in render
-    self.environment.handle_exception()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 832, in handle_exception
-    reraise(*rewrite_traceback_stack(source=source))
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\_compat.py", line 28, in reraise
-    raise value.with_traceback(tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 30, in top-level template code
-    {% block content %}{% endblock %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 12, in block "content"
-    <p>{{ user.get_friends().count() }} friends</p>
-TypeError: count() takes exactly one argument (0 given)
-2020-06-07 15:23:29,511 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:41]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 131, in host_game
+    user = User.query.filter_by(username=current_user).first_or_404()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 1893, in filter_by
+    clauses = [
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 1894, in <listcomp>
+    _entity_descriptor(self._joinpoint_zero(), key) == value
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\attributes.py", line 219, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\properties.py", line 367, in operate
+    return op(self.__clause_element__(), *other, **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\annotation.py", line 104, in __eq__
+    return self.__element.__class__.__eq__(self, other)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 759, in operate
+    return op(self.comparator, *other, **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\operators.py", line 365, in __eq__
+    return self.operate(eq, other)
+  File "<string>", line 1, in <lambda>
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\type_api.py", line 67, in operate
+    return o[0](self.expr, op, *(other + o[1:]), **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\default_comparator.py", line 105, in _boolean_compare
+    obj = _check_literal(expr, op, obj)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\default_comparator.py", line 373, in _check_literal
+    return expr._bind_param(operator, other, type_=bindparam_type)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 4219, in _bind_param
+    return BindParameter(
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 1230, in __init__
+    self.type = _compared_to_type.coerce_compared_value(
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\type_api.py", line 578, in coerce_compared_value
+    _coerced_type = _resolve_value_to_type(value)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3024, in _resolve_value_to_type
+    raise exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Object <User Harry> is not legal as a SQL literal value
+2020-06-09 11:13:44,092 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:47]
