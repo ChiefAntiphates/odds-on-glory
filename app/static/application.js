@@ -9,9 +9,23 @@ $(document).ready(function(){
 	var table = document.getElementById("arena_grid");
 	var arena_build = json_arena;
 	
-	for (let tile_row in arena_build.tile_rows) {
+	for (var tile_row in arena_build.tile_rows) {
 		console.log(tile_row, arena_build.tile_rows[tile_row])
+		var tr = "<tr>";
+		
+		for (var tiles_parser in arena_build.tile_rows[tile_row].tiles){
+			console.log(tile_row, arena_build.tile_rows[tile_row].tiles[tiles_parser])
+			var td = "<td class=outline_temp>";
+			td += arena_build.tile_rows[tile_row].tiles[tiles_parser].x_co;
+			td += arena_build.tile_rows[tile_row].tiles[tiles_parser].y_co;
+			td += "</td>";
+			tr += td;
+		}
+		
+		tr += "</tr>";
+		table.innerHTML += tr;
 	}
+	
 	//for tiles_row in arena_build:
 	//	console.log(tiles_row);
 

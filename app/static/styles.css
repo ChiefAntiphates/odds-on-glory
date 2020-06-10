@@ -1,3 +1,7 @@
 body {
   background-color: lightblue;
 }
+
+.outline_temp {
+	outline: 2px solid black;
+}
