@@ -234,7 +234,6 @@ class Gladiator:
 					
 			tile = r.choice(tile_list)
 			self.moveToTile(tile)
-			print("MOVING")
 		except IndexError as e:
 			print("%s can't move anywhere!")
 		self.state = Gladiator.MOVE

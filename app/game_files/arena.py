@@ -103,6 +103,7 @@ class Arena:
 		self.gladiators.append(gladiator)
 		gladiator.setArena(self)
 		gladiator.setPosition(tile.x_pos, tile.y_pos)
+		self.prepareOdds()
 		
 	def addRunner(self, runner):
 		tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied)])

@@ -17,3 +17,11 @@ body {
   flex-wrap: nowrap;
 }
 
+.oog_click_div {
+	cursor: pointer;
+}
+
+.oog_hide{
+	display: none;
+}
+

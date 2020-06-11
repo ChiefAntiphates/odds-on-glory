@@ -9,7 +9,6 @@
 	<script type="text/javascript">
 		var game_code = '{{ game_code }}';
 		var json_arena = JSON.parse({{ json_arena|tojson }});
-		var start_url = "{{ url_for('bm_starting_game', game_code=game_code) }}";
 	</script>
 	<script src="{{ url_for('static', filename='application.js') }}" + "?v=1"></script>
 	

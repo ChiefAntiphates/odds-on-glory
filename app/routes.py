@@ -39,8 +39,8 @@ def host_game():
 	game_handler = GameHandler(socketio, game.code, game.id)
 	active_games[game.code] = game_handler
 	
-	#thread = Thread()
-	#thread = socketio.start_background_task(game_handler.tempGoForThis)
+	thread = Thread()
+	thread = socketio.start_background_task(game_handler.preGame)
 	return redirect(url_for('game', game_id=game.id))
 
 @app.route('/game/<game_id>', methods=['GET', 'POST'])
@@ -53,17 +53,32 @@ def game(game_id):
 	json_arena = game_obj.getJSON()
 	return render_template('game.html', game_code=game.code, json_arena=json_arena)
 
-##hmm whats this
+'''
 @app.route('/bm_starting_game/<game_code>', methods=['POST'])
 def bm_starting_game(game_code):
+	print(request.form.get('temp_data'))##This is how to get data from JS
 	global active_games
 	game_code_key = "/"+game_code
 	game = active_games[game_code_key]
 	game.startGames()
+	return "done"'''
+
+##Test route get functionUp
+@app.route('/test_send_request', methods=['POST'])
+def test_send_req():
+	name = request.form.get('glad_name')
+	bet_amount = request.form.get('bet_amount')
+	print("\n\n\n\n\n\n")
+	print(name)
+	print(bet_amount)
+	print("\n\n\n\n\n\n")
 	return "done"
 	
 	
-
+	
+	
+	
+	
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
