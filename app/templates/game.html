@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+<!-- dont extend base.html -instead have a custom base with different margins -->
 
-{% block app_content %}	
+{% block game_content %}	
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     
@@ -16,10 +17,10 @@
 	<div class="oog_flex_container">
 		<div id="glad_info"></div>
 		<table id="arena_grid"></table>
-		<div id="activity_feed"></div>
+		<div id="activity_feed"></div><!--make a smaller div for battles too-->
 	</div>
 	<p>{{ game_code }}</p>
-	<div id="testbut"></div>
+	<div id="add_glad_but"></div>
 	<div id="log">
 	
 </div>

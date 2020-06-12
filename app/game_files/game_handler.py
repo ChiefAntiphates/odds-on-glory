@@ -9,7 +9,7 @@ from app.game_files.bank import *
 from app.game_files.convertToJSON import pushInfoToJSON
 
 
-BETTING_PHASE_TIME = 30
+BETTING_PHASE_TIME = 2
 
 
 #import tkinter as tk
@@ -36,7 +36,10 @@ class GameHandler:
 	def getJSON(self):
 		return pushInfoToJSON(self.arena)
 		
-	#def addGladiator:
+	def addGladiator(self):
+	#def addGladiator(gladiator stats):
+		self.arena.addGladiator(Gladiator(r.choice(nameslist), r.randrange(99), 
+						r.randrange(30,99), r.randrange(99)))
 		##Add remaining if 30 seconds left and remaining places
 		##Once max gladiators added calculate the odds
 	
@@ -44,16 +47,15 @@ class GameHandler:
 	
 	def preGame(self):
 		#Spend x amount of time getting new gladiators
-		for _ in range(4):
+		for _ in range(10):
 			self.socketio.sleep(1)
 			
-			self.arena.addGladiator(Gladiator(r.choice(nameslist), r.randrange(99), 
-						r.randrange(30,99), r.randrange(99)))
-						
+			
 			json_obj = pushInfoToJSON(self.arena)
 			self.socketio.emit('gladiatoradding', {'json_obj': json_obj}, namespace=self.nspace)
 			#if len(self.arena.gladiators) == glad_max: break
-			
+		
+		self.arena.active = True
 		self.socketio.emit('arenainitial', {'json_obj': json_obj}, namespace=self.nspace)	
 		self.socketio.sleep(BETTING_PHASE_TIME)
 		self.startGames()
@@ -68,7 +70,8 @@ class GameHandler:
 			#betting stuff
 		else:
 			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
-		
+		json_obj = pushInfoToJSON(self.arena)
+		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 		
 		
 		

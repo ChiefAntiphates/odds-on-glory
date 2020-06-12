@@ -45,6 +45,13 @@
 		{% endif %}
 		{% endwith %}
         {% block app_content %}{% endblock %}
+	</div>
+	<!-- block content just game URLs-->
+	<div class="container-fluid"> 
+		<div class="oog_game_cont">
+		{% block game_content %}{% endblock %}
+		</div>
+	</div>
 {% endblock %}
 
 {% block scripts %}

@@ -30,7 +30,7 @@ class ActivityFeed:
 	
 	draw_header =  "%(defender)s FOUGHT OFF %(attacker)s"
 	DRAW_MESSAGES = [
-[draw_header, "The battle between %(attacker)s sand %(defender)s left them each bloodied, but alive."],
+[draw_header, "The battle between %(attacker)s and %(defender)s left them each bloodied, but alive."],
 [draw_header, "%(defender)s fought off %(attacker)s! They each made it out with their lives."]	
 	]
 	

@@ -39,6 +39,7 @@ def host_game():
 	game_handler = GameHandler(socketio, game.code, game.id)
 	active_games[game.code] = game_handler
 	
+	#Start game running
 	thread = Thread()
 	thread = socketio.start_background_task(game_handler.preGame)
 	return redirect(url_for('game', game_id=game.id))
@@ -53,6 +54,16 @@ def game(game_id):
 	json_arena = game_obj.getJSON()
 	return render_template('game.html', game_code=game.code, json_arena=json_arena)
 
+
+@app.route('/add_gladiator_to_arena', methods=['POST'])
+def add_gladiator_to_arena():
+	print(request.form.get('gladiator'))##This is how to get data from JS
+	game_code_key = request.form.get('game_code')
+	global active_games
+	game = active_games[game_code_key]
+	game.addGladiator()
+	return "done"
+
 '''
 @app.route('/bm_starting_game/<game_code>', methods=['POST'])
 def bm_starting_game(game_code):
@@ -61,7 +72,8 @@ def bm_starting_game(game_code):
 	game_code_key = "/"+game_code
 	game = active_games[game_code_key]
 	game.startGames()
-	return "done"'''
+	return "done"
+'''
 
 ##Test route get functionUp
 @app.route('/test_send_request', methods=['POST'])

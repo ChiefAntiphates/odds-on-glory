@@ -29,6 +29,7 @@ class Arena:
 		self.active_battles = []
 		self.scorch_level = 0
 		self.edge_tiles = []
+		self.af = ActivityFeed()
 		self.socketio = socketio
 		self.nspace = nspace
 		
@@ -74,7 +75,7 @@ class Arena:
 		#End Tk Activity#
 		#################
 		'''
-		self.af = ActivityFeed() # semi tk related because Activity requires frame
+		 # semi tk related because Activity requires frame
 		
 		
 	#########################	
