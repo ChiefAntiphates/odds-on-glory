@@ -27,9 +27,9 @@ $(document).ready(function(){
 	}
 	
 	
+	//SOCKET RESPONSES
 	
-	
-
+	//Socket response to a new gladiator added
 	socket.on('gladiatoradding', function(msg) {
 		var gladiatoradding_arena = JSON.parse(msg.json_obj);
 		glad_view = document.getElementById("glad_info")
@@ -44,6 +44,7 @@ $(document).ready(function(){
 	});
 	
 	
+	//Socket response to initialise the betting phase
 	socket.on('arenainitial', function(msg) {
 		elem = document.getElementById("add_glad_but")
 		elem.parentNode.removeChild(elem);//Remove add gladiator button
@@ -58,14 +59,21 @@ $(document).ready(function(){
 		//console.log(arena);
 		
 		
-		
 		//Update tiles//NOTE: Convert to canvas at some point
         var table = document.getElementById("arena_grid");
 		for (var tile_row in arena.tile_rows) {
 			for (var tiles_parser in arena.tile_rows[tile_row].tiles){
-				var occ = arena.tile_rows[tile_row].tiles[tiles_parser].occupant_initials;
-				table.rows[tile_row].cells[tiles_parser].innerHTML = occ;
-			}
+				var tile = arena.tile_rows[tile_row].tiles[tiles_parser]
+				var table_td = table.rows[tile_row].cells[tiles_parser]
+				table_td.innerHTML = tile.occupant_initials;
+				if  (tile.hostile === true) { //if hostile
+					table_td.style.backgroundColor = "#821111"; 
+				} else if (tile.trap !== false){
+					table_td.style.border = "2px dashed purple";
+				}else{
+					table_td.style.border = null;
+				}
+			}//endfor
 		}
 		
 		
@@ -141,7 +149,7 @@ function initArenaGlads(arena_build){
 		var tr = "<tr>";
 		for (var tiles_parser in arena_build.tile_rows[tile_row].tiles){
 			//console.log(tile_row, arena_build.tile_rows[tile_row].tiles[tiles_parser])
-			var td = "<td class=oog_outline_temp>";
+			var td = "<td class=oog_td_style>";
 			td += arena_build.tile_rows[tile_row].tiles[tiles_parser].occupant_initials;
 			td += "</td>";
 			tr += td;
@@ -185,7 +193,6 @@ function initArenaGlads(arena_build){
 	//Catch up on activity feed
 	var af_div = document.getElementById("activity_feed");
 	var init_activity_feed = arena_grid.activity_log;
-	console.log(init_activity_feed);
 	if (init_activity_feed !== undefined) {
 		global_activity_feed = init_activity_feed;
 		var af_div_fill = "";

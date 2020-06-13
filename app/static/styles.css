@@ -2,7 +2,7 @@ body {
   background-color: lightblue;
 }
 
-.oog_outline_temp {
+.oog_td_style {
 	border: 2px solid black;
 	width: 50px;
 	min-width: 50px;
@@ -10,6 +10,7 @@ body {
 	height: 50px;
 	min-height: 50px;
 	max-height: 50px;
+	background-color: #edc168;
 }
 
 
