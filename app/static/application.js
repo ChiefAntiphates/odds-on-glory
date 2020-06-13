@@ -59,7 +59,7 @@ $(document).ready(function(){
 		
 		
 		
-		//Update tiles
+		//Update tiles//NOTE: Convert to canvas at some point
         var table = document.getElementById("arena_grid");
 		for (var tile_row in arena.tile_rows) {
 			for (var tiles_parser in arena.tile_rows[tile_row].tiles){
@@ -68,8 +68,8 @@ $(document).ready(function(){
 			}
 		}
 		
+		
 		//Update activity feed
-		//Maybe just add new instead of full update each time
 		var af_div = document.getElementById("activity_feed");
 		var activity_feed = arena.activity_log;
 		//console.log(activity_feed);
@@ -131,7 +131,7 @@ function sendGladBet(name, bet){
 }
 
 
-
+//Build arena upon first entering game
 function initArenaGlads(arena_build){
 	var table = document.getElementById("arena_grid");
 	
@@ -151,28 +151,34 @@ function initArenaGlads(arena_build){
 	}
 	table.innerHTML = table_html;
 	
+	
+	
 	//Build gladiator view
 	glad_view = document.getElementById("glad_info")
+	glad_ext_view =  document.getElementById("glad_extended")
 	var g_v_content = ""
+	var g_v_ext = ""
 	for (var gladiator in arena_build.gladiators) {
 		var glad_name = arena_build.gladiators[gladiator].name;
 		g_v_content += ("<div class='oog_click_div' id='div_" + glad_name
 						+ "' onclick=\"showGladInfo('hidden_div_" + glad_name +"');\">");
 		g_v_content += "<p>" + glad_name + "</p>";
-		
+		g_v_content += "</div>";
 		
 		//Pass gladiator obj into function then display there instead
-		g_v_content += "<div class='oog_hide' id='hidden_div_" + glad_name +"'>";
-		g_v_content += "<input type=\"text\" id=\"bet_" + glad_name + "\">";
-		g_v_content += ("<button onclick=\"sendGladBet('" 
+		g_v_ext += "<div class='oog_hide oog_center' id='hidden_div_" + glad_name +"'>";
+		g_v_ext +="<p>" + glad_name +"</p>";
+		g_v_ext += "<input type=\"text\" id=\"bet_" + glad_name + "\">";
+		g_v_ext += ("<button onclick=\"sendGladBet('" 
 						+ glad_name
 						+ "', document.getElementById('bet_" 
 						+ glad_name 
 						+ "').value)\">Click</button>");
-		g_v_content += "</div>";
-		g_v_content += "</div>";
+		g_v_ext += "</div>";
+		
 	}
 	glad_view.innerHTML = g_v_content;
+	glad_ext_view.innerHTML = g_v_ext;
 	
 	
 	
@@ -194,11 +200,15 @@ function initArenaGlads(arena_build){
 }//end func
 
 
+//Display selected glad div and hide all others
 function showGladInfo(div_id){
-	var x = document.getElementById(div_id);
-	if (x.style.display === 'block') {
-		x.style.display = 'none';
-	} else {
-		x.style.display = 'block';
+	let all_hide = document.getElementsByClassName("oog_hide");
+	for (i=0; i<all_hide.length; i++){
+		all_hide[i].style.display = "none";
 	}
+	var x = document.getElementById(div_id);
+	x.style.display = 'block';
 }
+
+
+
