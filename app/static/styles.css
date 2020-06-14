@@ -11,6 +11,7 @@ body {
 	min-height: 50px;
 	max-height: 50px;
 	background-color: #edc168;
+	outline-offset: -4px;
 }
 
 

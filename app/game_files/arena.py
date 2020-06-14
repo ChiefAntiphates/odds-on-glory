@@ -96,7 +96,7 @@ class Arena:
 	
 	
 	
-	def addGladiator(self, gladiator):
+	def getGladiator(self, gladiator):
 		#ensure gladiators not placed next to each other
 		tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied) 
 			and len([tile for tile in self.getTileSurroundings(tile) if tile.occupied]) < 1])
@@ -105,6 +105,7 @@ class Arena:
 		gladiator.setArena(self)
 		gladiator.setPosition(tile.x_pos, tile.y_pos)
 		self.prepareOdds()
+		print(gladiator.id)
 		
 	def addRunner(self, runner):
 		tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied)])
@@ -134,7 +135,7 @@ class Arena:
 		########################
 			json_obj = pushInfoToJSON(self)
 			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
-			self.socketio.sleep(TIMER)
+			self.socketio.sleep(TIMER/2)
 		####################################################
 			
 		for gladiator in sorted(self.gladiators, key=lambda x: x.speed, reverse=True):
@@ -187,10 +188,11 @@ class Arena:
 					self.grid[i][j].setHostile()
 		self.scorch_level += 1
 	
+	'''##MOVED INTO GAME HANDLER
 	##Sends a trap of fixed damage 50 to a gladiator
 	def sendGladiatorTrap(self, gladiator):
 		self.addRunner(Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)]))
-					
+	'''				
 	
 	##Create bet -> REQUIRED TK STUFF ##########
 	def prepareBet(self, gladiator):

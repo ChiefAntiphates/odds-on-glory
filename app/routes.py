@@ -63,22 +63,13 @@ def add_gladiator_to_arena():
 	game = active_games[game_code_key]
 	game.addGladiator()
 	return "done"
+	
 
-'''
-@app.route('/bm_starting_game/<game_code>', methods=['POST'])
-def bm_starting_game(game_code):
-	print(request.form.get('temp_data'))##This is how to get data from JS
-	global active_games
-	game_code_key = "/"+game_code
-	game = active_games[game_code_key]
-	game.startGames()
-	return "done"
-'''
 
-##Test route get functionUp
+##Test route get functionUp#Rename to glad bet
 @app.route('/test_send_request', methods=['POST'])
 def test_send_req():
-	name = request.form.get('glad_name')
+	glad_id = request.form.get('glad_id')
 	bet_amount = request.form.get('bet_amount')
 	print("\n\n\n\n\n\n")
 	print(name)
@@ -86,8 +77,16 @@ def test_send_req():
 	print("\n\n\n\n\n\n")
 	return "done"
 	
-	
-	
+
+@app.route('/send_glad_gift', methods=['POST'])
+def send_glad_gift():
+	glad_id = request.form.get('glad_id')
+	gift = request.form.get('gift')
+	game_code_key = request.form.get('game_code')
+	global active_games
+	game = active_games[game_code_key]
+	game.sendGift(glad_id, gift) ##gift var currently unused
+	return "done"
 	
 	
 	

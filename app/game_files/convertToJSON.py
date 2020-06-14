@@ -36,6 +36,7 @@ def pushInfoToJSON(arena):
 	for glad in arena.gladiators:
 		json_glad = {}
 		json_glad["name"] = glad.name
+		json_glad["id"] = glad.id
 		json_glad["initial"] = glad.initial
 		json_glad["odds"] = arena.odds_on[glad][2]
 		json_glad["strength"] = glad.strength
@@ -50,6 +51,7 @@ def pushInfoToJSON(arena):
 	for glad in arena.dead_gladiators:
 		json_dead = {}
 		json_dead["name"] = glad.name
+		json_dead["id"] = glad.id
 		json_dead["initial"] = glad.initial
 		json_dead["kill_count"] = glad.kill_count
 		json_dead["kills"] = [x.name for x in glad.kills]

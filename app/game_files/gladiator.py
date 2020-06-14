@@ -56,6 +56,9 @@ class Gladiator:
 		self.turn_delay = 0
 		self.delayed_fun = None
 		
+		self.id = id(self)
+		##self.owner = FOR WHEN WE GET SERIOUS
+		
 		#Inventory
 		self.inventory={
 			Gladiator.I_TRAPS: [],
@@ -208,10 +211,11 @@ class Gladiator:
 	
 	
 	def placeTrap(self):
-		trap = self.inventory[Gladiator.I_TRAPS][0] ##add time delay variable to traps?
+		trap = self.inventory[Gladiator.I_TRAPS][0]
 		self.tile.setTrapToTile(trap)
 		self.inventory[Gladiator.I_TRAPS].remove(trap)
-		
+		self.arena.af.updateActivityFeed("%s SET A TRAP" % self.name, 
+													"They set down a trap")
 		
 	def fatalAccident(self):
 		self.removeBody(self, ActivityFeed.SELF_ATTACKS)
@@ -283,7 +287,7 @@ class Gladiator:
 		'''Comment in updated probabilities throughout'''
 		
 		##Place trap
-		if (len(self.inventory[Gladiator.I_TRAPS]) > 0) and (self.arena.duration > 20): #Values not yet adjusted
+		if (len(self.inventory[Gladiator.I_TRAPS]) > 0) and (self.arena.duration > 20) and not(self.tile.edge):
 			action_prob.append([self.placeTrap, remaining_prob * 0.35])
 			remaining_prob = remaining_prob - (remaining_prob * 0.35)
 		
@@ -331,7 +335,7 @@ class Gladiator:
 		#SPEED ADJUSTMENT
 		self.speed = self.base_speed
 		if self.state == Gladiator.HUNT:
-			self.consecutive_hunt += 0.5
+			self.consecutive_hunt += 0.8
 			self.speed += (self.consecutive_hunt/10) #is this too much extra speed?
 		elif self.consecutive_hunt > 0:
 			self.consecutive_hunt = 0

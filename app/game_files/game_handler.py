@@ -36,13 +36,20 @@ class GameHandler:
 	def getJSON(self):
 		return pushInfoToJSON(self.arena)
 		
+		
 	def addGladiator(self):
 	#def addGladiator(gladiator stats):
-		self.arena.addGladiator(Gladiator(r.choice(nameslist), r.randrange(99), 
+		self.arena.getGladiator(Gladiator(r.choice(nameslist), r.randrange(99), 
 						r.randrange(30,99), r.randrange(99)))
 		##Add remaining if 30 seconds left and remaining places
 		##Once max gladiators added calculate the odds
 	
+	
+	def sendGift(self, glad_id, gift): ##And runner as param #Currently all gifts are traps
+		gladiator = next((x for x in self.arena.gladiators if int(x.id) == int(glad_id)), None)
+		#runner  = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, gift))
+		runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
+		self.arena.addRunner(runner)
 	
 	
 	def preGame(self):

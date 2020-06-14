@@ -1,46 +1,4 @@
-2020-06-10 14:55:31,932 ERROR: Exception on /host_game [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 39, in host_game
-    game_handler = GameHandler(socketio, game.code, game.id)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 25, in __init__
-    self.arena.addGladiator(Gladiator(r.choice(nameslist), r.randrange(99),
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\arena.py", line 102, in addGladiator
-    tile.setGladiatorToTile(gladiator)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\tile.py", line 32, in setGladiatorToTile
-    print(self.tile.x_pos)
-AttributeError: 'Tile' object has no attribute 'tile'
-2020-06-10 14:55:50,199 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 14:57:37,355 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:00:53,239 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:02:24,707 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:02:52,690 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:04:41,207 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:05:09,958 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:06:13,213 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:09:29,048 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:21:19,416 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:22:27,921 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:23:55,208 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:24:19,812 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:42:26,726 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:43:02,074 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 15:57:55,900 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 16:20:06,938 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-10 16:20:26,236 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-10 16:20:32,547 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -51,7 +9,7 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
     raise TypeError(
 TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
-2020-06-10 16:20:26,252 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-10 16:20:32,549 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -62,7 +20,7 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
     raise TypeError(
 TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
-2020-06-10 16:20:26,282 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-10 16:20:32,887 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -73,7 +31,7 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
     raise TypeError(
 TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
-2020-06-10 16:20:26,296 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-10 16:20:32,954 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -84,7 +42,7 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
     raise TypeError(
 TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
-2020-06-10 16:20:26,709 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-10 16:20:32,977 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -95,7 +53,7 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
     raise TypeError(
 TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
-2020-06-10 16:20:26,727 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-10 16:20:32,990 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -106,3 +64,49 @@ Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
     raise TypeError(
 TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
+2020-06-10 16:20:33,434 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1953, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1968, in finalize_request
+    response = self.make_response(rv)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
+    raise TypeError(
+TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
+2020-06-10 16:20:33,449 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1953, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1968, in finalize_request
+    response = self.make_response(rv)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
+    raise TypeError(
+TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
+2020-06-10 16:20:33,462 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1953, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1968, in finalize_request
+    response = self.make_response(rv)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
+    raise TypeError(
+TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
+2020-06-10 16:20:33,493 ERROR: Exception on /test_send_request [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1953, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1968, in finalize_request
+    response = self.make_response(rv)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2097, in make_response
+    raise TypeError(
+TypeError: The view function did not return a valid response. The function either returned None or ended without a return statement.
+2020-06-10 16:21:45,439 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-10 18:06:01,933 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]

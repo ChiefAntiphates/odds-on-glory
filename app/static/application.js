@@ -1,5 +1,6 @@
 //var global_glad_list = [];
 var global_activity_feed = [];
+var global_dead_gladiators = [];
 
 $(document).ready(function(){
 	console.log(game_code)
@@ -65,13 +66,14 @@ $(document).ready(function(){
 			for (var tiles_parser in arena.tile_rows[tile_row].tiles){
 				var tile = arena.tile_rows[tile_row].tiles[tiles_parser]
 				var table_td = table.rows[tile_row].cells[tiles_parser]
-				table_td.innerHTML = tile.occupant_initials;
+				table_td.innerHTML = tile.occupant_initials.join("\n");
 				if  (tile.hostile === true) { //if hostile
 					table_td.style.backgroundColor = "#821111"; 
+					table_td.style.outline = null;
 				} else if (tile.trap !== false){
-					table_td.style.border = "2px dashed purple";
+					table_td.style.outline = "3px dashed purple";
 				}else{
-					table_td.style.border = null;
+					table_td.style.outline = null;
 				}
 			}//endfor
 		}
@@ -102,41 +104,29 @@ $(document).ready(function(){
 			}
 		}
 		
-		/*
-		var af_div_fill = "";
-		for (var activity in activity_feed) {
-			af_div_fill = ("<p class=\"oog_afheader\">" + activity_feed[activity][0] 
-							+ "</p><p class=\"oog_afinfo\">" + activity_feed[activity][1] 
-							+ "</p>" + af_div_fill);
+		//Remove gladiators that are dead
+		var dead_gladiators = arena.dead_gladiators;
+		for (dead_glad in dead_gladiators){
+			if (global_dead_gladiators.includes(dead_gladiators[dead_glad].id) !== true){
+				global_dead_gladiators.push(dead_gladiators[dead_glad].id)
+				document.getElementById(dead_gladiators[dead_glad].id).remove();
+				document.getElementById("hidden_div_" + dead_gladiators[dead_glad].id).remove();
+			}
 		}
-		af_div.innerHTML = af_div_fill;
-		*/
-		
-		
-		
-		
 		//Loop through dead gladiators and delete divs with their id
 		//Update gladiators
 		//var local_glad_list = arena.gladiators;
 		//if ((Object.keys(local_glad_list).length == Object.keys(global_glad_list).length) == false) {
 		//	global_glad_list = local_glad_list;
 		
-		//}
+		
     });
 	
 });
 
 
-//Test function
-function sendGladBet(name, bet){
-	console.log("we hereeee")
-	document.getElementById('bet_'+name).value = "";
-	$.ajax({
-		type : "POST",
-		url : '/test_send_request',
-		data: {glad_name: name, bet_amount: bet}//This is how to send vars to flask
-	});
-}
+
+
 
 
 //Build arena upon first entering game
@@ -150,7 +140,7 @@ function initArenaGlads(arena_build){
 		for (var tiles_parser in arena_build.tile_rows[tile_row].tiles){
 			//console.log(tile_row, arena_build.tile_rows[tile_row].tiles[tiles_parser])
 			var td = "<td class=oog_td_style>";
-			td += arena_build.tile_rows[tile_row].tiles[tiles_parser].occupant_initials;
+			td += arena_build.tile_rows[tile_row].tiles[tiles_parser].occupant_initials.join("\n");
 			td += "</td>";
 			tr += td;
 		}
@@ -167,21 +157,31 @@ function initArenaGlads(arena_build){
 	var g_v_content = ""
 	var g_v_ext = ""
 	for (var gladiator in arena_build.gladiators) {
-		var glad_name = arena_build.gladiators[gladiator].name;
-		g_v_content += ("<div class='oog_click_div' id='div_" + glad_name
-						+ "' onclick=\"showGladInfo('hidden_div_" + glad_name +"');\">");
+		var gladiator_obj = arena_build.gladiators[gladiator];
+		var glad_name = gladiator_obj.name;
+		var glad_id = gladiator_obj.id;
+		g_v_content += ("<div class='oog_click_div' id='" + glad_id
+						+ "' onclick=\"showGladInfo('hidden_div_" + glad_id +"');\">");
 		g_v_content += "<p>" + glad_name + "</p>";
 		g_v_content += "</div>";
 		
-		//Pass gladiator obj into function then display there instead
-		g_v_ext += "<div class='oog_hide oog_center' id='hidden_div_" + glad_name +"'>";
+		
+		g_v_ext += "<div class='oog_hide oog_center' id='hidden_div_" + glad_id +"'>";
 		g_v_ext +="<p>" + glad_name +"</p>";
-		g_v_ext += "<input type=\"text\" id=\"bet_" + glad_name + "\">";
+		
+		//Button to send bet //Replace these with glad IDs
+		g_v_ext += "<input type=\"text\" id=\"bet_" + glad_id + "\">";
 		g_v_ext += ("<button onclick=\"sendGladBet('" 
-						+ glad_name
+						+ glad_id
 						+ "', document.getElementById('bet_" 
-						+ glad_name 
+						+ glad_id 
 						+ "').value)\">Click</button>");
+						
+		//Button to send gift
+		g_v_ext += ("<button onclick=\"sendGladGift('" 
+						+ glad_id
+						+ "', 'gift')\">Send Trap</button>");
+		
 		g_v_ext += "</div>";
 		
 	}
@@ -204,7 +204,32 @@ function initArenaGlads(arena_build){
 		af_div.innerHTML = af_div_fill;
 	}
 	
-}//end func
+}//end create func
+
+
+
+
+//Send gladiator bet
+function sendGladBet(glad_id, bet){
+	console.log("we hereeee")
+	document.getElementById('bet_'+glad_id).value = "";
+	$.ajax({
+		type : "POST",
+		url : '/test_send_request',
+		data: {glad_id: glad_id, bet_amount: bet}//This is how to send vars to flask
+	});
+}
+
+
+//Send gladiator gift
+function sendGladGift(glad_id, gift){
+	$.ajax({
+		type : "POST",
+		url : '/send_glad_gift',
+		data: {glad_id: glad_id, gift: gift, game_code: game_code}//This is how to send vars to flask
+	});
+}
+
 
 
 //Display selected glad div and hide all others

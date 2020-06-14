@@ -46,6 +46,7 @@ class Tile:
 		self.trap_present = True
 		self.trap = trap
 		
+		
 	def trapTripped(self, gladiator):
 		self.trap.activateTrap(gladiator)
 		self.trap_present = False
