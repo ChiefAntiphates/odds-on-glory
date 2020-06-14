@@ -12,6 +12,7 @@ body {
 	max-height: 50px;
 	background-color: #edc168;
 	outline-offset: -4px;
+	overflow: hidden;
 }
 
 

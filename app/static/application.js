@@ -64,14 +64,9 @@ $(document).ready(function(){
         var table = document.getElementById("arena_grid");
 		for (var tile_row in arena.tile_rows) {
 			for (var tiles_parser in arena.tile_rows[tile_row].tiles){
-				var tile = arena.tile_rows[tile_row].tiles[tiles_parser];
-				var table_td = table.rows[tile_row].cells[tiles_parser];
-				//table_td.innerHTML = tile.occupant_initials.join("\n");
-				let canvas = table_td.firstChild;
-				let ctx = canvas.getContext("2d")
-				ctx.clearRect(0,0,50,50);
-				ctx.font = "14px Arial";
-				ctx.fillText(tile.occupant_initials.join(""), 10.5, 20.5);
+				var tile = arena.tile_rows[tile_row].tiles[tiles_parser]
+				var table_td = table.rows[tile_row].cells[tiles_parser]
+				table_td.innerHTML = tile.occupant_initials.join("\n");
 				if  (tile.hostile === true) { //if hostile
 					table_td.style.backgroundColor = "#821111"; 
 					table_td.style.outline = null;
@@ -145,8 +140,7 @@ function initArenaGlads(arena_build){
 		for (var tiles_parser in arena_build.tile_rows[tile_row].tiles){
 			//console.log(tile_row, arena_build.tile_rows[tile_row].tiles[tiles_parser])
 			var td = "<td class=oog_td_style>";
-			//td += arena_build.tile_rows[tile_row].tiles[tiles_parser].occupant_initials.join("\n");
-			td += "<canvas width=\"50\" height=\"50\"></canvas>";
+			td += arena_build.tile_rows[tile_row].tiles[tiles_parser].occupant_initials.join("\n");
 			td += "</td>";
 			tr += td;
 		}
@@ -154,17 +148,7 @@ function initArenaGlads(arena_build){
 		table_html += tr;
 	}
 	table.innerHTML = table_html;
-
-	for (var tile_row in arena_build.tile_rows) {
-		for (var tiles_parser in arena_build.tile_rows[tile_row].tiles){
-			var tile = arena_build.tile_rows[tile_row].tiles[tiles_parser];
-			var table_td = table.rows[tile_row].cells[tiles_parser];
-			let canvas = table_td.firstChild;
-			let ctx = canvas.getContext("2d")
-			ctx.font = "14px Arial";
-			ctx.fillText(tile.occupant_initials.join(""), 10.5, 20.5);
-		}
-	}
+	
 	
 	
 	//Build gladiator view
