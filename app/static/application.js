@@ -10,8 +10,10 @@ $(document).ready(function(){
 	//Upon connecting build arena incase missed the update
 	initArenaGlads(json_arena)
 	
-	
-	
+	if (user_id === "") {//not logged in
+		console.log("hieakd")
+	}
+	console.log(user_id);
 	
 	//Add gladiator button - removed at start of betting phase
 	if (json_arena.active == false){
@@ -26,6 +28,20 @@ $(document).ready(function(){
 			});
 		});
 	}
+	
+	
+	//Add gladiator button - removed at start of betting phase
+	
+	var button = document.createElement("button");
+	button.innerHTML = "Add money";
+	document.getElementById("add_money_but").appendChild(button)
+	button.addEventListener("click", function() {
+		$.ajax({
+			type : "POST",
+			url : '/temp_add_money'
+		});
+	});
+	
 	
 	
 	//SOCKET RESPONSES
@@ -67,6 +83,9 @@ $(document).ready(function(){
 				var tile = arena.tile_rows[tile_row].tiles[tiles_parser]
 				var table_td = table.rows[tile_row].cells[tiles_parser]
 				table_td.innerHTML = tile.occupant_initials.join("\n");
+				if (tile.corpse_present === true){
+					table_td.style.backgroundImage = "url('"+cross_img_url+"')";
+				}
 				if  (tile.hostile === true) { //if hostile
 					table_td.style.backgroundColor = "#821111"; 
 					table_td.style.outline = null;
@@ -215,8 +234,8 @@ function sendGladBet(glad_id, bet){
 	document.getElementById('bet_'+glad_id).value = "";
 	$.ajax({
 		type : "POST",
-		url : '/test_send_request',
-		data: {glad_id: glad_id, bet_amount: bet}//This is how to send vars to flask
+		url : '/send_glad_bet',
+		data: {glad_id: glad_id, bet_amount: bet, game_code: game_code}//This is how to send vars to flask
 	});
 }
 

@@ -52,7 +52,8 @@ def game(game_id):
 		return render_template('404.html')#Maybe put custom error here
 	game_obj = active_games[game.code]
 	json_arena = game_obj.getJSON()
-	return render_template('game.html', game_code=game.code, json_arena=json_arena)
+	return render_template('game.html', game_code=game.code, json_arena=json_arena,
+														current_user=current_user)
 
 
 @app.route('/add_gladiator_to_arena', methods=['POST'])
@@ -66,15 +67,14 @@ def add_gladiator_to_arena():
 	
 
 
-##Test route get functionUp#Rename to glad bet
-@app.route('/test_send_request', methods=['POST'])
-def test_send_req():
+@app.route('/send_glad_bet', methods=['POST'])
+def send_glad_bet():
 	glad_id = request.form.get('glad_id')
 	bet_amount = request.form.get('bet_amount')
-	print("\n\n\n\n\n\n")
-	print(name)
-	print(bet_amount)
-	print("\n\n\n\n\n\n")
+	game_code_key = request.form.get('game_code')
+	global active_games
+	game = active_games[game_code_key]
+	game.sendBet(glad_id, bet_amount, current_user.id)
 	return "done"
 	
 
@@ -88,6 +88,12 @@ def send_glad_gift():
 	game.sendGift(glad_id, gift) ##gift var currently unused
 	return "done"
 	
+	
+@app.route('/temp_add_money', methods=['POST'])
+def temp_add_money():
+	current_user.addMoney(500)
+	db.session.commit()
+	return "done"
 	
 	
 
@@ -153,7 +159,7 @@ def register():
 		return redirect(url_for('index'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data)
+		user = User(username=form.username.data, email=form.email.data, money=0)
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()

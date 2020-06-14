@@ -27,6 +27,8 @@
 				<a class="navbar-brand" href="{{ url_for('user', username=current_user.username) }}">Profile</a>
 				<p class="navbar-brand">|</p>
 				<a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a>
+				<p class="navbar-brand">|</p>
+				<p class="navbar-brand">Money: {{ current_user.money }}</p>
 				{% endif %}
 			</div>
 		</div>

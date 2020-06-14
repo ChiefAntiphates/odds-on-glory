@@ -36,6 +36,7 @@ class User(UserMixin, db.Model):
 	password_hash = db.Column(db.String(128))
 	about_me = db.Column(db.String(140))
 	last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+	money = db.Column(db.Integer, index=True)
 	
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
 	hosted_games = db.relationship('Tournament', backref='host', lazy='dynamic')
@@ -46,6 +47,11 @@ class User(UserMixin, db.Model):
 		backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 	
 	
+	def addMoney(self, value):
+		self.money = self.money + value
+		
+	def spendMoney(self, value):
+		self.money = self.money - value
 		
 	
 	def __repr__(self):
@@ -80,8 +86,10 @@ class User(UserMixin, db.Model):
 		own = Post.query.filter_by(user_id=self.id)
 		return followed.union(own).order_by(Post.timestamp.desc())
 	
-	def get_friends(self):
-		return set(self.followed) & set(self.followers)
+	'''def get_friends(self):
+		print(self.followed)
+		print(self.followers)
+		return set(self.followed) & set(self.followers)'''
 	
 	def get_reset_password_token(self, expires_in=600):
 		return jwt.encode(

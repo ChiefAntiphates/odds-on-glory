@@ -13,6 +13,8 @@ body {
 	background-color: #edc168;
 	outline-offset: -4px;
 	overflow: hidden;
+	background-repeat: no-repeat;
+	text-align: center;
 }
 
 

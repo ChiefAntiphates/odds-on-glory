@@ -8,6 +8,9 @@ from app.game_files.nameslist import *
 from app.game_files.bank import *
 from app.game_files.convertToJSON import pushInfoToJSON
 
+from app import app, db, socketio
+from app.models import User, Post, Tournament
+
 
 BETTING_PHASE_TIME = 2
 
@@ -22,6 +25,7 @@ class GameHandler:
 		self.nspace = nspace
 		self.game_id = game_id
 		self.arena = Arena(8, 8, socketio, nspace) ##add size params
+		self.bets = []
 	
 		##Workflow should be as follows
 		'''
@@ -44,6 +48,11 @@ class GameHandler:
 		##Add remaining if 30 seconds left and remaining places
 		##Once max gladiators added calculate the odds
 	
+	
+	def sendBet(self, glad_id, bet_value, punter_id):
+		gladiator = next((x for x in self.arena.gladiators if int(x.id) == int(glad_id)), None)
+		self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id)) 
+		
 	
 	def sendGift(self, glad_id, gift): ##And runner as param #Currently all gifts are traps
 		gladiator = next((x for x in self.arena.gladiators if int(x.id) == int(glad_id)), None)
@@ -74,14 +83,21 @@ class GameHandler:
 		print("game over")
 		if len(self.arena.gladiators) > 0:
 			self.arena.af.updateActivityFeed("WINNER", "%s wins!" % self.arena.gladiators[0].name)
+			self.payOut(self.arena.gladiators[0])
 			#betting stuff
 		else:
 			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
 		json_obj = pushInfoToJSON(self.arena)
 		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 		
-		
-		
+	
+	
+	def payOut(self, winner):
+		for bet in self.bets:
+			if (bet.gladiator == winner):
+				punter = User.query.filter_by(id=bet.punter_id).first()
+				punter.addMoney(bet.betReturn)
+				db.session.commit()
 		
 		
 		

@@ -1,21 +1,47 @@
-2020-06-13 19:35:05,081 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-13 19:41:36,836 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-13 20:42:29,712 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:07:07,985 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:14:54,036 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:16:14,121 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:16:49,216 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:20:20,204 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:25:30,897 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:28:44,263 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:29:55,710 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:31:26,722 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:32:36,911 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:39:20,845 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:41:37,268 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:46:34,390 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:50:17,893 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:50:40,307 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:51:34,599 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:53:17,441 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 11:55:41,265 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:02:22,635 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
+    game.sendBet(glad_id, bet_amount, current_user.id)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 54, in sendBet
+    self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id))
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 6, in __init__
+    numer = self.odds_info[0]
+AttributeError: 'Bet' object has no attribute 'odds_info'
+2020-06-14 17:03:12,811 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:03:29,123 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
+    game.sendBet(glad_id, bet_amount, current_user.id)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 54, in sendBet
+    self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id))
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 6, in __init__
+    numer = self.odds_info[0]
+AttributeError: 'Bet' object has no attribute 'odds_info'
+2020-06-14 17:04:02,086 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:05:27,368 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:06:42,396 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:08:58,018 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]

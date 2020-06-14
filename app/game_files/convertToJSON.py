@@ -25,6 +25,7 @@ def pushInfoToJSON(arena):
 			json_tile["occupant_names"] = [x.name for x in tile.occupants]
 			json_tile["corpse_initials"] = [x.initial for x in tile.corpses]	
 			json_tile["corpse_names"] = [x.name for x in tile.corpses]
+			json_tile["corpse_present"] = len(tile.corpses)>0
 			json_tile["hostile"] = tile.hostile
 			if tile.trap_present:
 				json_tile["trap"] = tile.trap.owner.name

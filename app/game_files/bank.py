@@ -2,14 +2,17 @@ from fractions import Fraction
 
 class Bet:
 	'''CONSTRUCTOR'''
-	def __init__(self, arena, gladiator, bet):
+	def __init__(self, arena, gladiator, bet, punter_id):
+		self.odds_info = arena.odds_on[gladiator]
+		numer = self.odds_info[0]
+		denom = self.odds_info[1]
+		
 		self.arena = arena
 		self.gladiator = gladiator
-		self.odds_info = arena.odds_on[gladiator]
-		self.numer = self.odds_info[0]
-		self.denom = self.odds_info[1]
-		self.bet = float(bet)
-		self.betReturn = calculateBetReturn(self.numer, self.denom, self.bet)
+		
+		self.bet = int(bet)
+		self.betReturn = calculateBetReturn(numer, denom, self.bet)
+		self.punter_id = punter_id
 
 def calculateOdds(gladiators):
 	if len(gladiators) == 1:
@@ -59,4 +62,4 @@ def traitOddsModifiers(glads_odds, attribute, modifier):
 	return new_glads_odds
 
 def calculateBetReturn(numer, denom, bet):
-	return (numer/(denom/bet)) + bet
+	return round((numer/(denom/bet))) + bet

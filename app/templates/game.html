@@ -10,9 +10,10 @@
 	<script type="text/javascript">
 		var game_code = '{{ game_code }}';
 		var json_arena = JSON.parse({{ json_arena|tojson }});
+		var user_id = '{{ current_user.id }}';
+		var cross_img_url = "{{ url_for('static', filename='cross.png') }}";
 	</script>
 	<script src="{{ url_for('static', filename='application.js') }}" + "?v=1"></script>
-	
 	
 	<div class="oog_flex_container">
 		<div id="glad_info"></div>
@@ -22,6 +23,7 @@
 	<div id="glad_extended"></div>
 	<p>{{ game_code }}</p>
 	<div id="add_glad_but"></div>
+	<div id="add_money_but"></div>
 	<div id="log">
 	
 </div>

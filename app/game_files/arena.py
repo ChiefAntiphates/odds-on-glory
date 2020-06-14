@@ -25,7 +25,6 @@ class Arena:
 		self.runners = []
 		self.dead_gladiators = []
 		self.odds_on = None
-		self.bets_made = []
 		self.active_battles = []
 		self.scorch_level = 0
 		self.edge_tiles = []
@@ -194,25 +193,6 @@ class Arena:
 		self.addRunner(Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)]))
 	'''				
 	
-	##Create bet -> REQUIRED TK STUFF ##########
-	def prepareBet(self, gladiator):
-		'''def placeBet(value, gladiator):
-			bet_win.destroy()
-			self.bets_made.append(Bet(self, gladiator, value))
-			
-		bet_win = tk.Toplevel(self.window)
-		bet_win.minsize(220,175)
-		tk.Label(bet_win, text="Bet how much on %s?" % gladiator.name).pack()
-		value_input = tk.Entry(bet_win)
-		value_input.pack()
-		tk.Button(bet_win, text="Place Bet",
-				command=lambda : placeBet(value_input.get(), gladiator)).pack()'''
-		##Default currently at betting 50 coins
-		self.bets_made.append(Bet(self, gladiator, 50))
-	########REQUIRED TK STUFF ##########			
-				
-	def betWon(self, bet):
-		print("You won %s" % bet.betReturn)
 		
 	
 	
