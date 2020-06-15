@@ -261,7 +261,7 @@ function initArenaGlads(arena_build){
 						+ glad_id
 						+ "', document.getElementById('bet_" 
 						+ glad_id 
-						+ "').value)\">Place Bet</button>");
+						+ "').value, '"+glad_name+"')\">Place Bet</button>");
 		
 		g_v_ext += "</div>";
 						
@@ -310,7 +310,7 @@ function initArenaGlads(arena_build){
 
 
 //Send gladiator bet //VALIDATE THAT USER HAS ENOUGH MONEY
-function sendGladBet(glad_id, bet){
+function sendGladBet(glad_id, bet, glad_name){
 	console.log("we hereeee")
 	document.getElementById('bet_'+glad_id).value = "";
 	$.ajax({
@@ -322,6 +322,7 @@ function sendGladBet(glad_id, bet){
 			money_display.innerHTML = "Money: " + data;
 		}
 	});
+	swal(bet+" gold bet placed on "+glad_name);
 }
 
 
