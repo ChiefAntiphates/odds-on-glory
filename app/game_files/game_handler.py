@@ -52,6 +52,9 @@ class GameHandler:
 	def sendBet(self, glad_id, bet_value, punter_id):
 		gladiator = next((x for x in self.arena.gladiators if int(x.id) == int(glad_id)), None)
 		self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id)) 
+		punter = User.query.filter_by(id=punter_id).first()
+		punter.spendMoney(int(bet_value))
+		db.session.commit()
 		
 	
 	def sendGift(self, glad_id, gift): ##And runner as param #Currently all gifts are traps
@@ -63,7 +66,7 @@ class GameHandler:
 	
 	def preGame(self):
 		#Spend x amount of time getting new gladiators
-		for _ in range(10):
+		for _ in range(5):
 			self.socketio.sleep(1)
 			
 			
@@ -89,6 +92,10 @@ class GameHandler:
 			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
 		json_obj = pushInfoToJSON(self.arena)
 		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
+		#Final emit to clean up
+		self.socketio.emit('arenafinish', {'json_obj': json_obj}, namespace=self.nspace)
+		del self #remove from memory
+
 		
 	
 	

@@ -20,7 +20,10 @@ login.login_view = 'login'
 mail = Mail(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
-socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
+socketio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
+
+
+
 
 
 if not app.debug:
@@ -47,6 +50,8 @@ if not app.debug:
 	app.logger.addHandler(file_handler)
 	app.logger.setLevel(logging.INFO)
 	app.logger.info('OddsOnGlory Game')
+	
+	
 
 
 

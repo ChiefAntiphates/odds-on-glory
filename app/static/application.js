@@ -10,10 +10,12 @@ $(document).ready(function(){
 	//Upon connecting build arena incase missed the update
 	initArenaGlads(json_arena)
 	
+	
 	if (user_id === "") {//not logged in
-		console.log("hieakd")
+		console.log("not logged in")
 	}
 	console.log(user_id);
+	
 	
 	//Add gladiator button - removed at start of betting phase
 	if (json_arena.active == false){
@@ -68,6 +70,21 @@ $(document).ready(function(){
 		var arena_initial_in = JSON.parse(msg.json_obj);
 		initArenaGlads(arena_initial_in)
 	});
+	
+	
+	//Socket response to game finishing //Remove buttons etc.
+	socket.on('arenafinish', function(msg) {
+		$.ajax({ //Here we will also sell or return the winning gladiator
+			type : "POST",
+			url : '/finish_game',
+			data: {game_code: game_code},
+			success: function(data) { //Update money on screen
+				var money_display = document.getElementById("money_display");
+				money_display.innerHTML = "Money: " + data;
+			}
+		});
+	});
+	
 	
 
     //Upon Socket arena update event
@@ -132,12 +149,22 @@ $(document).ready(function(){
 				document.getElementById("hidden_div_" + dead_gladiators[dead_glad].id).remove();
 			}
 		}
-		//Loop through dead gladiators and delete divs with their id
-		//Update gladiators
-		//var local_glad_list = arena.gladiators;
-		//if ((Object.keys(local_glad_list).length == Object.keys(global_glad_list).length) == false) {
-		//	global_glad_list = local_glad_list;
 		
+		//Update gladiators
+		var gladiators = arena.gladiators;
+		for (var gladiator in gladiators){
+			let gladiator_obj = arena.gladiators[gladiator];
+			let glad_name = gladiator_obj.name;
+			let glad_id = gladiator_obj.id;
+			
+			let health = document.getElementById("health_bar_"+glad_id);
+			health.style.width = (Number(gladiator_obj.health)*100)+"%";
+			
+			let odds = document.getElementById("odds_"+glad_id);
+			let status = document.getElementById("status_"+glad_id);
+			odds.innerHTML = gladiator_obj.odds;
+			status.innerHTML = "Status: " + gladiator_obj.state
+		}
 		
     });
 	
@@ -152,7 +179,9 @@ $(document).ready(function(){
 function initArenaGlads(arena_build){
 	var table = document.getElementById("arena_grid");
 	
+	///////////////////
 	//Build arena grid
+	//////////////////
 	var table_html ="";
 	for (var tile_row in arena_build.tile_rows) {
 		var tr = "<tr>";
@@ -167,49 +196,101 @@ function initArenaGlads(arena_build){
 		table_html += tr;
 	}
 	table.innerHTML = table_html;
+	//Add terrain extras that may have been placed throughout the game
+	for (var tile_row in arena_build.tile_rows) {
+		for (var tiles_parser in arena_build.tile_rows[tile_row].tiles){
+			var tile = arena_build.tile_rows[tile_row].tiles[tiles_parser]
+			var table_td = table.rows[tile_row].cells[tiles_parser]
+			if (tile.corpse_present === true){
+				table_td.style.backgroundImage = "url('"+cross_img_url+"')";
+			}
+			if  (tile.hostile === true) { //if hostile
+				table_td.style.backgroundColor = "#821111"; 
+				table_td.style.outline = null;
+			} else if (tile.trap !== false){
+				table_td.style.outline = "3px dashed purple";
+			}else{
+				table_td.style.outline = null;
+			}
+		}//endfor
+	}
 	
 	
 	
+	
+	///////////////////////
 	//Build gladiator view
+	//////////////////////
 	glad_view = document.getElementById("glad_info")
 	glad_ext_view =  document.getElementById("glad_extended")
 	var g_v_content = ""
 	var g_v_ext = ""
 	for (var gladiator in arena_build.gladiators) {
-		var gladiator_obj = arena_build.gladiators[gladiator];
-		var glad_name = gladiator_obj.name;
-		var glad_id = gladiator_obj.id;
+		let gladiator_obj = arena_build.gladiators[gladiator];
+		let glad_name = gladiator_obj.name;
+		let glad_id = gladiator_obj.id;
 		g_v_content += ("<div class='oog_click_div' id='" + glad_id
 						+ "' onclick=\"showGladInfo('hidden_div_" + glad_id +"');\">");
 		g_v_content += "<p>" + glad_name + "</p>";
 		g_v_content += "</div>";
 		
-		
+		//Extended (hidden) gladiator info
 		g_v_ext += "<div class='oog_hide oog_center' id='hidden_div_" + glad_id +"'>";
+		g_v_ext += "<div class='oog_flex_container'>";//Row 1
 		g_v_ext +="<p>" + glad_name +"</p>";
-		
-		//Button to send bet //Replace these with glad IDs
-		g_v_ext += "<input type=\"text\" id=\"bet_" + glad_id + "\">";
-		g_v_ext += ("<button onclick=\"sendGladBet('" 
-						+ glad_id
-						+ "', document.getElementById('bet_" 
-						+ glad_id 
-						+ "').value)\">Click</button>");
-						
-		//Button to send gift
+		g_v_ext +="<div class='health_box'><div class='health_bar' id='health_bar_"+glad_id +"'>";
+		g_v_ext += "</div></div>";
+		//Button to send gift // Current only trap
 		g_v_ext += ("<button onclick=\"sendGladGift('" 
 						+ glad_id
 						+ "', 'gift')\">Send Trap</button>");
+		g_v_ext += "</div>";
+		
+		g_v_ext += "<div class='oog_flex_container'>";//row 2
+		g_v_ext += "<p class='odds' id='odds_" + glad_id +"'>"+gladiator_obj.odds+"</p>";
+		g_v_ext += "<p id='status_" + glad_id +"'>Status: </p>";
+		g_v_ext += "<p id='speed_" + glad_id +"'>Spd: "+ gladiator_obj.speed +"</p>";
+		g_v_ext += "<p id='strength_" + glad_id +"'>Str: "+ gladiator_obj.strength +"</p>";
+		g_v_ext += "<p id='aggro_" + glad_id +"'>Agr: "+ gladiator_obj.aggro +"</p>";
+		g_v_ext += "</div>";
+		
+		g_v_ext += "<div class='oog_flex_container'>";//row 3
+		//Button to send bet //Replace these with glad IDs
+		g_v_ext += "<input size='5' type=\"text\" id=\"bet_" + glad_id + "\">";
+		g_v_ext += ("<button id=\"betbut_" + glad_id + "\" onclick=\"sendGladBet('" 
+						+ glad_id
+						+ "', document.getElementById('bet_" 
+						+ glad_id 
+						+ "').value)\">Place Bet</button>");
 		
 		g_v_ext += "</div>";
+						
+		g_v_ext += "</div>";//End hidden div
 		
 	}
 	glad_view.innerHTML = g_v_content;
 	glad_ext_view.innerHTML = g_v_ext;
 	
+	//Add event listeners
+	for (var gladiator in arena_build.gladiators) {
+		let gladiator_obj = arena_build.gladiators[gladiator];
+		let glad_name = gladiator_obj.name;
+		let glad_id = gladiator_obj.id;
+		
+		let input = document.getElementById("bet_" + glad_id);
+		input.addEventListener("keyup", function(event) {
+			if (event.keyCode === 13) {//enter key
+				document.getElementById("betbut_" + glad_id).click();
+			}
+		});
+		
+	}
 	
 	
+	
+	//////////////////////////////
 	//Catch up on activity feed
+	////////////////////////////////
 	var af_div = document.getElementById("activity_feed");
 	var init_activity_feed = arena_grid.activity_log;
 	if (init_activity_feed !== undefined) {
@@ -228,14 +309,18 @@ function initArenaGlads(arena_build){
 
 
 
-//Send gladiator bet
+//Send gladiator bet //VALIDATE THAT USER HAS ENOUGH MONEY
 function sendGladBet(glad_id, bet){
 	console.log("we hereeee")
 	document.getElementById('bet_'+glad_id).value = "";
 	$.ajax({
 		type : "POST",
 		url : '/send_glad_bet',
-		data: {glad_id: glad_id, bet_amount: bet, game_code: game_code}//This is how to send vars to flask
+		data: {glad_id: glad_id, bet_amount: bet, game_code: game_code},//This is how to send vars to flask
+		success: function(data) { //Update money on screen
+			var money_display = document.getElementById("money_display");
+			money_display.innerHTML = "Money: " + data;
+		}
 	});
 }
 

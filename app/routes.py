@@ -75,7 +75,7 @@ def send_glad_bet():
 	global active_games
 	game = active_games[game_code_key]
 	game.sendBet(glad_id, bet_amount, current_user.id)
-	return "done"
+	return (str(current_user.money))
 	
 
 @app.route('/send_glad_gift', methods=['POST'])
@@ -86,7 +86,15 @@ def send_glad_gift():
 	global active_games
 	game = active_games[game_code_key]
 	game.sendGift(glad_id, gift) ##gift var currently unused
-	return "done"
+	return "send glad gift"
+	
+	
+@app.route('/finish_game', methods=['POST'])
+def finish_game():
+	game_code_key = request.form.get('game_code')
+	global active_games
+	del active_games[game_code_key]
+	return (str(current_user.money))
 	
 	
 @app.route('/temp_add_money', methods=['POST'])
@@ -159,7 +167,7 @@ def register():
 		return redirect(url_for('index'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data, money=0)
+		user = User(username=form.username.data, email=form.email.data, money=150)
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()
