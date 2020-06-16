@@ -22,7 +22,7 @@ class Gladiator:
 	
 	
 	'''CONSTRUCTOR'''
-	def __init__(self, name, strength, aggro, speed, owner=None):
+	def __init__(self, name, strength, aggro, speed, ext_id=None):
 		self.name = name
 		
 		#Gladiator Base Attributes
@@ -36,6 +36,7 @@ class Gladiator:
 		self.aggro = self.base_aggro
 		self.health = 1.0
 		
+		self.ext_id = ext_id
 		self.alive = True
 		self.allies = []
 		self.state = Gladiator.MOVE
@@ -123,7 +124,11 @@ class Gladiator:
 				msg_choice[1] % {'winner': slayer.name, 'loser': self.name})
 		else:
 			self.arena.af.updateActivityFeed(msg_choice[0] % self.name, msg_choice[1] % self.name)
-			
+		
+		if (self.ext_id != None):
+			self.arena.socketio.emit('glad_killed', {'glad_id': self.ext_id}, namespace=self.arena.nspace)
+		
+		
 		
 	def detectNearbyGladiators(self):
 		success = False

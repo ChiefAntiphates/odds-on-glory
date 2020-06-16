@@ -43,7 +43,7 @@ class Gladiator(db.Model):
 		self.owner = new_owner
 	
 	def getJSON(self):
-		return {"name": self.name, "strength": self.strength,
+		return {"id": self.id, "name": self.name, "strength": self.strength,
 					"speed": self.speed, "aggro": self.aggro}
 		
 		

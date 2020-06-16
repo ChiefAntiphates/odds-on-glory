@@ -18,15 +18,31 @@ $(document).ready(function(){
 	
 	
 	//Add gladiator button - removed at start of betting phase
-	if (json_arena.active == false){
-		var button = document.createElement("button");
+	if ((json_arena.active == false) && (Object.keys(gladiator_options).length > 0)){
+		
+		//gladiator_options | CURRENTLY RELIES ON UNIQUE NAME
+		let selbut = "";
+		selbut += "<select id='glad_select'>";
+		var no_glads = Object.keys(gladiator_options).length;
+		for (i=0; i<no_glads; i++){
+			selbut += "<option value='"+gladiator_options[i].id+"'>"+gladiator_options[i].name+"</option>";
+		}
+		selbut += "</select>";
+		
+		document.getElementById("add_glad_but").innerHTML = selbut;
+		
+		
+		let button = document.createElement("button");
 		button.innerHTML = "Add Gladiator";
 		document.getElementById("add_glad_but").appendChild(button)
 		button.addEventListener("click", function() {
+			let sel = document.getElementById("glad_select")
+			let glad = gladiator_options[sel.selectedIndex];
+			console.log(glad);
 			$.ajax({
 				type : "POST",
 				url : '/add_gladiator_to_arena',
-				data: {gladiator: "printing glad", game_code: game_code}//This is how to send vars to flask
+				data: {gladiator: JSON.stringify(glad), game_code: game_code}//This is how to send vars to flask
 			});
 		});
 	}
@@ -99,7 +115,7 @@ $(document).ready(function(){
 			for (var tiles_parser in arena.tile_rows[tile_row].tiles){
 				var tile = arena.tile_rows[tile_row].tiles[tiles_parser]
 				var table_td = table.rows[tile_row].cells[tiles_parser]
-				table_td.innerHTML = tile.occupant_initials.join("\n");
+				table_td.innerHTML = tile.occupant_initials.join("<br>");
 				if (tile.corpse_present === true){
 					table_td.style.backgroundImage = "url('"+cross_img_url+"')";
 				}
@@ -168,7 +184,21 @@ $(document).ready(function(){
 		
     });
 	
-});
+	
+	///////////////////////////////////////////
+	//Socket response to gladiator being killed
+	///////////////////////////////////////////
+	socket.on('glad_killed', function(msg) {
+		console.log(msg.glad_id);
+		let glad_id = msg.glad_id;
+		$.ajax({ //Here we will also sell or return the winning gladiator
+			type : "POST",
+			url : '/remove_glad',
+			data: {glad_id: glad_id}
+		});
+	});
+	
+});///End DOC ready
 
 
 

@@ -1,3 +1,10 @@
+body {
+	background-color: #c0d2f0;
+}
+
+. arena_grid td { 
+	white-space:pre;
+}
 
 .oog_td_style {
 	border: 2px solid black;

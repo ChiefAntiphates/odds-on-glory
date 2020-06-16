@@ -11,7 +11,7 @@ from app.game_files.convertToJSON import pushInfoToJSON
 from app import app, db, socketio
 from app.models import User, Post, Tournament
 
-
+GLAD_ADD_TIME = 10
 BETTING_PHASE_TIME = 2
 
 
@@ -25,6 +25,7 @@ class GameHandler:
 		self.nspace = nspace
 		self.game_id = game_id
 		self.arena = Arena(8, 8, socketio, nspace) ##add size params
+		self.capacity = 10 #How many gladiators you want
 		self.bets = []
 	
 		##Workflow should be as follows
@@ -41,12 +42,10 @@ class GameHandler:
 		return pushInfoToJSON(self.arena)
 		
 		
-	def addGladiator(self):
-	#def addGladiator(gladiator stats):
-		self.arena.getGladiator(Gladiator(r.choice(nameslist), r.randrange(99), 
-						r.randrange(30,99), r.randrange(99)))
-		##Add remaining if 30 seconds left and remaining places
-		##Once max gladiators added calculate the odds
+	def addGladiator(self, name, strength, aggro, speed, ext_id=None):
+		if (len(self.arena.gladiators) < self.capacity):
+			self.arena.getGladiator(Gladiator(name, strength, aggro, speed, ext_id))
+		#else emit an error message!!!
 	
 	
 	def sendBet(self, glad_id, bet_value, punter_id):
@@ -64,20 +63,35 @@ class GameHandler:
 		self.arena.addRunner(runner)
 	
 	
+	
+	##Allowing for adding gladiators
 	def preGame(self):
 		#Spend x amount of time getting new gladiators
-		for _ in range(5):
-			self.socketio.sleep(1)
+		for i in range(GLAD_ADD_TIME):
+			
+			if (i == (GLAD_ADD_TIME-1)):
+			#Add gladiators into empty spaces	
+				while (len(self.arena.gladiators) < self.capacity):
+					self.addGladiator(r.choice(nameslist), r.randrange(99),
+										r.randrange(30,99), r.randrange(99))
 			
 			
 			json_obj = pushInfoToJSON(self.arena)
 			self.socketio.emit('gladiatoradding', {'json_obj': json_obj}, namespace=self.nspace)
-			#if len(self.arena.gladiators) == glad_max: break
+			if (len(self.arena.gladiators) >= self.capacity):
+				break
+			self.socketio.sleep(1)	
+			
+			
 		
+		#Start games	
 		self.arena.active = True
 		self.socketio.emit('arenainitial', {'json_obj': json_obj}, namespace=self.nspace)	
 		self.socketio.sleep(BETTING_PHASE_TIME)
 		self.startGames()
+	
+	
+	
 	
 	def startGames(self):
 		while len(self.arena.gladiators) > 1:

@@ -1,108 +1,119 @@
-2020-06-14 15:01:41,028 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:01:44,953 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:01:50,876 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:02:22,997 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:02:26,173 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:03:25,822 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:03:28,831 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:05:11,517 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:06:41,213 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:06:43,434 ERROR: Exception on /user/Harry [GET] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-16 10:33:34,548 ERROR: Exception on /user/test [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 178, in user
-    return render_template('user.html', user=user, posts=posts.items, form=form,
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 137, in render_template
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 205, in user
+    return render_template('user.html', user=user, glads=glads.items,
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 137, in render_template
     return _render(
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 120, in _render
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 120, in _render
     rv = template.render(context)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 1090, in render
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 1090, in render
     self.environment.handle_exception()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 832, in handle_exception
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 832, in handle_exception
     reraise(*rewrite_traceback_stack(source=source))
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\jinja2\_compat.py", line 28, in reraise
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\_compat.py", line 28, in reraise
     raise value.with_traceback(tb)
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 1, in top-level template code
     {% extends 'bootstrap/base.html' %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
     {% block doc -%}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block "doc"
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block "doc"
     {%- block html %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block "html"
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block "html"
     {% block body -%}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block "body"
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block "body"
     {% block content -%}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 47, in block "content"
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 49, in block "content"
     {% block app_content %}{% endblock %}
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 14, in block "app_content"
-    <!--<p>{{ user.get_friends()|length }} friends</p>-->
-jinja2.exceptions.UndefinedError: 'app.models.User object' has no attribute 'get_friends'
-2020-06-14 15:07:06,629 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:19:32,623 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:27:04,033 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:28:25,430 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:32:33,351 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:34:59,590 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:37:26,288 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:38:37,962 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:45:23,160 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 15:47:25,708 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 17:00:08,250 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 17:00:44,310 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
-2020-06-14 17:01:01,776 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 41, in block "app_content"
+    {% include '_post.html' %}
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\_post.html", line 4, in top-level template code
+    <a href="{{ url_for('user', username=post.author.username) }}">
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 471, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'post' is undefined
+2020-06-16 10:34:08,189 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+2020-06-16 10:34:09,934 ERROR: Exception on /user/test [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
-    game.sendBet(glad_id, bet_amount, current_user.id)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 54, in sendBet
-    self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id))
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 6, in __init__
-    numer = self.odds_info[0]
-AttributeError: 'Bet' object has no attribute 'odds_info'
-2020-06-14 17:01:05,546 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 205, in user
+    return render_template('user.html', user=user, glads=glads.items,
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 137, in render_template
+    return _render(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 120, in _render
+    rv = template.render(context)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 1090, in render
+    self.environment.handle_exception()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 832, in handle_exception
+    reraise(*rewrite_traceback_stack(source=source))
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\_compat.py", line 28, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block "doc"
+    {%- block html %}
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block "html"
+    {% block body -%}
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block "body"
+    {% block content -%}
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\base.html", line 49, in block "content"
+    {% block app_content %}{% endblock %}
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\user.html", line 41, in block "app_content"
+    {% include '_glad.html' %}
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\_glad.html", line 5, in top-level template code
+    <img src="{{ post.author.avatar(36) }}"></td>
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 471, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'post' is undefined
+2020-06-16 10:34:43,669 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+2020-06-16 10:35:50,838 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+2020-06-16 10:35:55,584 ERROR: Exception on /temp_add_glad [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
-    game.sendBet(glad_id, bet_amount, current_user.id)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 54, in sendBet
-    self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id))
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 6, in __init__
-    numer = self.odds_info[0]
-AttributeError: 'Bet' object has no attribute 'odds_info'
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 117, in temp_add_glad
+    return redirect(url_for('user', current_user.username))
+TypeError: url_for() takes 1 positional argument but 2 were given
+2020-06-16 10:36:52,576 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]

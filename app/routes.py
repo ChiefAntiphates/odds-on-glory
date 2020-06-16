@@ -60,15 +60,29 @@ def game(game_id):
 								glads=current_user.getGlads())
 
 
+##Delete a gladiator once dead
+@app.route('/remove_glad', methods=['POST'])
+def remove_glad():
+	glad_id = request.form.get('glad_id')
+	Gladiator.query.filter_by(id=glad_id).delete()
+	db.session.commit()
+	print("deleted")
+	return "done"
+	
+	
+	
+	
 @app.route('/add_gladiator_to_arena', methods=['POST'])
 def add_gladiator_to_arena():
-	print(request.form.get('gladiator'))##This is how to get data from JS
+	json_glad = json.loads(request.form.get('gladiator'))
+	glad = Gladiator.query.filter_by(id=json_glad["id"]).first()
+	print(glad)#set gladiator object as "busy" or "in arena"
 	game_code_key = request.form.get('game_code')
 	global active_games
 	game = active_games[game_code_key]
-	game.addGladiator()
+	game.addGladiator(glad.name, glad.strength, glad.aggro,
+							glad.speed, glad.id)
 	return "done"
-	
 
 
 @app.route('/send_glad_bet', methods=['POST'])
