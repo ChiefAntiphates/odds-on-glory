@@ -57,26 +57,17 @@ def game(game_id):
 	json_arena = game_obj.getJSON()
 	return render_template('game.html', game_code=game.code, json_arena=json_arena,
 								current_user=current_user, 
-								glads=current_user.getGlads())
+								glads=current_user.getAvailGlads())
 
 
-##Delete a gladiator once dead
-@app.route('/remove_glad', methods=['POST'])
-def remove_glad():
-	glad_id = request.form.get('glad_id')
-	Gladiator.query.filter_by(id=glad_id).delete()
-	db.session.commit()
-	print("deleted")
-	return "done"
-	
-	
-	
 	
 @app.route('/add_gladiator_to_arena', methods=['POST'])
 def add_gladiator_to_arena():
 	json_glad = json.loads(request.form.get('gladiator'))
 	glad = Gladiator.query.filter_by(id=json_glad["id"]).first()
 	print(glad)#set gladiator object as "busy" or "in arena"
+	glad.available = False
+	db.session.commit()
 	game_code_key = request.form.get('game_code')
 	global active_games
 	game = active_games[game_code_key]
@@ -112,8 +103,31 @@ def finish_game():
 	game_code_key = request.form.get('game_code')
 	global active_games
 	del active_games[game_code_key]
+	win_id = request.form.get('winner')
+	print(win_id)
+	if (win_id != "None"):
+		gladiator = Gladiator.query.filter_by(id=win_id).first()
+		gladiator.available = True
+		win_owner = gladiator.owner
+		win_owner.addMoney(500)
+		print("this is true")
+		db.session.commit()
+		print(gladiator)
+	else:
+		print("non player gladiator wins")
 	return (str(current_user.money))
 	
+
+
+##Delete a gladiator once dead
+@app.route('/remove_glad', methods=['POST'])
+def remove_glad():
+	glad_id = request.form.get('glad_id')
+	Gladiator.query.filter_by(id=glad_id).delete()
+	db.session.commit()
+	print("deleted")
+	return "done"
+
 	
 @app.route('/temp_add_money', methods=['POST'])
 def temp_add_money():
@@ -127,6 +141,7 @@ def temp_add_glad():
 							strength=r.randrange(99),
 							speed=r.randrange(99),
 							aggro=r.randrange(30,99),
+							available = True,
 							owner=current_user)
 	db.session.add(gladiator)
 	db.session.commit()

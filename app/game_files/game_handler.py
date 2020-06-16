@@ -11,7 +11,7 @@ from app.game_files.convertToJSON import pushInfoToJSON
 from app import app, db, socketio
 from app.models import User, Post, Tournament
 
-GLAD_ADD_TIME = 10
+GLAD_ADD_TIME = 18
 BETTING_PHASE_TIME = 2
 
 
@@ -24,8 +24,8 @@ class GameHandler:
 		self.socketio = socketio
 		self.nspace = nspace
 		self.game_id = game_id
-		self.arena = Arena(8, 8, socketio, nspace) ##add size params
-		self.capacity = 10 #How many gladiators you want
+		self.arena = Arena(4, 4, socketio, nspace) ##add size params
+		self.capacity = 4 #How many gladiators you want
 		self.bets = []
 	
 		##Workflow should be as follows
@@ -107,7 +107,11 @@ class GameHandler:
 		json_obj = pushInfoToJSON(self.arena)
 		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 		#Final emit to clean up
-		self.socketio.emit('arenafinish', {'json_obj': json_obj}, namespace=self.nspace)
+		win_id = self.arena.gladiators[0].ext_id
+		if (self.arena.gladiators[0].ext_id == None):
+			win_id = "None"
+		
+		self.socketio.emit('arenafinish', {'winner': win_id}, namespace=self.nspace)
 		del self #remove from memory
 
 		

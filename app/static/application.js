@@ -6,7 +6,8 @@ $(document).ready(function(){
 	console.log(game_code)
     //connect to the socket server.
     var socket = io.connect('http://' + document.domain + ':' + location.port + game_code);
-    console.log('{{ game_code|safe }}');
+    var arena_active = json_arena.active;
+	console.log('{{ game_code|safe }}');
 	//Upon connecting build arena incase missed the update
 	initArenaGlads(json_arena)
 	
@@ -18,7 +19,7 @@ $(document).ready(function(){
 	
 	
 	//Add gladiator button - removed at start of betting phase
-	if ((json_arena.active == false) && (Object.keys(gladiator_options).length > 0)){
+	if ((arena_active == false) && (Object.keys(gladiator_options).length > 0)){
 		
 		//gladiator_options | CURRENTLY RELIES ON UNIQUE NAME
 		let selbut = "";
@@ -37,13 +38,53 @@ $(document).ready(function(){
 		document.getElementById("add_glad_but").appendChild(button)
 		button.addEventListener("click", function() {
 			let sel = document.getElementById("glad_select")
-			let glad = gladiator_options[sel.selectedIndex];
+			let sel_glad_id = sel.options[sel.selectedIndex].value;
+			//let glad = gladiator_options[sel.selectedIndex];
+			console.log(gladiator_options);
+			
+			for (gladiator in gladiator_options){
+				if (Number(gladiator_options[gladiator].id) === Number(sel_glad_id)){
+					console.log("yay");
+					var glad = gladiator_options[gladiator];
+					break;
+				}
+			}
 			console.log(glad);
-			$.ajax({
-				type : "POST",
-				url : '/add_gladiator_to_arena',
-				data: {gladiator: JSON.stringify(glad), game_code: game_code}//This is how to send vars to flask
+			swal({
+				title: "Submit " + glad.name +" to Arena?",
+				text: "If they die they're dead forever!",
+				icon: "warning",
+				buttons: [
+					'No, perhaps not...',
+					'Yes, let them prove themselves!'
+				]
+			})
+			.then((isConfirm) => {
+				if (isConfirm) {
+					if ((arena_active == false)){
+						console.log(glad);
+						$.ajax({
+							type : "POST",
+							url : '/add_gladiator_to_arena',
+							data: {gladiator: JSON.stringify(glad), game_code: game_code}//This is how to send vars to flask
+						});
+						swal({
+							title: "Gladiator Entered",
+							text: glad.name+" has entered the arena...",
+							icon: "success",
+							timer: 3000
+						});
+						sel.remove(sel.selectedIndex);
+						sel.selectedIndex = 0;
+					}else {
+						console.log("outta time!!");
+					}
+				} else {
+					console.log("Gladiator not entered");
+				}
 			});
+			
+			
 		});
 	}
 	
@@ -81,6 +122,7 @@ $(document).ready(function(){
 	
 	//Socket response to initialise the betting phase
 	socket.on('arenainitial', function(msg) {
+		arena_active = true;
 		elem = document.getElementById("add_glad_but")
 		elem.parentNode.removeChild(elem);//Remove add gladiator button
 		var arena_initial_in = JSON.parse(msg.json_obj);
@@ -93,7 +135,7 @@ $(document).ready(function(){
 		$.ajax({ //Here we will also sell or return the winning gladiator
 			type : "POST",
 			url : '/finish_game',
-			data: {game_code: game_code},
+			data: {game_code: game_code, winner: msg.winner},//Submit the final gladiator
 			success: function(data) { //Update money on screen
 				var money_display = document.getElementById("money_display");
 				money_display.innerHTML = "Money: " + data;
@@ -352,7 +394,12 @@ function sendGladBet(glad_id, bet, glad_name){
 			money_display.innerHTML = "Money: " + data;
 		}
 	});
-	swal(bet+" gold bet placed on "+glad_name);
+	swal({
+		title: "Bet Placed",
+		text: bet+" gold placed on "+glad_name,
+		icon: "success",
+		timer: 3000
+	});
 }
 
 

@@ -32,7 +32,7 @@ class Gladiator(db.Model):
 	strength = db.Column(db.Integer, index=True)
 	speed = db.Column(db.Integer, index=True)
 	aggro = db.Column(db.Integer, index=True)
-	##Add 'in arena' attribute
+	available = db.Column(db.Boolean)#False if in Arena
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	
 	def __repr__(self):
@@ -79,10 +79,11 @@ class User(UserMixin, db.Model):
 	def spendMoney(self, value):
 		self.money = self.money - value
 		
-	def getGlads(self):
+	def getAvailGlads(self):
 		json_obj = []
 		for glad in self.gladiators:
-			json_obj.append(glad.getJSON())
+			if glad.available:
+				json_obj.append(glad.getJSON())
 		return json.dumps(json_obj)
 		
 	
