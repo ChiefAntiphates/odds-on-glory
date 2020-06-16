@@ -1,4 +1,4 @@
-2020-06-13 17:05:44,866 ERROR: Exception on /send_glad_gift [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-14 17:02:22,635 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,14 +12,15 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 88, in send_glad_gift
-    game.sendGift(glad_id, gift) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 51, in sendGift
-    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 401, in __init__
-    self.name = self.target_gladiator.name + "'s Runner: " + self.name
-AttributeError: 'NoneType' object has no attribute 'name'
-2020-06-13 17:05:48,254 ERROR: Exception on /send_glad_gift [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
+    game.sendBet(glad_id, bet_amount, current_user.id)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 54, in sendBet
+    self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id))
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 6, in __init__
+    numer = self.odds_info[0]
+AttributeError: 'Bet' object has no attribute 'odds_info'
+2020-06-14 17:03:12,811 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:03:29,123 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -33,14 +34,21 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 88, in send_glad_gift
-    game.sendGift(glad_id, gift) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 51, in sendGift
-    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 401, in __init__
-    self.name = self.target_gladiator.name + "'s Runner: " + self.name
-AttributeError: 'NoneType' object has no attribute 'name'
-2020-06-13 17:05:48,718 ERROR: Exception on /send_glad_gift [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
+    game.sendBet(glad_id, bet_amount, current_user.id)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 54, in sendBet
+    self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id))
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 6, in __init__
+    numer = self.odds_info[0]
+AttributeError: 'Bet' object has no attribute 'odds_info'
+2020-06-14 17:04:02,086 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:05:27,368 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:06:42,396 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 17:08:58,018 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 18:50:56,753 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-14 18:53:26,473 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-15 10:31:35,357 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-15 10:32:05,843 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -54,14 +62,13 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 88, in send_glad_gift
-    game.sendGift(glad_id, gift) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 51, in sendGift
-    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 401, in __init__
-    self.name = self.target_gladiator.name + "'s Runner: " + self.name
-AttributeError: 'NoneType' object has no attribute 'name'
-2020-06-13 17:05:48,876 ERROR: Exception on /send_glad_gift [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
+    game.sendBet(glad_id, bet_amount, current_user.id)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 55, in sendBet
+    punter.spendMoney(bet_value)
+NameError: name 'punter' is not defined
+2020-06-15 10:34:06,358 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-15 10:34:27,325 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -75,14 +82,13 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 88, in send_glad_gift
-    game.sendGift(glad_id, gift) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 51, in sendGift
-    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 401, in __init__
-    self.name = self.target_gladiator.name + "'s Runner: " + self.name
-AttributeError: 'NoneType' object has no attribute 'name'
-2020-06-13 17:05:48,907 ERROR: Exception on /send_glad_gift [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
+    game.sendBet(glad_id, bet_amount, current_user.id)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 55, in sendBet
+    punter = User.query.filter_by(id=bet.punter_id).first()
+NameError: name 'bet' is not defined
+2020-06-15 10:37:34,197 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:49]
+2020-06-15 10:38:12,240 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -96,10 +102,15 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 88, in send_glad_gift
-    game.sendGift(glad_id, gift) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 51, in sendGift
-    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 401, in __init__
-    self.name = self.target_gladiator.name + "'s Runner: " + self.name
-AttributeError: 'NoneType' object has no attribute 'name'
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 77, in send_glad_bet
+    game.sendBet(glad_id, bet_amount, current_user.id)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 56, in sendBet
+    punter.spendMoney(bet_value)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\models.py", line 54, in spendMoney
+    self.money = self.money - value
+TypeError: unsupported operand type(s) for -: 'int' and 'str'
+2020-06-15 10:40:55,742 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-15 10:55:26,295 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:54]
+2020-06-15 10:55:50,676 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:54]
+2020-06-15 10:57:58,664 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:53]
+2020-06-15 11:10:19,016 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:53]

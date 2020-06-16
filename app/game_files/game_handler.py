@@ -4,7 +4,7 @@ from flask_socketio import SocketIO, emit
 from fractions import Fraction
 from app.game_files.gladiator import *
 from app.game_files.arena import *
-from app.game_files.nameslist import *
+from app.game_files.nameslist import nameslist
 from app.game_files.bank import *
 from app.game_files.convertToJSON import pushInfoToJSON
 

@@ -1,6 +1,7 @@
 from datetime import datetime
 from time import time
 import jwt
+import json
 from app import db, login, app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -21,8 +22,32 @@ class Tournament(db.Model):
 		
 	def set_code(self):
 		self.code = ('/gsockname'+str(self.id))
+
+
+
+
+class Gladiator(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(64), index=True)
+	strength = db.Column(db.Integer, index=True)
+	speed = db.Column(db.Integer, index=True)
+	aggro = db.Column(db.Integer, index=True)
+	##Add 'in arena' attribute
+	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	
+	def __repr__(self):
+		return '<Gladiator {}>'.format(self.name)
 		
+	def setOwner(self, new_id):
+		new_owner = User.query.filter_by(user_id=new_id)
+		self.owner = new_owner
+	
+	def getJSON(self):
+		return {"name": self.name, "strength": self.strength,
+					"speed": self.speed, "aggro": self.aggro}
+		
+		
+
 
 followers = db.Table('followers',
 			db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -39,6 +64,7 @@ class User(UserMixin, db.Model):
 	money = db.Column(db.Integer, index=True)
 	
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
+	gladiators = db.relationship('Gladiator', backref='owner', lazy='dynamic')
 	hosted_games = db.relationship('Tournament', backref='host', lazy='dynamic')
 	followed = db.relationship(
 		'User', secondary=followers,
@@ -52,6 +78,12 @@ class User(UserMixin, db.Model):
 		
 	def spendMoney(self, value):
 		self.money = self.money - value
+		
+	def getGlads(self):
+		json_obj = []
+		for glad in self.gladiators:
+			json_obj.append(glad.getJSON())
+		return json.dumps(json_obj)
 		
 	
 	def __repr__(self):

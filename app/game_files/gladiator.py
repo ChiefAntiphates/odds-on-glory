@@ -22,7 +22,7 @@ class Gladiator:
 	
 	
 	'''CONSTRUCTOR'''
-	def __init__(self, name, strength, aggro, speed):
+	def __init__(self, name, strength, aggro, speed, owner=None):
 		self.name = name
 		
 		#Gladiator Base Attributes

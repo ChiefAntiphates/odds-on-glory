@@ -6,7 +6,7 @@ $(document).ready(function(){
 	console.log(game_code)
     //connect to the socket server.
     var socket = io.connect('http://' + document.domain + ':' + location.port + game_code);
-    
+    console.log('{{ game_code|safe }}');
 	//Upon connecting build arena incase missed the update
 	initArenaGlads(json_arena)
 	

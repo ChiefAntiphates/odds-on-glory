@@ -13,6 +13,10 @@
 		var json_arena = JSON.parse({{ json_arena|tojson }});
 		var user_id = '{{ current_user.id }}';
 		var cross_img_url = "{{ url_for('static', filename='cross.png') }}";
+		var gladiator_options = JSON.parse({{ glads|tojson }});
+		console.log(gladiator_options);
+		console.log(gladiator_options[0].name);
+		
 	</script>
 	<script src="{{ url_for('static', filename='application.js') }}" + "?v=1"></script>
 	

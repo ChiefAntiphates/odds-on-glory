@@ -1,0 +1,18 @@
+<table class="table table-hover>
+	<tr>
+		<td width="70px">
+			<a href="{{ url_for('user', username=glad.owner.username) }}">
+				<img src="{{ glad.owner.avatar(36) }}"></td>
+			</a>
+		</td>
+		<td>
+			<a href="{{ url_for('user', username=glad.owner.username) }}">
+				{{ glad.owner.username }}
+			</a>
+			{{ glad.name }}
+			{{ glad.strength }}
+			{{ glad.speed }}
+			{{ glad.aggro }}
+		</td>
+	</tr>
+</table>

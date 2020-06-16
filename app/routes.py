@@ -2,11 +2,14 @@ from flask import render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
+import random as r
+import json
 from flask_socketio import SocketIO, emit
 from threading import Thread
 from app import app, db, socketio
-from app.models import User, Post, Tournament
+from app.models import User, Post, Tournament, Gladiator
 from app.email import send_password_reset_email
+from app.game_files.nameslist import nameslist
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, \
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
 						
@@ -53,7 +56,8 @@ def game(game_id):
 	game_obj = active_games[game.code]
 	json_arena = game_obj.getJSON()
 	return render_template('game.html', game_code=game.code, json_arena=json_arena,
-														current_user=current_user)
+								current_user=current_user, 
+								glads=current_user.getGlads())
 
 
 @app.route('/add_gladiator_to_arena', methods=['POST'])
@@ -102,6 +106,19 @@ def temp_add_money():
 	current_user.addMoney(500)
 	db.session.commit()
 	return "done"
+	
+@app.route('/temp_add_glad', methods=['GET', 'POST'])
+def temp_add_glad():
+	gladiator = Gladiator(name=r.choice(nameslist),
+							strength=r.randrange(99),
+							speed=r.randrange(99),
+							aggro=r.randrange(30,99),
+							owner=current_user)
+	db.session.add(gladiator)
+	db.session.commit()
+	return redirect(url_for('user', username=current_user.username))
+	
+	
 	
 	
 
@@ -167,7 +184,7 @@ def register():
 		return redirect(url_for('index'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data, money=150)
+		user = User(username=form.username.data, email=form.email.data, money=500)
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()
@@ -181,15 +198,14 @@ def register():
 def user(username):
 	user = User.query.filter_by(username=username).first_or_404()
 	page = request.args.get('page', 1, type=int)
-	posts = user.posts.order_by(Post.timestamp.desc()).paginate(
-		page, app.config['POSTS_PER_PAGE'], False)
-	next_url = url_for('user', username=user.username, page=posts.next_num) \
-												if posts.has_next else None
-	prev_url = url_for('user', username=user.username, page=posts.prev_num) \
-												if posts.has_prev else None
+	glads = user.gladiators.paginate(page, app.config['POSTS_PER_PAGE'], False)
+	next_url = url_for('user', username=user.username, page=glads.next_num) \
+												if glads.has_next else None
+	prev_url = url_for('user', username=user.username, page=glads.prev_num) \
+												if glads.has_prev else None
 	form = EmptyForm()
-	return render_template('user.html', user=user, posts=posts.items, form=form,
-									next_url=next_url, prev_url=prev_url)
+	return render_template('user.html', user=user, glads=glads.items, 
+										form=form, next_url=next_url, prev_url=prev_url)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
