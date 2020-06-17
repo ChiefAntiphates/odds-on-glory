@@ -32,7 +32,6 @@ $(document).ready(function(){
 		
 		document.getElementById("add_glad_but").innerHTML = selbut;
 		
-		
 		let button = document.createElement("button");
 		button.innerHTML = "Add Gladiator";
 		document.getElementById("add_glad_but").appendChild(button)
@@ -83,23 +82,11 @@ $(document).ready(function(){
 					console.log("Gladiator not entered");
 				}
 			});
-			
-			
 		});
-	}
+	}//END add gladiator button
 	
 	
-	//Add gladiator button - removed at start of betting phase
-	
-	var button = document.createElement("button");
-	button.innerHTML = "Add money";
-	document.getElementById("add_money_but").appendChild(button)
-	button.addEventListener("click", function() {
-		$.ajax({
-			type : "POST",
-			url : '/temp_add_money'
-		});
-	});
+
 	
 	
 	
@@ -328,7 +315,7 @@ function initArenaGlads(arena_build){
 		
 		g_v_ext += "<div class='oog_flex_container'>";//row 3
 		//Button to send bet //Replace these with glad IDs
-		g_v_ext += "<input size='5' type=\"text\" id=\"bet_" + glad_id + "\">";
+		g_v_ext += "<input size='5' type=\"number\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" id=\"bet_" + glad_id + "\">";
 		g_v_ext += ("<button id=\"betbut_" + glad_id + "\" onclick=\"sendGladBet('" 
 						+ glad_id
 						+ "', document.getElementById('bet_" 
@@ -383,23 +370,25 @@ function initArenaGlads(arena_build){
 
 //Send gladiator bet //VALIDATE THAT USER HAS ENOUGH MONEY
 function sendGladBet(glad_id, bet, glad_name){
-	console.log("we hereeee")
+	let can_buy = enoughMoney(Number(bet));
 	document.getElementById('bet_'+glad_id).value = "";
-	$.ajax({
-		type : "POST",
-		url : '/send_glad_bet',
-		data: {glad_id: glad_id, bet_amount: bet, game_code: game_code},//This is how to send vars to flask
-		success: function(data) { //Update money on screen
-			var money_display = document.getElementById("money_display");
-			money_display.innerHTML = "Money: " + data;
-		}
-	});
-	swal({
-		title: "Bet Placed",
-		text: bet+" gold placed on "+glad_name,
-		icon: "success",
-		timer: 3000
-	});
+	if (can_buy === true && Number(bet)>0) {
+		$.ajax({
+			type : "POST",
+			url : '/send_glad_bet',
+			data: {glad_id: glad_id, bet_amount: bet, game_code: game_code},//This is how to send vars to flask
+			success: function(data) { //Update money on screen
+				var money_display = document.getElementById("money_display");
+				money_display.innerHTML = "Money: " + data;
+			}
+		});
+		swal({
+			title: "Bet Placed",
+			text: bet+" gold placed on "+glad_name,
+			icon: "success",
+			timer: 3000
+		});
+	}
 }
 
 
@@ -423,6 +412,22 @@ function showGladInfo(div_id){
 	var x = document.getElementById(div_id);
 	x.style.display = 'block';
 }
+
+
+//Validate that you have enough cash
+function enoughMoney(cost) {
+	let user_money = Number(money_display.innerHTML.slice(7))
+	if (user_money < cost) {
+		console.log("put a swal here saying not enough cash");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+
+
+
 
 
 

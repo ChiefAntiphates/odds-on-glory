@@ -114,7 +114,6 @@ def finish_game():
 		gladiator.available = True
 		win_owner = gladiator.owner
 		win_owner.addMoney(500)
-		print("this is true")
 		db.session.commit()
 		print(gladiator)
 	else:
@@ -133,11 +132,7 @@ def remove_glad():
 	return "done"
 
 	
-@app.route('/temp_add_money', methods=['POST'])
-def temp_add_money():
-	current_user.addMoney(500)
-	db.session.commit()
-	return "done"
+
 	
 @app.route('/buy_gladiator', methods=['GET', 'POST'])
 def buy_gladiator():

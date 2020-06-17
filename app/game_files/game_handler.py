@@ -11,8 +11,8 @@ from app.game_files.convertToJSON import pushInfoToJSON
 from app import app, db, socketio
 from app.models import User, Post, Tournament
 
-GLAD_ADD_TIME = 18
-BETTING_PHASE_TIME = 2
+GLAD_ADD_TIME = 10
+BETTING_PHASE_TIME = 5
 
 
 #import tkinter as tk
