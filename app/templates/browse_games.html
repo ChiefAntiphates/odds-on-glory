@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block app_content %}	
+
+<h1>Ongoing games</h1>
+	
+	
+	{% for game in games %}
+	<div class="glad_sale">
+		<a href="{{ url_for('game', game_id=game.id) }}">Game ref: {{ game.id }}</a>
+		<br>
+	</div>
+	{% endfor %}
+
+	
+	<nav aria-label="pager">
+		<ul class="pager">
+			<li class="previous{% if not prev_url %} disabled{% endif %}">
+				<a href="{{ prev_url or '#' }}">
+					<span aria-hidden="true">&larr;</span> Newer posts
+				</a>
+			</li>
+			<li class="next{% if not next_url %} disabled{% endif %}">
+				<a href="{{ next_url or '#' }}">
+					Older posts <span aria-hidden="true">&rarr;</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+
+{% endblock %}

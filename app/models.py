@@ -16,6 +16,7 @@ class Tournament(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	code = db.Column(db.String(120), index=True, unique=True)
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	#Introduce "state" idea
 
 	def __repr__(self):
 		return '<Game {}>'.format(self.id)

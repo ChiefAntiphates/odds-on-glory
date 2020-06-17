@@ -200,6 +200,19 @@ def marketplace():
 											if glads.has_prev else None
 	return render_template('marketplace.html', glads=glads.items, 
 										next_url=next_url, prev_url=prev_url)
+
+
+@app.route('/browse_games')
+@login_required
+def browse_games():
+	page = request.args.get('page', 1, type=int)
+	games = Tournament.query.paginate(page, app.config['POSTS_PER_PAGE'], False)
+	next_url = url_for('browse_games', page=games.next_num) \
+											if games.has_next else None
+	prev_url = url_for('browse_games', page=games.prev_num) \
+											if games.has_prev else None
+	return render_template('browse_games.html', games=games.items, 
+										next_url=next_url, prev_url=prev_url)
 										
 
 
