@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block app_content %}	
+<script>
+function buyGlad(glad_id) { //VALIDATE FIRST
+	$.ajax({
+		type : "POST",
+		url : '/buy_gladiator',
+		data: {glad_id: glad_id},
+		success: function(data) { //Update money on screen
+				var money_display = document.getElementById("money_display");
+				money_display.innerHTML = "Money: " + data;
+				document.getElementById("buy_"+glad_id).remove();
+			}
+	});
+}
+
+</script>
+	<h1>Hello, {{ current_user.username }}!</h1>
+	
+	
+	{% for glad in glads %}
+	<div class="glad_sale" id="buy_{{ glad.id }}">
+		{% include '_glad.html' %}
+		<p>Price: {{ glad.getPrice() }}</p>
+		<button onclick="buyGlad({{ glad.id }})">Buy</button>
+		<br>
+	</div>
+	{% endfor %}
+
+	
+	<nav aria-label="pager">
+		<ul class="pager">
+			<li class="previous{% if not prev_url %} disabled{% endif %}">
+				<a href="{{ prev_url or '#' }}">
+					<span aria-hidden="true">&larr;</span> Newer posts
+				</a>
+			</li>
+			<li class="next{% if not next_url %} disabled{% endif %}">
+				<a href="{{ next_url or '#' }}">
+					Older posts <span aria-hidden="true">&rarr;</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+{% endblock %}

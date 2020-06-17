@@ -16,7 +16,6 @@
 				{% if user == current_user %}
 				<p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
 				<p><a href="{{ url_for('host_game') }}">Host a new game</a></p>
-				<p><a href="{{ url_for('temp_add_glad') }}">tempgetglad</a></p>
 			
 				{% elif not current_user.is_following(user) %}
 				<p>
@@ -37,9 +36,13 @@
 		</tr>
 	</table>
 	<hr>
+	
 	{% for glad in glads %}
+	<div class="glad_sale">
 		{% include '_glad.html' %}
+	</div>
 	{% endfor %}
+	
 	<nav aria-label="pager">
 		<ul class="pager">
 			<li class="previous{% if not prev_url %} disabled{% endif %}">

@@ -102,7 +102,11 @@ def send_glad_gift():
 def finish_game():
 	game_code_key = request.form.get('game_code')
 	global active_games
+	game = active_games[game_code_key]
+	game = Tournament.query.filter_by(id=game.game_id).first_or_404()
 	del active_games[game_code_key]
+	db.session.delete(game)
+	db.session.commit()
 	win_id = request.form.get('winner')
 	print(win_id)
 	if (win_id != "None"):
@@ -135,17 +139,16 @@ def temp_add_money():
 	db.session.commit()
 	return "done"
 	
-@app.route('/temp_add_glad', methods=['GET', 'POST'])
-def temp_add_glad():
-	gladiator = Gladiator(name=r.choice(nameslist),
-							strength=r.randrange(99),
-							speed=r.randrange(99),
-							aggro=r.randrange(30,99),
-							available = True,
-							owner=current_user)
-	db.session.add(gladiator)
+@app.route('/buy_gladiator', methods=['GET', 'POST'])
+def buy_gladiator():
+	glad_id = request.form.get('glad_id')
+	gladiator = Gladiator.query.filter_by(id=glad_id).first_or_404()
+	gladiator.owner = current_user
+	current_user.spendMoney(gladiator.getPrice())
 	db.session.commit()
-	return redirect(url_for('user', username=current_user.username))
+	return str(current_user.money)
+
+
 	
 	
 	
@@ -181,6 +184,29 @@ def explore():
 	prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
 	return render_template('index.html', title='Explore', posts=posts.items,
 								next_url=next_url, prev_url=prev_url)
+								
+@app.route('/marketplace')
+@login_required
+def marketplace():
+	if Gladiator.query.filter_by(owner=None).count() < 20:
+		for i in range(20-Gladiator.query.filter_by(owner=None).count()):
+			new_glad = Gladiator(name=r.choice(nameslist),
+							strength=r.randrange(99),
+							speed=r.randrange(99),
+							aggro=r.randrange(30,99),
+							available = True,
+							owner=None)
+			db.session.add(new_glad)
+			db.session.commit()
+	page = request.args.get('page', 1, type=int)
+	glads = Gladiator.query.filter_by(owner=None).paginate(page, app.config['POSTS_PER_PAGE'], False)
+	next_url = url_for('marketplace', page=glads.next_num) \
+											if glads.has_next else None
+	prev_url = url_for('marketplace', page=glads.prev_num) \
+											if glads.has_prev else None
+	return render_template('marketplace.html', glads=glads.items, 
+										next_url=next_url, prev_url=prev_url)
+										
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -227,7 +253,7 @@ def register():
 def user(username):
 	user = User.query.filter_by(username=username).first_or_404()
 	page = request.args.get('page', 1, type=int)
-	glads = user.gladiators.paginate(page, app.config['POSTS_PER_PAGE'], False)
+	glads = user.gladiators.order_by(Gladiator.id.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
 	next_url = url_for('user', username=user.username, page=glads.next_num) \
 												if glads.has_next else None
 	prev_url = url_for('user', username=user.username, page=glads.prev_num) \

@@ -1,4 +1,4 @@
-2020-06-16 15:05:04,084 ERROR: Exception on /add_gladiator_to_arena [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-16 15:45:10,165 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,11 +12,14 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 67, in add_gladiator_to_arena
-    gladiator = Gladiator.query.filter_by(id=json_glad["id"]).first()
-TypeError: string indices must be integers
-2020-06-16 15:05:56,860 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-16 15:06:03,042 ERROR: Exception on /add_gladiator_to_arena [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 95, in send_glad_gift
+    game.sendGift(glad_id, gift) ##gift var currently unused
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 62, in sendGift
+    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 405, in __init__
+    super().__init__(name, strength, aggro, speed)
+TypeError: __init__() missing 1 required positional argument: 'ext_id'
+2020-06-16 15:45:11,323 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -30,11 +33,14 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 67, in add_gladiator_to_arena
-    gladiator = Gladiator.query.filter_by(id=json_glad.id).first()
-AttributeError: 'str' object has no attribute 'id'
-2020-06-16 15:07:07,681 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-16 15:07:19,756 ERROR: Exception on /add_gladiator_to_arena [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 95, in send_glad_gift
+    game.sendGift(glad_id, gift) ##gift var currently unused
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 62, in sendGift
+    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 405, in __init__
+    super().__init__(name, strength, aggro, speed)
+TypeError: __init__() missing 1 required positional argument: 'ext_id'
+2020-06-16 15:45:15,018 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -48,10 +54,14 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 67, in add_gladiator_to_arena
-    gladiator = Gladiator.query.filter_by(id=json_glad.id).first()
-AttributeError: 'str' object has no attribute 'id'
-2020-06-16 15:07:20,210 ERROR: Exception on /add_gladiator_to_arena [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 95, in send_glad_gift
+    game.sendGift(glad_id, gift) ##gift var currently unused
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 62, in sendGift
+    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 405, in __init__
+    super().__init__(name, strength, aggro, speed)
+TypeError: __init__() missing 1 required positional argument: 'ext_id'
+2020-06-16 15:45:15,968 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -65,10 +75,14 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 67, in add_gladiator_to_arena
-    gladiator = Gladiator.query.filter_by(id=json_glad.id).first()
-AttributeError: 'str' object has no attribute 'id'
-2020-06-16 15:07:20,361 ERROR: Exception on /add_gladiator_to_arena [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 95, in send_glad_gift
+    game.sendGift(glad_id, gift) ##gift var currently unused
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 62, in sendGift
+    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 405, in __init__
+    super().__init__(name, strength, aggro, speed)
+TypeError: __init__() missing 1 required positional argument: 'ext_id'
+2020-06-16 15:45:18,306 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -82,24 +96,10 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 67, in add_gladiator_to_arena
-    gladiator = Gladiator.query.filter_by(id=json_glad.id).first()
-AttributeError: 'str' object has no attribute 'id'
-2020-06-16 15:07:20,563 ERROR: Exception on /add_gladiator_to_arena [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 67, in add_gladiator_to_arena
-    gladiator = Gladiator.query.filter_by(id=json_glad.id).first()
-AttributeError: 'str' object has no attribute 'id'
-2020-06-16 15:09:57,647 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 95, in send_glad_gift
+    game.sendGift(glad_id, gift) ##gift var currently unused
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 62, in sendGift
+    runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\gladiator.py", line 405, in __init__
+    super().__init__(name, strength, aggro, speed)
+TypeError: __init__() missing 1 required positional argument: 'ext_id'

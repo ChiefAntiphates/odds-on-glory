@@ -38,13 +38,13 @@ class Gladiator(db.Model):
 	def __repr__(self):
 		return '<Gladiator {}>'.format(self.name)
 		
-	def setOwner(self, new_id):
-		new_owner = User.query.filter_by(user_id=new_id)
-		self.owner = new_owner
 	
 	def getJSON(self):
 		return {"id": self.id, "name": self.name, "strength": self.strength,
 					"speed": self.speed, "aggro": self.aggro}
+	
+	def getPrice(self):
+		return round(((self.speed+self.strength)/2)*3)
 		
 		
 
@@ -84,7 +84,7 @@ class User(UserMixin, db.Model):
 		for glad in self.gladiators:
 			if glad.available:
 				json_obj.append(glad.getJSON())
-		return json.dumps(json_obj)
+		return json.dumps(json_obj[::-1])
 		
 	
 	def __repr__(self):
