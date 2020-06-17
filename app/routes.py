@@ -104,10 +104,11 @@ def send_glad_gift():
 	glad_id = request.form.get('glad_id')
 	gift = request.form.get('gift')
 	game_code_key = request.form.get('game_code')
+	cost = request.form.get('cost')
 	global active_games
 	game = active_games[game_code_key]
-	game.sendGift(glad_id, gift) ##gift var currently unused
-	return "send glad gift"
+	game.sendGift(glad_id, gift, cost, current_user.id) ##gift var currently unused
+	return (str(current_user.money))
 	
 	
 @app.route('/finish_game', methods=['POST'])

@@ -11,8 +11,8 @@ from app.game_files.convertToJSON import pushInfoToJSON
 from app import app, db, socketio
 from app.models import User, Post, Tournament
 
-GLAD_ADD_TIME = 1
-BETTING_PHASE_TIME = 1
+GLAD_ADD_TIME = 10
+BETTING_PHASE_TIME = 5
 
 
 #import tkinter as tk
@@ -24,8 +24,8 @@ class GameHandler:
 		self.socketio = socketio
 		self.nspace = nspace
 		self.game_id = game_id
-		self.arena = Arena(3, 3, socketio, nspace) ##add size params
-		self.capacity = 2 #How many gladiators you want
+		self.arena = Arena(7, 7, socketio, nspace) ##add size params
+		self.capacity = 7 #How many gladiators you want
 		self.bets = []
 	
 		##Workflow should be as follows
@@ -56,9 +56,12 @@ class GameHandler:
 		db.session.commit()
 		
 	
-	def sendGift(self, glad_id, gift): ##And runner as param #Currently all gifts are traps
+	def sendGift(self, glad_id, gift, cost, sender_id): ##And runner as param #Currently all gifts are traps
 		gladiator = next((x for x in self.arena.gladiators if int(x.id) == int(glad_id)), None)
 		#runner  = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, gift))
+		sender = User.query.filter_by(id=sender_id).first()
+		sender.spendMoney(int(cost))
+		db.session.commit()
 		runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
 		self.arena.addRunner(runner)
 	

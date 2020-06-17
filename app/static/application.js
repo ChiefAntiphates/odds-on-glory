@@ -118,15 +118,17 @@ $(document).ready(function(){
 	
 	//Socket response to game finishing //Remove buttons etc.
 	socket.on('arenafinish', function(msg) {
-		$.ajax({ //Here we will also sell or return the winning gladiator
-			type : "POST",
-			url : '/finish_game',
-			data: {game_code: game_code, winner: msg.winner},//Submit the final gladiator
-			success: function(data) { //Update money on screen
-				var money_display = document.getElementById("money_display");
-				money_display.innerHTML = "Money: " + data;
-			}
-		});
+		if (logged_in === true) {
+			$.ajax({ //Here we will also sell or return the winning gladiator
+				type : "POST",
+				url : '/finish_game',
+				data: {game_code: game_code, winner: msg.winner},//Submit the final gladiator
+				success: function(data) { //Update money on screen
+					var money_display = document.getElementById("money_display");
+					money_display.innerHTML = "Money: " + data;
+				}
+			});
+		}
 	});
 	
 	
@@ -300,7 +302,7 @@ function initArenaGlads(arena_build){
 		g_v_ext += "</div></div>";
 		//Button to send gift // Current only trap
 		if (logged_in === true){
-			g_v_ext += ("<button onclick=\"sendGladGift('" 
+			g_v_ext += ("<button onclick=\"sendGladGift('"+glad_name+"', '" 
 							+ glad_id
 							+ "', 'gift')\">Send Trap</button>");
 		}
@@ -309,9 +311,9 @@ function initArenaGlads(arena_build){
 		g_v_ext += "<div class='oog_flex_container'>";//row 2
 		g_v_ext += "<p class='odds' id='odds_" + glad_id +"'>"+gladiator_obj.odds+"</p>";
 		g_v_ext += "<p id='status_" + glad_id +"'>Status: </p>";
-		g_v_ext += "<p id='speed_" + glad_id +"'>Spd: "+ gladiator_obj.speed +"</p>";
-		g_v_ext += "<p id='strength_" + glad_id +"'>Str: "+ gladiator_obj.strength +"</p>";
-		g_v_ext += "<p id='aggro_" + glad_id +"'>Agr: "+ gladiator_obj.aggro +"</p>";
+		g_v_ext += "<p id='speed_" + glad_id +"'>Spd: "+ Math.round(gladiator_obj.speed*100) +"</p>";
+		g_v_ext += "<p id='strength_" + glad_id +"'>Str: "+ Math.round(gladiator_obj.strength*100) +"</p>";
+		g_v_ext += "<p id='aggro_" + glad_id +"'>Agr: "+ Math.round(gladiator_obj.aggro*100) +"</p>";
 		g_v_ext += "</div>";
 		
 		if (logged_in === true){
@@ -346,6 +348,11 @@ function initArenaGlads(arena_build){
 				}
 			});
 		}
+	}
+	//set dead gladiators
+	let dead_gladiators = arena_build.dead_gladiators;
+	for (dead_glad in dead_gladiators){
+			global_dead_gladiators.push(dead_gladiators[dead_glad].id)
 	}
 	
 	
@@ -392,16 +399,51 @@ function sendGladBet(glad_id, bet, glad_name){
 			timer: 3000
 		});
 	}
+	else{
+		console.log("too little cash")
+	}
 }
 
 
 //Send gladiator gift
-function sendGladGift(glad_id, gift){
-	$.ajax({
-		type : "POST",
-		url : '/send_glad_gift',
-		data: {glad_id: glad_id, gift: gift, game_code: game_code}//This is how to send vars to flask
-	});
+function sendGladGift(glad_name, glad_id, gift){
+	var gift_value = 50;
+	let can_buy = enoughMoney(gift_value);
+	if (can_buy === true){
+		swal({
+			title:"Send "+glad_name+" a gift?",
+			text: "This will cost you " + gift_value,
+			icon: "warning",
+			buttons: [
+				'No',
+				'Yes'
+			]
+		})
+		.then((isConfirm) => {
+			if(isConfirm) {
+				$.ajax({
+					type : "POST",
+					url : '/send_glad_gift',
+					data: {glad_id: glad_id, gift: gift, game_code: game_code, cost: gift_value},//This is how to send vars to flask
+					success: function(data) { //Update money on screen
+						var money_display = document.getElementById("money_display");
+						money_display.innerHTML = "Money: " + data;
+					}
+				});
+				swal({
+					title: "Gift Sent!",
+					text: "A runner is on their way now",
+					icon: "success",
+					timer: 2500
+				});
+			}else{
+				console.log("decided against it")
+			}
+		});
+	} else{
+		console.log("not enough dosh")
+	}
+	
 }
 
 
