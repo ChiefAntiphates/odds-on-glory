@@ -12,77 +12,76 @@ $(document).ready(function(){
 	initArenaGlads(json_arena)
 	
 	
-	if (user_id === "") {//not logged in
-		console.log("not logged in")
-	}
-	console.log(user_id);
+	
 	
 	
 	//Add gladiator button - removed at start of betting phase
-	if ((arena_active == false) && (Object.keys(gladiator_options).length > 0)){
-		
-		//gladiator_options | CURRENTLY RELIES ON UNIQUE NAME
-		let selbut = "";
-		selbut += "<select id='glad_select'>";
-		var no_glads = Object.keys(gladiator_options).length;
-		for (i=0; i<no_glads; i++){
-			selbut += "<option value='"+gladiator_options[i].id+"'>"+gladiator_options[i].name+"</option>";
-		}
-		selbut += "</select>";
-		
-		document.getElementById("add_glad_but").innerHTML = selbut;
-		
-		let button = document.createElement("button");
-		button.innerHTML = "Add Gladiator";
-		document.getElementById("add_glad_but").appendChild(button)
-		button.addEventListener("click", function() {
-			let sel = document.getElementById("glad_select")
-			let sel_glad_id = sel.options[sel.selectedIndex].value;
-			//let glad = gladiator_options[sel.selectedIndex];
-			console.log(gladiator_options);
+	if (logged_in === true){
+		if ((arena_active == false) && (Object.keys(gladiator_options).length > 0)){
 			
-			for (gladiator in gladiator_options){
-				if (Number(gladiator_options[gladiator].id) === Number(sel_glad_id)){
-					console.log("yay");
-					var glad = gladiator_options[gladiator];
-					break;
-				}
+			//gladiator_options | CURRENTLY RELIES ON UNIQUE NAME
+			let selbut = "";
+			selbut += "<select id='glad_select'>";
+			var no_glads = Object.keys(gladiator_options).length;
+			for (i=0; i<no_glads; i++){
+				selbut += "<option value='"+gladiator_options[i].id+"'>"+gladiator_options[i].name+"</option>";
 			}
-			console.log(glad);
-			swal({
-				title: "Submit " + glad.name +" to Arena?",
-				text: "If they die they're dead forever!",
-				icon: "warning",
-				buttons: [
-					'No, perhaps not...',
-					'Yes, let them prove themselves!'
-				]
-			})
-			.then((isConfirm) => {
-				if (isConfirm) {
-					if ((arena_active == false)){
-						console.log(glad);
-						$.ajax({
-							type : "POST",
-							url : '/add_gladiator_to_arena',
-							data: {gladiator: JSON.stringify(glad), game_code: game_code}//This is how to send vars to flask
-						});
-						swal({
-							title: "Gladiator Entered",
-							text: glad.name+" has entered the arena...",
-							icon: "success",
-							timer: 3000
-						});
-						sel.remove(sel.selectedIndex);
-						sel.selectedIndex = 0;
-					}else {
-						console.log("outta time!!");
+			selbut += "</select>";
+			
+			document.getElementById("add_glad_but").innerHTML = selbut;
+			
+			let button = document.createElement("button");
+			button.innerHTML = "Add Gladiator";
+			document.getElementById("add_glad_but").appendChild(button)
+			button.addEventListener("click", function() {
+				let sel = document.getElementById("glad_select")
+				let sel_glad_id = sel.options[sel.selectedIndex].value;
+				//let glad = gladiator_options[sel.selectedIndex];
+				console.log(gladiator_options);
+				
+				for (gladiator in gladiator_options){
+					if (Number(gladiator_options[gladiator].id) === Number(sel_glad_id)){
+						console.log("yay");
+						var glad = gladiator_options[gladiator];
+						break;
 					}
-				} else {
-					console.log("Gladiator not entered");
 				}
+				console.log(glad);
+				swal({
+					title: "Submit " + glad.name +" to Arena?",
+					text: "If they die they're dead forever!",
+					icon: "warning",
+					buttons: [
+						'No, perhaps not...',
+						'Yes, let them prove themselves!'
+					]
+				})
+				.then((isConfirm) => {
+					if (isConfirm) {
+						if ((arena_active == false)){
+							console.log(glad);
+							$.ajax({
+								type : "POST",
+								url : '/add_gladiator_to_arena',
+								data: {gladiator: JSON.stringify(glad), game_code: game_code}//This is how to send vars to flask
+							});
+							swal({
+								title: "Gladiator Entered",
+								text: glad.name+" has entered the arena...",
+								icon: "success",
+								timer: 3000
+							});
+							sel.remove(sel.selectedIndex);
+							sel.selectedIndex = 0;
+						}else {
+							console.log("outta time!!");
+						}
+					} else {
+						console.log("Gladiator not entered");
+					}
+				});
 			});
-		});
+		}
 	}//END add gladiator button
 	
 	
@@ -300,9 +299,11 @@ function initArenaGlads(arena_build){
 		g_v_ext +="<div class='health_box'><div class='health_bar' id='health_bar_"+glad_id +"'>";
 		g_v_ext += "</div></div>";
 		//Button to send gift // Current only trap
-		g_v_ext += ("<button onclick=\"sendGladGift('" 
-						+ glad_id
-						+ "', 'gift')\">Send Trap</button>");
+		if (logged_in === true){
+			g_v_ext += ("<button onclick=\"sendGladGift('" 
+							+ glad_id
+							+ "', 'gift')\">Send Trap</button>");
+		}
 		g_v_ext += "</div>";
 		
 		g_v_ext += "<div class='oog_flex_container'>";//row 2
@@ -313,16 +314,17 @@ function initArenaGlads(arena_build){
 		g_v_ext += "<p id='aggro_" + glad_id +"'>Agr: "+ gladiator_obj.aggro +"</p>";
 		g_v_ext += "</div>";
 		
-		g_v_ext += "<div class='oog_flex_container'>";//row 3
-		//Button to send bet //Replace these with glad IDs
-		g_v_ext += "<input size='5' type=\"number\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" id=\"bet_" + glad_id + "\">";
-		g_v_ext += ("<button id=\"betbut_" + glad_id + "\" onclick=\"sendGladBet('" 
-						+ glad_id
-						+ "', document.getElementById('bet_" 
-						+ glad_id 
-						+ "').value, '"+glad_name+"')\">Place Bet</button>");
-		
-		g_v_ext += "</div>";
+		if (logged_in === true){
+			g_v_ext += "<div class='oog_flex_container'>";//row 3
+			g_v_ext += "<input size='5' type=\"number\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" id=\"bet_" + glad_id + "\">";
+			g_v_ext += ("<button id=\"betbut_" + glad_id + "\" onclick=\"sendGladBet('" 
+							+ glad_id
+							+ "', document.getElementById('bet_" 
+							+ glad_id 
+							+ "').value, '"+glad_name+"')\">Place Bet</button>");
+			
+			g_v_ext += "</div>";
+		}
 						
 		g_v_ext += "</div>";//End hidden div
 		
@@ -331,18 +333,19 @@ function initArenaGlads(arena_build){
 	glad_ext_view.innerHTML = g_v_ext;
 	
 	//Add event listeners
-	for (var gladiator in arena_build.gladiators) {
-		let gladiator_obj = arena_build.gladiators[gladiator];
-		let glad_name = gladiator_obj.name;
-		let glad_id = gladiator_obj.id;
-		
-		let input = document.getElementById("bet_" + glad_id);
-		input.addEventListener("keyup", function(event) {
-			if (event.keyCode === 13) {//enter key
-				document.getElementById("betbut_" + glad_id).click();
-			}
-		});
-		
+	if (logged_in === true){
+		for (var gladiator in arena_build.gladiators) {
+			let gladiator_obj = arena_build.gladiators[gladiator];
+			let glad_name = gladiator_obj.name;
+			let glad_id = gladiator_obj.id;
+			
+			let input = document.getElementById("bet_" + glad_id);
+			input.addEventListener("keyup", function(event) {
+				if (event.keyCode === 13) {//enter key
+					document.getElementById("betbut_" + glad_id).click();
+				}
+			});
+		}
 	}
 	
 	

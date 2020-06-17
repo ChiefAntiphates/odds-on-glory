@@ -11,8 +11,8 @@ from app.game_files.convertToJSON import pushInfoToJSON
 from app import app, db, socketio
 from app.models import User, Post, Tournament
 
-GLAD_ADD_TIME = 10
-BETTING_PHASE_TIME = 5
+GLAD_ADD_TIME = 1
+BETTING_PHASE_TIME = 1
 
 
 #import tkinter as tk
@@ -24,8 +24,8 @@ class GameHandler:
 		self.socketio = socketio
 		self.nspace = nspace
 		self.game_id = game_id
-		self.arena = Arena(4, 4, socketio, nspace) ##add size params
-		self.capacity = 4 #How many gladiators you want
+		self.arena = Arena(3, 3, socketio, nspace) ##add size params
+		self.capacity = 2 #How many gladiators you want
 		self.bets = []
 	
 		##Workflow should be as follows
@@ -112,7 +112,17 @@ class GameHandler:
 			win_id = "None"
 		
 		self.socketio.emit('arenafinish', {'winner': win_id}, namespace=self.nspace)
-		del self #remove from memory
+		if (win_id != "None"):
+			gladiator = Gladiator.query.filter_by(id=win_id).first()
+			gladiator.available = True
+			win_owner = gladiator.owner
+			win_owner.addMoney(500)
+		else:
+			print("non player glad wins")
+		game = Tournament.query.filter_by(id=self.game_id).first()
+		db.session.delete(game)
+		db.session.commit()
+		
 
 		
 	

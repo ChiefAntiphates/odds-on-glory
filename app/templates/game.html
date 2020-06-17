@@ -9,12 +9,21 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     
 	<script type="text/javascript">
+		var user_id = '{{ current_user.id }}';
+		if (user_id === "") {//not logged in
+			var logged_in = false;
+		}else{
+			var logged_in = true;
+		}
+		console.log(user_id);
 		var game_code = '{{ game_code }}';
 		var json_arena = JSON.parse({{ json_arena|tojson }});
-		var user_id = '{{ current_user.id }}';
-		var cross_img_url = "{{ url_for('static', filename='cross.png') }}";
-		var gladiator_options = JSON.parse({{ glads|tojson }});
 		
+		if (logged_in === true){
+			var gladiator_options = JSON.parse({{ glads|tojson }});
+		}
+		
+		var cross_img_url = "{{ url_for('static', filename='cross.png') }}";
 	</script>
 	<script src="{{ url_for('static', filename='application.js') }}" + "?v=1"></script>
 	

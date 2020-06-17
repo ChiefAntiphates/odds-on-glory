@@ -21,9 +21,18 @@ active_games = {}##REMEMBER TO REMOVE FROM ACTIVE GAMES ONCE COMPLETE
 
 @app.before_request
 def before_request():
+	global active_games
+	del_keys = []
+	for game_code in active_games:
+		if Tournament.query.filter_by(code=game_code).first() == None:
+			del_keys.append(game_code)
+	for game_code in del_keys:
+		del active_games[game_code]
 	if current_user.is_authenticated:
 		current_user.last_seen = datetime.utcnow()
 		db.session.commit()
+	print("ACTIVE GAMES")
+	print(active_games)
 
 
 
@@ -55,9 +64,12 @@ def game(game_id):
 		return render_template('404.html')#Maybe put custom error here
 	game_obj = active_games[game.code]
 	json_arena = game_obj.getJSON()
+	glads = None
+	if current_user.is_authenticated:
+		glads = current_user.getAvailGlads()
 	return render_template('game.html', game_code=game.code, json_arena=json_arena,
 								current_user=current_user, 
-								glads=current_user.getAvailGlads())
+								glads=glads)
 
 
 	
@@ -101,25 +113,10 @@ def send_glad_gift():
 @app.route('/finish_game', methods=['POST'])
 def finish_game():
 	game_code_key = request.form.get('game_code')
-	global active_games
-	game = active_games[game_code_key]
-	game = Tournament.query.filter_by(id=game.game_id).first_or_404()
-	del active_games[game_code_key]
-	db.session.delete(game)
-	db.session.commit()
-	win_id = request.form.get('winner')
-	print(win_id)
-	if (win_id != "None"):
-		gladiator = Gladiator.query.filter_by(id=win_id).first()
-		gladiator.available = True
-		win_owner = gladiator.owner
-		win_owner.addMoney(500)
-		db.session.commit()
-		print(gladiator)
-	else:
-		print("non player gladiator wins")
+	
 	return (str(current_user.money))
 	
+
 
 
 ##Delete a gladiator once dead
@@ -153,6 +150,7 @@ def buy_gladiator():
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
+	print(active_games)
 	form = PostForm()
 	if form.validate_on_submit():
 		post = Post(body=form.post.data, author=current_user)
