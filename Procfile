@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn oddsonglory:app
+web: flask db upgrade; gunicorn --worker-class eventlet -w 1 oddsonglory:app
