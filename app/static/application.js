@@ -7,7 +7,7 @@ $(document).ready(function(){
     //connect to the socket server.
     var socket = io.connect('https://' + document.domain + ':' + location.port + game_code);
     var arena_active = json_arena.active;
-	console.log('{{ game_code|safe }}');
+	//console.log('{{ game_code|safe }}');
 	//Upon connecting build arena incase missed the update
 	initArenaGlads(json_arena)
 	
@@ -94,7 +94,7 @@ $(document).ready(function(){
 	//Socket response to a new gladiator added
 	socket.on('gladiatoradding', function(msg) {
 		var gladiatoradding_arena = JSON.parse(msg.json_obj);
-		glad_view = document.getElementById("glad_info")
+		let glad_view = document.getElementById("glad_info");
 		var g_v_content = ""
 		for (var gladiator in gladiatoradding_arena.gladiators) {
 			var glad_name = gladiatoradding_arena.gladiators[gladiator].name;
@@ -103,6 +103,22 @@ $(document).ready(function(){
 			g_v_content += "<br>";
 		}
 		glad_view.innerHTML = g_v_content;
+		
+		let timer = document.getElementById("over_text");
+		timer.innerHTML = "Time left to add gladiators:<br>"+msg.timer;
+	});
+	
+	
+	//Update countdown in betting phase
+	socket.on('arenabetting', function(msg) {
+		let timer = document.getElementById("over_text");
+		timer.innerHTML = "BETTING PHASE<br>Game begins in:<br>"+msg.timer;
+		console.log(msg.timer);
+		if (msg.timer === 0){
+			let time_hold = document.getElementById("overlay");
+			time_hold.remove();
+		}
+		
 	});
 	
 	

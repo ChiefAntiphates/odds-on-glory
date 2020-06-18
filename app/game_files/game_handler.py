@@ -11,8 +11,8 @@ from app.game_files.convertToJSON import pushInfoToJSON
 from app import app, db, socketio
 from app.models import User, Post, Tournament
 
-GLAD_ADD_TIME = 10
-BETTING_PHASE_TIME = 5
+GLAD_ADD_TIME = 20
+BETTING_PHASE_TIME = 10
 
 
 #import tkinter as tk
@@ -80,7 +80,7 @@ class GameHandler:
 			
 			
 			json_obj = pushInfoToJSON(self.arena)
-			self.socketio.emit('gladiatoradding', {'json_obj': json_obj}, namespace=self.nspace)
+			self.socketio.emit('gladiatoradding', {'json_obj': json_obj, 'timer': GLAD_ADD_TIME-i-1}, namespace=self.nspace)
 			if (len(self.arena.gladiators) >= self.capacity):
 				break
 			self.socketio.sleep(1)	
@@ -90,7 +90,9 @@ class GameHandler:
 		#Start games	
 		self.arena.active = True
 		self.socketio.emit('arenainitial', {'json_obj': json_obj}, namespace=self.nspace)	
-		self.socketio.sleep(BETTING_PHASE_TIME)
+		for i in range(BETTING_PHASE_TIME):
+			self.socketio.emit('arenabetting', {'timer': BETTING_PHASE_TIME-i-1}, namespace=self.nspace)
+			self.socketio.sleep(1)
 		self.startGames()
 	
 	

@@ -26,14 +26,14 @@
 		var cross_img_url = "{{ url_for('static', filename='cross.png') }}";
 	</script>
 	<script src="{{ url_for('static', filename='application.js') }}" + "?v=1"></script>
-	
+	<div id="overlay"><span id="over_text">Time left to add gladiators:<br></span></div>
 	<div class="oog_flex_container">
 		<div id="glad_info"></div>
 		<table id="arena_grid"></table>
 		<div id="activity_feed"></div><!--make a smaller div for battles too-->
 	</div>
 	<div id="glad_extended"></div>
-	<p>{{ game_code }}</p>
+	<!--<p>{{ game_code }}</p>-->
 	<div id="add_glad_but"></div>
 	<div id="log">
 	

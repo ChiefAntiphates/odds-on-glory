@@ -30,8 +30,10 @@ def before_request():
 	if current_user.is_authenticated:
 		current_user.last_seen = datetime.utcnow()
 		db.session.commit()
-	print("ACTIVE GAMES")
-	print(active_games)
+	if request.url.startswith('http://'): #Force https
+		url = request.url.replace('http://', 'https://', 1)
+		code = 301
+		return redirect(url, code=code)
 
 
 
@@ -130,14 +132,17 @@ def remove_glad():
 
 	
 
-	
+
 @app.route('/buy_gladiator', methods=['GET', 'POST'])
 def buy_gladiator():
 	glad_id = request.form.get('glad_id')
-	gladiator = Gladiator.query.filter_by(id=glad_id).first_or_404()
-	gladiator.owner = current_user
-	current_user.spendMoney(gladiator.getPrice())
-	db.session.commit()
+	gladiator = Gladiator.query.filter_by(id=glad_id).first()
+	if gladiator != None:
+		gladiator.owner = current_user
+		current_user.spendMoney(gladiator.getPrice())
+		db.session.commit()
+	else:
+		pass #put some error return message
 	return str(current_user.money)
 
 
@@ -218,7 +223,7 @@ def browse_games():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if current_user.is_authenticated:
-		return redirect(url_for('index'))
+		return redirect(url_for('marketplace'))
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
@@ -228,7 +233,7 @@ def login():
 		login_user(user, remember=form.remember_me.data)
 		next_page = request.args.get('next')
 		if not next_page or url_parse(next_page).netloc != '':
-			next_page = url_for('index')
+			next_page = url_for('marketplace')
 		return redirect(next_page)
 	return render_template('login.html', title='Sign In', form=form)
 	
@@ -245,7 +250,7 @@ def register():
 		return redirect(url_for('index'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data, money=500)
+		user = User(username=form.username.data, email=form.email.data, money=800)
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()

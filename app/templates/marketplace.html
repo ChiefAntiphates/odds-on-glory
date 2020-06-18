@@ -4,7 +4,7 @@
 
 {% block app_content %}	
 <script>
-function buyGlad(glad_id, price) { //VALIDATE FIRST
+function buyGlad(glad_id, price) { //Maybe use socket emmissions to remove/add bought glads
 	let user_money = Number(money_display.innerHTML.slice(7))
 	console.log(price);
 	if (user_money < price) {

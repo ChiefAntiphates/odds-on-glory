@@ -1,5 +1,5 @@
 body {
-	background-color: #c0d2f0;
+	/*background-color: #c0d2f0;*/
 }
 
 .glad_sale{
@@ -11,8 +11,22 @@ body {
 /* 
 ARENA/GAME CSS BELOW
 */
-. arena_grid td { 
-	white-space:pre;
+#overlay{
+	position: fixed;
+	left: 41%;
+	width: 18%;
+	height: 15%;
+	z-index: 2;
+	background-color: rgba(0,0,0,0.5);
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	color: white;
+}
+
+#over_text{
+	vertical-align: middle;
+	display: inline-block;
 }
 
 .oog_td_style {
