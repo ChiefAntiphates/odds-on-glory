@@ -3,7 +3,6 @@ from app.game_files.tile import *
 from app.game_files.gladiator import *
 from app.game_files.activity_feed import *
 from numpy.random import choice as np_choice
-from tkinter import messagebox as tkalert
 
 class Battle:
 	
