@@ -12,7 +12,10 @@ $(document).ready(function(){
 	initArenaGlads(json_arena)
 	
 	
-	
+	if (arena_active == false) {
+		let time_hold = document.getElementById("overlay");
+		time_hold.remove();
+	}
 	
 	
 	//Add gladiator button - removed at start of betting phase

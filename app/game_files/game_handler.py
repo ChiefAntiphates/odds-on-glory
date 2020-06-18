@@ -10,6 +10,7 @@ from app.game_files.convertToJSON import pushInfoToJSON
 
 from app import app, db, socketio
 from app.models import User, Post, Tournament
+from app.models import Gladiator as DbGladiator
 
 GLAD_ADD_TIME = 20
 BETTING_PHASE_TIME = 10
@@ -118,10 +119,12 @@ class GameHandler:
 		
 		self.socketio.emit('arenafinish', {'winner': win_id}, namespace=self.nspace)
 		if (win_id != "None"):
-			gladiator = Gladiator.query.filter_by(id=win_id).first()
+			gladiator = dbGladiator.query.filter_by(id=win_id).first()
 			gladiator.available = True
 			win_owner = gladiator.owner
 			win_owner.addMoney(500)
+			db.session.commit()
+			print("THIS BIT HERE")
 		else:
 			print("non player glad wins")
 		game = Tournament.query.filter_by(id=self.game_id).first()
