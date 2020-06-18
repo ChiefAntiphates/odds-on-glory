@@ -88,8 +88,7 @@ class GameHandler:
 			
 			
 		
-		#Start games	
-		self.arena.active = True
+		
 		self.socketio.emit('arenainitial', {'json_obj': json_obj}, namespace=self.nspace)	
 		for i in range(BETTING_PHASE_TIME):
 			self.socketio.emit('arenabetting', {'timer': BETTING_PHASE_TIME-i-1}, namespace=self.nspace)
@@ -100,6 +99,7 @@ class GameHandler:
 	
 	
 	def startGames(self):
+		self.arena.active = True
 		while len(self.arena.gladiators) > 1:
 			self.arena.nextTurn()
 		
