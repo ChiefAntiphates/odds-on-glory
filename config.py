@@ -15,4 +15,6 @@ class Config(object):
 	ADMINS = ['oddsonglory@gmail.com']
 	
 	POSTS_PER_PAGE = 10
+	
+	LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 	#LANGUAGES = ['en', 'es']
