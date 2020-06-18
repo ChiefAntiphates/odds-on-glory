@@ -6,7 +6,6 @@ from app.game_files.tile import *
 from app.game_files.gladiator import *
 from app.game_files.bank import *
 from functools import partial
-from app.game_files.tk_file import interfacePrintGrid
 from app.game_files.nameslist import *
 from app.game_files.convertToJSON import pushInfoToJSON
 import sys
