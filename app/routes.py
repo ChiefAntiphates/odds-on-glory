@@ -13,7 +13,6 @@ from app.game_files.nameslist import nameslist
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, \
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
 						
-from app.game_files.functionUp import randomNumberGenerator
 from app.game_files.game_handler import GameHandler						
 #Use . to go through directories, so app.game_files.arena etc.
 
