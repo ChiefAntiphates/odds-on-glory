@@ -212,7 +212,7 @@ $(document).ready(function(){
 			status.innerHTML = "Status: " + gladiator_obj.state
 			
 			let glad_disp = document.getElementById("disp_"+glad_id);
-			glad_disp.innerHTML = gladiator_obj.odds +" | HP: "+gladiator_obj.health*100;
+			glad_disp.innerHTML = gladiator_obj.odds +" | HP: "+Math.round(gladiator_obj.health*100);
 		}
 		
     });
@@ -295,7 +295,7 @@ function initArenaGlads(arena_build){
 		g_v_content += ("<div class='oog_click_div glad_sale' id='" + glad_id
 						+ "' onclick=\"showGladInfo('hidden_div_" + glad_id +"');\">");
 		g_v_content += "<p>" + glad_name + "</p>";
-		g_v_content += "<p id='disp_"+glad_id+"'>" +gladiator_obj.odds +" | HP: "+gladiator_obj.health*100+"</p>";
+		g_v_content += "<p id='disp_"+glad_id+"'>" +gladiator_obj.odds +" | HP: "+Math.round(gladiator_obj.health*100)+"</p>";
 		g_v_content += "</div>";
 		
 		//Extended (hidden) gladiator info
