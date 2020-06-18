@@ -20,13 +20,18 @@ active_games = {}##REMEMBER TO REMOVE FROM ACTIVE GAMES ONCE COMPLETE
 
 @app.before_request
 def before_request():
-	global active_games
-	del_keys = []
-	for game_code in active_games:
-		if Tournament.query.filter_by(code=game_code).first() == None:
-			del_keys.append(game_code)
-	for game_code in del_keys:
-		del active_games[game_code]
+	try:
+		global active_games
+		del_keys = []
+		for game_code in active_games:
+			if Tournament.query.filter_by(code=game_code).first() == None:
+				del_keys.append(game_code)
+		for game_code in del_keys:
+			del active_games[game_code]
+	except RuntimeError as e:
+		print(e)
+		print(active_games)
+		
 	if current_user.is_authenticated:
 		current_user.last_seen = datetime.utcnow()
 		db.session.commit()
@@ -117,18 +122,6 @@ def finish_game():
 	game_code_key = request.form.get('game_code')
 	
 	return (str(current_user.money))
-	
-
-
-
-##Delete a gladiator once dead
-@app.route('/remove_glad', methods=['POST'])
-def remove_glad():
-	glad_id = request.form.get('glad_id')
-	Gladiator.query.filter_by(id=glad_id).delete()
-	db.session.commit()
-	print("deleted")
-	return "done"
 
 	
 
@@ -146,7 +139,6 @@ def buy_gladiator():
 	return str(current_user.money)
 
 
-	
 	
 	
 	

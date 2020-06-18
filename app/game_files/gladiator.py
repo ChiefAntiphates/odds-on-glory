@@ -6,6 +6,10 @@ from app.game_files.battle import *
 from app.game_files.trap import *
 from app.game_files.activity_feed import *
 
+from app import app, db, socketio
+from app.models import User, Post, Tournament
+from app.models import Gladiator as dbGladiator
+
 class Gladiator:
 	
 	MOVE = "Roaming"
@@ -108,7 +112,7 @@ class Gladiator:
 					chosen_func()
 					
 			
-	
+	##CHANGE SO INCAPACIATION CAN HAPPEN
 	def removeBody(self, slayer, cod): #cod = cause of death
 		self.tile.removeGladiator(self)
 		self.tile.corpses.append(self)
@@ -125,9 +129,10 @@ class Gladiator:
 		else:
 			self.arena.af.updateActivityFeed(msg_choice[0] % self.name, msg_choice[1] % self.name)
 		
+		##DELETE GLADIATOR FROM DATABASE
 		if (self.ext_id != None):
-			self.arena.socketio.emit('glad_killed', {'glad_id': self.ext_id}, namespace=self.arena.nspace)
-		
+			dbGladiator.query.filter_by(id=self.ext_id).delete()
+			db.session.commit()
 		
 		
 	def detectNearbyGladiators(self):

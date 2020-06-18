@@ -12,7 +12,7 @@ $(document).ready(function(){
 	initArenaGlads(json_arena)
 	
 	
-	if (arena_active == false) {
+	if (arena_active === true) {
 		let time_hold = document.getElementById("overlay");
 		time_hold.remove();
 	}
@@ -234,21 +234,8 @@ $(document).ready(function(){
 			glad_disp.innerHTML = gladiator_obj.odds +" | HP: "+Math.round(gladiator_obj.health*100);
 		}
 		
-    });
+    });//end arena update
 	
-	
-	///////////////////////////////////////////
-	//Socket response to gladiator being killed
-	///////////////////////////////////////////
-	socket.on('glad_killed', function(msg) {
-		console.log(msg.glad_id);
-		let glad_id = msg.glad_id;
-		$.ajax({ //Here we will also sell or return the winning gladiator
-			type : "POST",
-			url : '/remove_glad',
-			data: {glad_id: glad_id}
-		});
-	});
 	
 });///End DOC ready
 

@@ -25,8 +25,8 @@ class GameHandler:
 		self.socketio = socketio
 		self.nspace = nspace
 		self.game_id = game_id
-		self.arena = Arena(7, 7, socketio, nspace) ##add size params
-		self.capacity = 7 #How many gladiators you want
+		self.arena = Arena(6, 6, socketio, nspace) ##add size params
+		self.capacity = 3 #How many gladiators you want
 		self.bets = []
 	
 		##Workflow should be as follows

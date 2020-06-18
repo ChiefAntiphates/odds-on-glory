@@ -10,6 +10,7 @@ from app.game_files.nameslist import *
 from app.game_files.convertToJSON import pushInfoToJSON
 import sys
 
+
 TIMER = 0.5
 
 class Arena:
