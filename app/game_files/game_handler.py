@@ -10,7 +10,7 @@ from app.game_files.convertToJSON import pushInfoToJSON
 
 from app import app, db, socketio
 from app.models import User, Post, Tournament
-from app.models import Gladiator as DbGladiator
+from app.models import Gladiator as dbGladiator
 
 GLAD_ADD_TIME = 20
 BETTING_PHASE_TIME = 10
