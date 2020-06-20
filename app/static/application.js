@@ -143,8 +143,8 @@ $(document).ready(function(){
 				url : '/finish_game',
 				data: {game_code: game_code, winner: msg.winner},//Submit the final gladiator
 				success: function(data) { //Update money on screen
-					var money_display = document.getElementById("money_display");
-					money_display.innerHTML = "Money: " + data;
+					var money_display = document.getElementById("display_money");
+					money_display.innerHTML = data;
 				}
 			});
 		}
@@ -398,8 +398,8 @@ function sendGladBet(glad_id, bet, glad_name){
 			url : '/send_glad_bet',
 			data: {glad_id: glad_id, bet_amount: bet, game_code: game_code},//This is how to send vars to flask
 			success: function(data) { //Update money on screen
-				var money_display = document.getElementById("money_display");
-				money_display.innerHTML = "Money: " + data;
+				var money_display = document.getElementById("display_money");
+				money_display.innerHTML = data;
 			}
 		});
 		swal({
@@ -436,8 +436,8 @@ function sendGladGift(glad_name, glad_id, gift){
 					url : '/send_glad_gift',
 					data: {glad_id: glad_id, gift: gift, game_code: game_code, cost: gift_value},//This is how to send vars to flask
 					success: function(data) { //Update money on screen
-						var money_display = document.getElementById("money_display");
-						money_display.innerHTML = "Money: " + data;
+						var money_display = document.getElementById("display_money");
+						money_display.innerHTML = data;
 					}
 				});
 				swal({
@@ -471,7 +471,7 @@ function showGladInfo(div_id){
 
 //Validate that you have enough cash
 function enoughMoney(cost) {
-	let user_money = Number(money_display.innerHTML.slice(7))
+	let user_money = Number(display_money.innerHTML)
 	if (user_money < cost) {
 		console.log("put a swal here saying not enough cash");
 		return false;

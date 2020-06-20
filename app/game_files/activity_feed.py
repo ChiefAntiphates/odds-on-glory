@@ -1,4 +1,3 @@
-#import tkinter as tk
 
 class ActivityFeed:
 	
@@ -42,42 +41,14 @@ class ActivityFeed:
 ["Unknown %s death", "%s died"]
 	]
 	
-	'''CONSTRUCTOR'''##Lots of Tk throughout this file
+	'''CONSTRUCTOR'''
 	def __init__(self):
-	#def __init__(self, activity_frame):
-		#self.activity_frame = activity_frame
 		self.activity = []
 		
 	def updateActivityFeed(self, header, message):
 		self.activity.append([header, message])
 		#self.tkStuff()
 	
-			
-	'''
-	###TK
-	def tkStuff(self):
-		tk.Label(self.activity_frame, text=self.activity[-1][1]+"\n", wraplength=200).pack(side="bottom")
-		if "KILLED" in self.activity[-1][0]:
-			tk.Label(self.activity_frame, text=self.activity[-1][0], wraplength=200, font='Calibri 10 bold', bg="#d4453b").pack(side="bottom")
-		elif "FOUGHT OFF" in self.activity[-1][0]:
-			tk.Label(self.activity_frame, text=self.activity[-1][0], wraplength=200, font='Calibri 10 bold', bg="#3180e8").pack(side="bottom")
-		elif "PICKED UP" in self.activity[-1][0]:
-			tk.Label(self.activity_frame, text=self.activity[-1][0], wraplength=200, font='Calibri 10 bold', bg="#37b859").pack(side="bottom")
-		elif "TRAP" in self.activity[-1][0]:
-			tk.Label(self.activity_frame, text=self.activity[-1][0], wraplength=200, font='Calibri 10 bold', bg="#a12dd6").pack(side="bottom")
-		else:
-			tk.Label(self.activity_frame, text=self.activity[-1][0], wraplength=200, font='Calibri 10 bold', bg="#ebb521").pack(side="bottom")
-		
-		activity_widgets = []
-		for widget in self.activity_frame.winfo_children():
-			activity_widgets.append(widget)
-		
-		if len(activity_widgets) > 16:
-			activity_widgets[4].destroy()
-			activity_widgets[5].destroy()
-		self.activity_frame.update()
-		
-	'''	
-		
+
 		
 		

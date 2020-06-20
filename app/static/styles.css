@@ -7,17 +7,17 @@ body {
   padding: 0;
 }
 
+h1 {
+  font-family: Bitter, sans-serif;
+  padding: 0.15em 0.5em 0.15em 0.5em;
+}
+
 .main {
   margin-top: 6em;
 }
 
 .container {
   margin: 0px 4em 20px 4em;
-}
-
-.glad_sale {
-  border: 1px solid black;
-  margin: 2px;
 }
 
 /*Nav bar*/
@@ -101,6 +101,85 @@ https://codepen.io/divinector/pen/qgZKYQ
   color: #ffffff;
 }
 /*end navbar*/
+/*
+Glad start
+*/
+.glad_margin {
+  margin: 1em 0.5em 1em 0.5em;
+  justify-content: center;
+  opacity: 1;
+  -webkit-transition: opacity 300ms linear;
+  transition: opacity 300ms linear;
+}
+
+.glad_shop_holder {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+}
+.glad_shop_holder .glad_pricing {
+  display: flex;
+  padding: 0;
+}
+.glad_shop_holder .glad_pricing img {
+  width: 17px;
+  height: 20px;
+  padding: 0.3em 0em 0em 1em;
+}
+.glad_shop_holder .glad_pricing p {
+  padding: 0.25em 0em 0em 0em;
+  margin: 0.2em;
+  font-size: 0.95em;
+}
+.glad_shop_holder .glad_pricing .buy_glad_btn {
+  height: 2em;
+  margin: 0.2em;
+  cursor: pointer;
+}
+
+.glad_display_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 25em;
+  grid-auto-rows: minmax(2em, auto);
+  grid-gap: 0.3em 0.1em;
+  border: 2px solid #4a4949;
+  border-radius: 0.5em;
+  background: #e0c179;
+}
+.glad_display_grid img {
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0em 0.2em 0em 0.2em;
+}
+.glad_display_grid div {
+  display: flex;
+  align-items: center;
+}
+.glad_display_grid .glad_display_name {
+  grid-column: 1/5;
+  justify-content: center;
+  font-family: Bitter, sans-serif;
+  font-size: 1.1em;
+  padding-top: 0.3em;
+}
+.glad_display_grid .glad_display_icon {
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.glad_display_grid .glad_display_height {
+  justify-content: center;
+}
+.glad_display_grid .glad_display_bio {
+  grid-column: 1/5;
+  height: 5em;
+  padding: 0.5em;
+  font-size: 0.8em;
+  border-top: 1px solid black;
+}
+
+/*glad end*/
 /* 
 ARENA/GAME CSS BELOW
 */

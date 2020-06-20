@@ -24,8 +24,8 @@
 		{% if current_user.is_anonymous %}
 			<a href="{{ url_for('login') }}">Login</a></div>
 		{% else %}
-			<a href="{{ url_for('marketplace') }}">Marketplace</a>
-			<a href="{{ url_for('browse_games') }}">Browse Games</a>
+			<a href="{{ url_for('marketplace') }}">Market</a>
+			<a href="{{ url_for('browse_games') }}">Arena</a>
 			<a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
 			<a href="{{ url_for('logout') }}">Logout</a>
 		</div>
@@ -57,42 +57,7 @@
 			{% block game_content %}{% endblock %}
 		</div>
 	{% endblock %}
-
-
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 </div>
+
 </body>
 </html>

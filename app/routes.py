@@ -10,6 +10,9 @@ from app import app, db, socketio
 from app.models import User, Post, Tournament, Gladiator
 from app.email import send_password_reset_email
 from app.game_files.nameslist import nameslist
+from app.game_files.bioslist import bios
+from app.game_files.quoteslist import quotes
+from app.game_files.heightlist import heights
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, \
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
 						
@@ -180,10 +183,14 @@ def explore():
 def marketplace():
 	if Gladiator.query.filter_by(owner=None).count() < 20:
 		for i in range(20-Gladiator.query.filter_by(owner=None).count()):
-			new_glad = Gladiator(name=r.choice(nameslist),
-							strength=r.randrange(99),
-							speed=r.randrange(99),
+			gname = r.choice(nameslist)
+			new_glad = Gladiator(name=gname,
+							strength=r.randrange(1,99),
+							speed=r.randrange(1,99),
 							aggro=r.randrange(30,99),
+							height= r.choice(heights),
+							bio= (r.choice(bios) % {'name': gname}),
+							quote= r.choice(quotes),
 							available = True,
 							owner=None)
 			db.session.add(new_glad)

@@ -1,2 +1,18 @@
-<p>{{ glad.name }}</p>
-<p>Str: {{ glad.strength }}, Spd: {{ glad.speed }}, Agr: {{ glad.aggro }}</p>
+<div class="glad_display_grid" title="&quot;{{ glad.quote }}&quot; - {{ glad.name }}">
+	<div class="glad_display_name">{{ glad.name }}</div>
+	<div class="glad_display_icon">
+		<img src="{{ url_for('static', filename='strength-icon.png') }}" title="Strength">
+		{{ glad.strength }}
+	</div>
+	<div class="glad_display_icon">
+		<img src="{{ url_for('static', filename='running-icon.png') }}" title="Speed">
+		{{ glad.speed }}
+	</div>
+	<div class="glad_display_icon">
+		<img src="{{ url_for('static', filename='aggro-icon.png') }}" title="Aggression">
+		{{ glad.aggro }}
+	</div>
+	<div class="glad_display_height" title="Height">{{ glad.height }}</div>
+	<div class="glad_display_bio">{{ glad.bio }}</div>
+	<!--have quote display on hover-->
+</div>

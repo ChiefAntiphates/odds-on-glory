@@ -33,6 +33,10 @@ class Gladiator(db.Model):
 	strength = db.Column(db.Integer, index=True)
 	speed = db.Column(db.Integer, index=True)
 	aggro = db.Column(db.Integer, index=True)
+	height = db.Column(db.String(32))
+	bio = db.Column(db.String(250))
+	quote = db.Column(db.String(140))
+	
 	available = db.Column(db.Boolean)#False if in Arena
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	
@@ -45,7 +49,7 @@ class Gladiator(db.Model):
 					"speed": self.speed, "aggro": self.aggro}
 	
 	def getPrice(self):
-		return round(((self.speed+self.strength)/2)*3)
+		return round((self.speed*0.6)+(self.strength*3)+(self.aggro*0.2))
 		
 		
 

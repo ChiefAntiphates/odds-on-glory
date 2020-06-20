@@ -5,7 +5,8 @@
 {% block app_content %}	
 <script>
 function buyGlad(glad_id, price) { //Maybe use socket emmissions to remove/add bought glads
-	let user_money = Number(money_display.innerHTML.slice(7))
+	var money_display = document.getElementById("display_money");
+	let user_money = Number(money_display.innerHTML)
 	console.log(price);
 	if (user_money < price) {
 		console.log("put a swal here saying not enough cash");
@@ -15,10 +16,12 @@ function buyGlad(glad_id, price) { //Maybe use socket emmissions to remove/add b
 			url : '/buy_gladiator',
 			data: {glad_id: glad_id},
 			success: function(data) { //Update money on screen
-					var money_display = document.getElementById("money_display");
-					money_display.innerHTML = "Money: " + data;
-					
-					document.getElementById("buy_"+glad_id).remove();
+					money_display.innerHTML = data;
+					let bought_glad = document.getElementById("buy_"+glad_id);
+					bought_glad.style.opacity = '0'
+					setTimeout(function(){
+						bought_glad.remove();
+					}, 1000);
 				}
 		});
 	}
@@ -26,17 +29,21 @@ function buyGlad(glad_id, price) { //Maybe use socket emmissions to remove/add b
 </script>
 
 
-	<h1>Hello, {{ current_user.username }}!</h1>
+	<h1>Market | Recruit Gladiators</h1>
 	
-	
-	{% for glad in glads %}
-	<div class="glad_sale" id="buy_{{ glad.id }}">
-		{% include '_glad.html' %}
-		<p>Price: {{ glad.getPrice() }}</p>
-		<button onclick="buyGlad({{ glad.id }}, {{ glad.getPrice() }})">Buy</button>
-		<br>
+	<div class="glad_shop_holder">
+		{% for glad in glads %}
+		<div class="glad_margin" id="buy_{{ glad.id }}">
+			{% include '_glad.html' %}
+			<div class="glad_pricing">
+				<img src="{{ url_for('static', filename='money-icon.png') }}">
+				<p>{{ glad.getPrice() }}</p>
+				<button class="buy_glad_btn" onclick="buyGlad({{ glad.id }}, {{ glad.getPrice() }})">Recruit</button>
+			</div>
+			<br>
+		</div>
+		{% endfor %}
 	</div>
-	{% endfor %}
 
 	
 	<nav aria-label="pager">
