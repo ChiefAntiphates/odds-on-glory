@@ -1,8 +1,9 @@
 @charset "UTF-8";
+/*general subheader font*/
 body {
   background-color: #d1d1d1;
   color: #000000;
-  font-family: sans-serif;
+  font-family: Blinker, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -10,6 +11,10 @@ body {
 h1 {
   font-family: Bitter, sans-serif;
   padding: 0.15em 0.5em 0.15em 0.5em;
+}
+
+hr {
+  margin: 0;
 }
 
 .main {
@@ -84,7 +89,8 @@ https://codepen.io/divinector/pen/qgZKYQ
 .navbar div img {
   width: 28px;
   height: 30px;
-  padding: 0.65em 0.3em 0em 1.5em;
+  padding: 0.1em 0.3em 0em 1.5em;
+  align-self: center;
 }
 .navbar div a {
   text-decoration: none;
@@ -101,45 +107,50 @@ https://codepen.io/divinector/pen/qgZKYQ
   color: #ffffff;
 }
 /*end navbar*/
-/*
-Glad start
-*/
-.glad_margin {
-  margin: 1em 0.5em 1em 0.5em;
-  justify-content: center;
-  opacity: 1;
-  -webkit-transition: opacity 300ms linear;
-  transition: opacity 300ms linear;
+/*Page nav stuff*/
+.page_nav {
+  display: flex;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+}
+.page_nav a {
+  color: black;
+  text-decoration: none;
 }
 
-.glad_shop_holder {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
+.prev_url {
+  text-align: left;
+  width: 100%;
 }
-.glad_shop_holder .glad_pricing {
-  display: flex;
-  padding: 0;
+
+.next_url {
+  text-align: right;
+  width: 100%;
 }
-.glad_shop_holder .glad_pricing img {
-  width: 17px;
-  height: 20px;
-  padding: 0.3em 0em 0em 1em;
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
 }
-.glad_shop_holder .glad_pricing p {
-  padding: 0.25em 0em 0em 0em;
-  margin: 0.2em;
-  font-size: 0.95em;
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
 }
-.glad_shop_holder .glad_pricing .buy_glad_btn {
-  height: 2em;
-  margin: 0.2em;
-  cursor: pointer;
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
 }
 
 .glad_display_grid {
   display: grid;
+  margin: 0 auto;
   grid-template-columns: repeat(4, 1fr);
+  min-width: 15em;
   max-width: 25em;
   grid-auto-rows: minmax(2em, auto);
   grid-gap: 0.3em 0.1em;
@@ -175,11 +186,101 @@ Glad start
   grid-column: 1/5;
   height: 5em;
   padding: 0.5em;
-  font-size: 0.8em;
+  font-size: 0.9em;
   border-top: 1px solid black;
 }
 
-/*glad end*/
+.glad_margin {
+  margin: 1em 0.5em 1em 0.5em;
+  justify-content: center;
+  opacity: 1;
+  -webkit-transition: opacity 300ms linear;
+  transition: opacity 300ms linear;
+}
+
+.glad_shop_holder {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.glad_shop_holder .glad_pricing {
+  display: flex;
+  padding: 0;
+  min-width: 15em;
+  max-width: 25em;
+  margin: 0 auto;
+}
+.glad_shop_holder .glad_pricing img {
+  width: 17px;
+  height: 20px;
+  padding: 0.3em 0em 0em 1em;
+}
+.glad_shop_holder .glad_pricing p {
+  padding: 0.25em 0em 0em 0em;
+  margin: 0.2em;
+  font-size: 0.95em;
+}
+.glad_shop_holder .glad_pricing .buy_glad_btn {
+  height: 2em;
+  width: 6em;
+  margin: 0.2em;
+  cursor: pointer;
+  font-family: Blinker, sans-serif;
+  background-color: #fff;
+}
+.glad_shop_holder .glad_pricing .buy_glad_btn:hover {
+  background-color: #e3ac34;
+  transition: 1s;
+}
+
+.user_page_div {
+  display: flex;
+  align-items: center;
+}
+.user_page_div .user_title {
+  margin: 0.3em 0em;
+  padding: 0.5em;
+  width: 100%;
+  text-align: right;
+  font-size: 2.5em;
+}
+.user_page_div .flex_icon_div {
+  display: flex;
+  align-items: center;
+  margin: 0.2em 0em;
+}
+.user_page_div .flex_icon_div p {
+  padding: 0;
+  margin: 0;
+}
+.user_page_div .flex_icon_div img {
+  width: 1.5em;
+  height: 1.8em;
+  padding: 0em 0.2em;
+}
+.user_page_div .user_avatar {
+  border: 0.1em solid black;
+  margin: 0em 0.5em;
+}
+
+.last_seen {
+  margin: 0.2em 0.7em;
+  font-size: 0.9em;
+}
+
+.user_glad_title {
+  margin: 1em 0em 0.1em 0.7em;
+}
+
+.user_glad_holder {
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/*
+current (user) start
+*/
+/*current end*/
 /* 
 ARENA/GAME CSS BELOW
 */
