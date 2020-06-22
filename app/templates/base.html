@@ -30,7 +30,7 @@
 			<a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
 			<a href="{{ url_for('logout') }}">Logout</a>
 		</div>
-		<div>
+		<div class="user_values">
 			<img id="moneyicon" src="{{ url_for('static', filename='money-icon.png') }}">
 			<p id="display_money">{{ current_user.money }}</p>
 			<img id="powericon" src="{{ url_for('static', filename='power-icon.png') }}">

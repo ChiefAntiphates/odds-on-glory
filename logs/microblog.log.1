@@ -1,4 +1,25 @@
-2020-06-17 11:51:10,583 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-17 21:04:43,914 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+2020-06-18 10:18:19,728 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+2020-06-18 10:18:37,760 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+2020-06-18 11:19:29,147 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 11:46:07,237 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 11:46:15,985 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 12:08:53,918 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:01:46,907 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:08:22,693 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:11:14,022 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:14:51,361 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:19:01,832 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:23:22,022 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:30:31,019 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:32:05,348 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 14:34:35,704 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 18:51:01,599 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 18:53:52,439 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 18:55:58,739 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 18:57:21,999 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 19:00:03,014 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 19:01:13,237 ERROR: Exception on /finish_game [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -8,63 +29,26 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 110, in send_glad_gift
-    game.sendGift(glad_id, gift, cost, current_user.id) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 63, in sendGift
-    sender.spendMoney(int(bet_value))
-NameError: name 'bet_value' is not defined
-2020-06-17 11:51:58,032 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 11:53:49,603 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 11:55:13,261 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 11:58:02,871 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 11:59:27,869 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 12:02:47,917 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 12:04:00,379 ERROR: Exception on /finish_game [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 118, in finish_game
-    return (str(current_user.money))
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\werkzeug\local.py", line 347, in __getattr__
-    return getattr(self._get_current_object(), name)
-AttributeError: 'AnonymousUserMixin' object has no attribute 'money'
-2020-06-17 12:04:00,383 ERROR: Exception on /finish_game [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 118, in finish_game
-    return (str(current_user.money))
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\werkzeug\local.py", line 347, in __getattr__
-    return getattr(self._get_current_object(), name)
-AttributeError: 'AnonymousUserMixin' object has no attribute 'money'
-2020-06-17 12:05:41,239 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 12:06:08,858 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 19:19:06,232 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 19:19:41,083 ERROR: Exception on /browse_games [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 25, in before_request
+    for game_code in active_games:
+RuntimeError: dictionary changed size during iteration
+2020-06-18 19:04:35,677 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 19:12:15,179 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-18 19:17:24,400 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-19 19:16:34,753 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-20 13:41:29,884 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-20 13:41:36,941 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-20 19:39:33,544 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-20 20:18:47,373 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-20 20:18:56,921 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-20 22:35:56,667 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-22 10:58:07,068 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:57]
+2020-06-22 15:22:39,305 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-22 15:22:50,404 ERROR: Exception on /explore [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -80,33 +64,23 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 209, in browse_games
-    games = Tournament.query.all().paginate(page, app.config['POSTS_PER_PAGE'], False)
-AttributeError: 'list' object has no attribute 'paginate'
-2020-06-17 19:20:08,148 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 19:20:39,171 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 19:21:44,003 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 19:22:56,091 ERROR: Exception on /finish_game [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1948, in full_dispatch_request
-    rv = self.preprocess_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2242, in preprocess_request
-    rv = func()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 26, in before_request
-    for game_code in active_games:
-RuntimeError: dictionary changed size during iteration
-2020-06-17 19:23:59,085 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 20:54:35,499 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 20:55:51,757 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 20:56:25,421 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 20:58:09,001 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 21:03:00,104 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 21:03:41,607 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 178, in explore
+    return render_template('index.html', title='Explore', posts=posts.items,
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 137, in render_template
+    return _render(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 120, in _render
+    rv = template.render(context)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 1090, in render
+    self.environment.handle_exception()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\environment.py", line 832, in handle_exception
+    reraise(*rewrite_traceback_stack(source=source))
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\jinja2\_compat.py", line 28, in reraise
+    raise value.with_traceback(tb)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\templates\index.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 60, in get_source
+    return self._get_source_fast(environment, template)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\templating.py", line 89, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: bootstrap/wtf.html
+2020-06-22 15:23:13,267 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
