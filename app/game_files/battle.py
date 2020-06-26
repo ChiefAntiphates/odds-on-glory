@@ -26,10 +26,10 @@ class Battle:
 	
 	def notifyAttack(self):
 		##Attacker messages need to be put somewhere
-		#attacker_message_full = random.choice(list(ActivityFeed.ATTACK_MESSAGES))
-		#attacker_message = attacker_message_full[1] % {'attacker': self.attacker.name, 'defender': self.defender.name}
-		#header = attacker_message_full[0] % {'attacker': self.attacker.name, 'defender': self.defender.name}
-		#self.arena.af.updateActivityFeed(header, attacker_message)
+		attacker_message_full = random.choice(list(ActivityFeed.ATTACK_MESSAGES))
+		attacker_message = attacker_message_full[1] % {'attacker': self.attacker.name, 'defender': self.defender.name}
+		header = attacker_message_full[0] % {'attacker': self.attacker.name, 'defender': self.defender.name}
+		self.arena.af.updateActivityFeed(header, attacker_message)
 		self.arena.active_battles.append(self)
 		self.attacker.setBattle(self)
 		self.defender.setBattle(self)

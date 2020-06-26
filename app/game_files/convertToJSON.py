@@ -6,6 +6,7 @@ def pushInfoToJSON(arena):
 		"height": arena.height,
 		"duration": arena.duration,
 		"active": arena.active,
+		"gladding": arena.gladding,
 		"tile_rows": [],
 		"gladiators": [],
 		"dead_gladiators": [],

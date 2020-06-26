@@ -7,7 +7,7 @@ from app.game_files.trap import *
 from app.game_files.activity_feed import *
 
 from app import app, db, socketio
-from app.models import User, Post, Tournament
+from app.models import User, Tournament
 from app.models import Gladiator as dbGladiator
 
 class Gladiator:
@@ -409,7 +409,7 @@ class Runner(Gladiator):
 		##sort out how arena handles display of Runners
 		super().__init__(name, strength, aggro, speed)
 		self.target_gladiator = target_gladiator
-		self.name = self.target_gladiator.name + "'s Runner: " + self.name
+		self.name = self.target_gladiator.name + "'s Runner: " + name
 		self.initial = "R:" + self.target_gladiator.initial
 		self.mission_achieved = False
 		

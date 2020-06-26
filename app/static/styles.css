@@ -25,6 +25,10 @@ hr {
   margin: 0px 4em 20px 4em;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 /*Nav bar*/
 .nav_holder {
   /*
@@ -277,10 +281,6 @@ https://codepen.io/divinector/pen/qgZKYQ
   grid-template-columns: repeat(2, 1fr);
 }
 
-/*
-current (user) start
-*/
-/*current end*/
 /* 
 ARENA/GAME CSS BELOW
 */
@@ -345,64 +345,248 @@ ARENA/GAME CSS BELOW
 }
 
 #glad_info {
-  border: 2px solid red;
   margin: 0 auto;
+  min-width: 130px;
+  min-height: 400px;
+  max-height: 400px;
+  overflow: auto;
+  padding: 0.3em;
+  position: relative;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+#glad_extended {
+  width: 46%;
+  margin: 0 auto;
+}
+#glad_extended .hidden_glad {
+  /*make this a css grid*/
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.5em;
+  background-color: rgba(163, 185, 196, 0.6);
+  border: 2px solid black;
+}
+#glad_extended .hidden_glad .glad_info_grid {
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+}
+#glad_extended .hidden_glad .glad_info_grid .glad_name {
+  grid-column: 1/4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+#glad_extended .hidden_glad .glad_info_grid .glad_name p {
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+#glad_extended .hidden_glad .glad_info_grid button:hover {
+  background-color: #e3ac34;
+  transition: 1s;
+  cursor: pointer;
+}
+#glad_extended .hidden_glad .glad_info_grid .align_div {
+  grid-column: 1/4;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#glad_extended .hidden_glad .glad_info_grid .align_div .health_box {
+  background-color: #ccc;
+  width: 100%;
+  height: 1.3em;
+  border: solid 1.5px black;
+  background: rgba(120, 7, 7, 0.8);
+}
+#glad_extended .hidden_glad .glad_info_grid .align_div .health_box .health_bar {
+  background-color: #6cc26b;
+  text-align: center;
+  width: inherit;
+  height: 1.3em;
+  position: relative;
+}
+#glad_extended .hidden_glad .glad_info_grid .odds_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 4;
+  grid-row: 1/3;
+}
+#glad_extended .hidden_glad .glad_info_grid .odds_div .odds {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.32em;
+  padding: 0;
+  margin: 0;
+}
+#glad_extended .hidden_glad .glad_info_grid .stats {
+  display: flex;
+  grid-column: 1/3;
+  grid-row: 3;
+  padding: 0;
+  align-items: center;
+}
+#glad_extended .hidden_glad .glad_info_grid .stats img {
+  width: 1.2em;
+  height: 1.2em;
+  padding: 0em 0.2em 0em 1em;
+}
+#glad_extended .hidden_glad .glad_info_grid .stats .speed {
+  padding: 0;
+  margin: 0;
+}
+#glad_extended .hidden_glad .glad_info_grid .stats .strength {
+  padding: 0;
+  margin: 0;
+}
+#glad_extended .hidden_glad .glad_info_grid .stats .aggro {
+  padding: 0;
+  margin: 0;
+}
+#glad_extended .hidden_glad .glad_info_grid .status {
+  grid-column: 3;
+  grid-row: 3;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+#glad_extended .hidden_glad .glad_info_grid .bet_div {
+  display: flex;
+  grid-column: 1/3;
+  grid-row: 4;
+}
+#glad_extended .hidden_glad .glad_info_grid .bet_div .bet_input {
+  width: 5em;
+}
+#glad_extended .hidden_glad .glad_info_grid .bet_div .bet_send_btn {
+  padding: 0 0.28em 0 0.2em;
+}
+#glad_extended .hidden_glad .glad_info_grid .gift_send_btn {
+  grid-column: 3;
+  grid-row: 4;
+}
+#glad_extended .hidden_glad .glad_info_grid .glad_pic {
+  grid-column: 5;
+  grid-row: 1/5;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+#glad_extended .hidden_glad .glad_info_grid .glad_pic .glad_img {
+  border: 0.1em solid black;
+  margin: 0;
+  padding: 0;
+  height: 8.4em;
+  width: 11.2em;
+}
+
+/*grid-column: 1 / 3;
+grid-row: 1;*/
+#user_activity {
+  margin: 0 auto;
+  border: 2px solid blue;
+  width: 22%;
+  padding-top: 5px;
+}
+
+#own_bets {
+  margin: 0 auto;
+  width: 22%;
+  padding-top: 5px;
+  border: 1px solid red;
 }
 
 #activity_feed {
   max-width: 260px;
   min-width: 260px;
+  min-height: 400px;
   max-height: 400px;
-  border: 2px solid red;
+  padding: 0.1em;
   overflow: auto;
   margin: 0 auto;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
 }
 
 #activity_feed p {
-  font-size: 13px;
   text-align: center;
-}
-
-#glad_extended {
-  margin: 0 auto;
-  border: 2px solid red;
 }
 
 .oog_afheader {
   font-weight: bold;
+  font-size: 0.9em;
   padding-bottom: 0px;
   margin-bottom: 0px;
-  padding-top: 7px;
 }
 
 .oog_afinfo {
   padding-top: 0px;
   margin-top: 0px;
+  font-size: 0.82em;
 }
 
-.oog_center {
-  width: 60%;
-  border: 2px solid red;
-  padding-top: 5px;
-  margin: 0 auto;
+.af_kill {
+  color: #910a0a;
 }
 
-.health_box {
-  background-color: #ccc;
-  width: 200px;
-  height: 16px;
-  border: solid 1px black;
+.af_loot {
+  color: #146ea6;
 }
 
-.health_bar {
-  background-color: #007f00;
-  width: inherit;
-  height: 15px;
-  position: relative;
+.af_trap {
+  color: #67118c;
 }
 
-.odds {
+.af_attack {
+  color: #ab670f;
+}
+
+.af_survive {
+  color: #23730a;
+}
+
+.glad_sidebar {
+  background: #a3b9c4;
+  border: 1.2px solid black;
+  margin: 2px;
+  padding: 0.3em 0.5em;
+  font-size: 0.9em;
+  opacity: 1;
+  -webkit-transition: opacity 800ms linear;
+  transition: opacity 800ms linear;
+}
+.glad_sidebar .glad_sidebar_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-weight: bold;
+  padding: 0;
+  margin: 0em 0em 0em 0em;
+}
+.glad_sidebar .glad_sidebar_top p {
+  padding: 0;
+  margin: 0em 0em 0em 0em;
+}
+.glad_sidebar .glad_sidebar_bottom {
+  display: flex;
+  height: 1em;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0em 0em 0em 0em;
+  padding: 0;
+}
+.glad_sidebar .glad_sidebar_bottom p {
+  margin: 0em 0em 0.3em 0em;
+  padding: 0;
+  font-size: 0.88em;
 }
 
 /*# sourceMappingURL=styles.css.map */

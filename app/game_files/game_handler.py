@@ -9,11 +9,11 @@ from app.game_files.bank import *
 from app.game_files.convertToJSON import pushInfoToJSON
 
 from app import app, db, socketio
-from app.models import User, Post, Tournament
+from app.models import User, Tournament
 from app.models import Gladiator as dbGladiator
 
-GLAD_ADD_TIME = 20
-BETTING_PHASE_TIME = 10
+GLAD_ADD_TIME = 10
+BETTING_PHASE_TIME = 20
 
 
 #import tkinter as tk
@@ -88,7 +88,9 @@ class GameHandler:
 			
 			
 		
-		
+		self.arena.gladding = False
+		self.arena.af.updateActivityFeed("BETTING PHASE", "Place your first bets on gladiators before the game starts for the best odds!")
+		json_obj = pushInfoToJSON(self.arena)
 		self.socketio.emit('arenainitial', {'json_obj': json_obj}, namespace=self.nspace)	
 		for i in range(BETTING_PHASE_TIME):
 			self.socketio.emit('arenabetting', {'timer': BETTING_PHASE_TIME-i-1}, namespace=self.nspace)

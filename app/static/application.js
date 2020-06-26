@@ -3,13 +3,15 @@ var global_activity_feed = [];
 var global_dead_gladiators = [];
 
 $(document).ready(function(){
-	console.log(game_code)
+	//console.log(game_code)
     //connect to the socket server.
     var socket = io.connect('https://' + document.domain + ':' + location.port + game_code);
     var arena_active = json_arena.active;
+    var gladding = json_arena.gladding;
 	//console.log('{{ game_code|safe }}');
 	//Upon connecting build arena incase missed the update
 	initArenaGlads(json_arena)
+	
 	
 	
 	if (arena_active === true) {
@@ -18,11 +20,9 @@ $(document).ready(function(){
 	}
 	
 	
-	//Add gladiator button - removed at start of betting phase
-	if (logged_in === true){
-		if ((arena_active == false) && (Object.keys(gladiator_options).length > 0)){
-			
-			//gladiator_options | CURRENTLY RELIES ON UNIQUE NAME
+	//Add gladiator button - removed at start of betting phase <!> except it's not!!!
+	if ((gladding === true) && (Object.keys(gladiator_options).length > 0)){
+		if (logged_in === true){
 			let selbut = "";
 			selbut += "<select id='glad_select'>";
 			var no_glads = Object.keys(gladiator_options).length;
@@ -61,7 +61,7 @@ $(document).ready(function(){
 				})
 				.then((isConfirm) => {
 					if (isConfirm) {
-						if ((arena_active == false)){
+						if ((gladding === true)){
 							console.log(glad);
 							$.ajax({
 								type : "POST",
@@ -109,6 +109,7 @@ $(document).ready(function(){
 		
 		let timer = document.getElementById("over_text");
 		timer.innerHTML = "Time left to add gladiators:<br>"+msg.timer;
+		
 	});
 	
 	
@@ -116,7 +117,7 @@ $(document).ready(function(){
 	socket.on('arenabetting', function(msg) {
 		let timer = document.getElementById("over_text");
 		timer.innerHTML = "BETTING PHASE<br>Game begins in:<br>"+msg.timer;
-		console.log(msg.timer);
+		//console.log(msg.timer);
 		if (msg.timer === 0){
 			let time_hold = document.getElementById("overlay");
 			time_hold.remove();
@@ -192,26 +193,35 @@ $(document).ready(function(){
 			for (i=af_diff; i>0; i--){
 				let header = document.createElement("p");
 				header.className = "oog_afheader";
-				let header_txt = document.createTextNode(activity_feed[af_len-i][0]);
-				header.appendChild(header_txt);
+				console.log(activity_feed[af_len-i][0]);
+				header.innerHTML = activity_feed[af_len-i][0];
 				
 				let info = document.createElement("p");
 				info.className = "oog_afinfo";
 				let info_txt = document.createTextNode(activity_feed[af_len-i][1]);
 				info.appendChild(info_txt);
 				
+				let hr = document.createElement("HR");
+				
+				af_div.insertBefore(hr, af_div.firstChild);
 				af_div.insertBefore(info, af_div.firstChild);
 				af_div.insertBefore(header, af_div.firstChild);
 			}
 		}
+		
+		
 		
 		//Remove gladiators that are dead
 		var dead_gladiators = arena.dead_gladiators;
 		for (dead_glad in dead_gladiators){
 			if (global_dead_gladiators.includes(dead_gladiators[dead_glad].id) !== true){
 				global_dead_gladiators.push(dead_gladiators[dead_glad].id)
-				document.getElementById(dead_gladiators[dead_glad].id).remove();
 				document.getElementById("hidden_div_" + dead_gladiators[dead_glad].id).remove();
+				let dead_div = document.getElementById(dead_gladiators[dead_glad].id);
+				dead_div.style.opacity = '0'
+					setTimeout(function(){
+						dead_div.remove();
+					}, 1000);
 			}
 		}
 		
@@ -223,19 +233,39 @@ $(document).ready(function(){
 			let glad_id = gladiator_obj.id;
 			
 			let health = document.getElementById("health_bar_"+glad_id);
+			health.innerHTML =  Math.round(Number(gladiator_obj.health)*100)+"%";
 			health.style.width = (Number(gladiator_obj.health)*100)+"%";
 			
-			let odds = document.getElementById("odds_"+glad_id);
-			let status = document.getElementById("status_"+glad_id);
-			odds.innerHTML = gladiator_obj.odds;
-			status.innerHTML = "Status: " + gladiator_obj.state
+			let odds_split = gladiator_obj.odds.split("/");
 			
+			let odds = document.getElementById("odds_"+glad_id);
+			
+			
+			let status = document.getElementById("status_"+glad_id);
+			status.innerHTML = gladiator_obj.state;
+			
+			
+			
+			let glad_odds = document.getElementById("disp_odds_"+glad_id);
 			let glad_disp = document.getElementById("disp_"+glad_id);
-			glad_disp.innerHTML = gladiator_obj.odds +" | HP: "+Math.round(gladiator_obj.health*100);
+			
+			if (odds_split[1] === undefined) {
+				glad_odds.innerHTML = "WIN";
+				odds.innerHTML = "WIN";
+				glad_disp.getElementsByTagName('p')[1].innerHTML = "WINNER";
+			}else{
+				odds.innerHTML = "<sup>"+odds_split[0]+"</sup>&frasl;<sub>"+odds_split[1]+"</sub>";
+				glad_odds.innerHTML = "<sup>"+odds_split[0]+"</sup>&frasl;<sub>"+odds_split[1]+"</sub>";
+				glad_disp.getElementsByTagName('p')[1].innerHTML = gladiator_obj.state;
+			}
+			
+			
+			
+			
+			glad_disp.getElementsByTagName('p')[0].innerHTML = "HP: "+Math.round(gladiator_obj.health*100);
 		}
 		
     });//end arena update
-	
 	
 });///End DOC ready
 
@@ -298,46 +328,58 @@ function initArenaGlads(arena_build){
 		let gladiator_obj = arena_build.gladiators[gladiator];
 		let glad_name = gladiator_obj.name;
 		let glad_id = gladiator_obj.id;
-		g_v_content += ("<div class='oog_click_div glad_sale' id='" + glad_id
+		g_v_content += ("<div class='oog_click_div glad_sidebar' id='" + glad_id
 						+ "' onclick=\"showGladInfo('hidden_div_" + glad_id +"');\">");
-		g_v_content += "<p>" + glad_name + "</p>";
-		g_v_content += "<p id='disp_"+glad_id+"'>" +gladiator_obj.odds +" | HP: "+Math.round(gladiator_obj.health*100)+"</p>";
+		g_v_content += "<div class='glad_sidebar_top'><p>" + glad_name + "</p>";
+		let odds_split = gladiator_obj.odds.split("/")
+		g_v_content += "<p class='disp_odds' id='disp_odds_"+glad_id+"'><sup>"+odds_split[0]+"</sup>&frasl;<sub>"+odds_split[1]+"</sub></p></div>";
+		g_v_content += "<div class='glad_sidebar_bottom' id='disp_"+glad_id+"'><p></p><p></p></div>";
 		g_v_content += "</div>";
 		
 		//Extended (hidden) gladiator info
-		g_v_ext += "<div class='oog_hide oog_center' id='hidden_div_" + glad_id +"'>";
-		g_v_ext += "<div class='oog_flex_container'>";//Row 1
-		g_v_ext +="<p>" + glad_name +"</p>";
-		g_v_ext +="<div class='health_box'><div class='health_bar' id='health_bar_"+glad_id +"'>";
-		g_v_ext += "</div></div>";
-		//Button to send gift // Current only trap
-		if (logged_in === true){
-			g_v_ext += ("<button onclick=\"sendGladGift('"+glad_name+"', '" 
-							+ glad_id
-							+ "', 'gift')\">Send Trap</button>");
-		}
-		g_v_ext += "</div>";
+		g_v_ext += "<div class='oog_hide hidden_glad' id='hidden_div_" + glad_id +"'>";
+		g_v_ext += "<div class='glad_info_grid'>";//Start grid
+		g_v_ext +="<div class='glad_name'><p>" + glad_name +"</p></div>";
+		g_v_ext +="<div class='align_div'><div class='health_box'><div class='health_bar' id='health_bar_"+glad_id +"'>100%";
+		g_v_ext += "</div></div></div>";
 		
-		g_v_ext += "<div class='oog_flex_container'>";//row 2
-		g_v_ext += "<p class='odds' id='odds_" + glad_id +"'>"+gladiator_obj.odds+"</p>";
-		g_v_ext += "<p id='status_" + glad_id +"'>Status: </p>";
-		g_v_ext += "<p id='speed_" + glad_id +"'>Spd: "+ Math.round(gladiator_obj.speed*100) +"</p>";
-		g_v_ext += "<p id='strength_" + glad_id +"'>Str: "+ Math.round(gladiator_obj.strength*100) +"</p>";
-		g_v_ext += "<p id='aggro_" + glad_id +"'>Agr: "+ Math.round(gladiator_obj.aggro*100) +"</p>";
-		g_v_ext += "</div>";
+		g_v_ext += "<div class='odds_div'><p class='odds' id='odds_" + glad_id +"'>"+"<sup>"+odds_split[0]+"</sup>&frasl;<sub>"+odds_split[1]+"</sub></p></div>";
 		
+		
+		
+		g_v_ext += "<div class='stats'>";
+		g_v_ext += "<img src='"+running_icon+"'><p class='speed' id='speed_" + glad_id +"'>"+ Math.round(gladiator_obj.speed*100) +"</p>";
+		g_v_ext += "<img src='"+strength_icon+"'><p class='strength' id='strength_" + glad_id +"'>"+ Math.round(gladiator_obj.strength*100) +"</p>";
+		g_v_ext += "<img src='"+aggro_icon+"'><p class='aggro' id='aggro_" + glad_id +"'>"+ Math.round(gladiator_obj.aggro*100) +"</p>";
+		g_v_ext +=  "</div>";
+		
+		g_v_ext += "<p class='status' id='status_" + glad_id +"'></p>";
+
+		g_v_ext += "<div class='bet_div'>";
 		if (logged_in === true){
-			g_v_ext += "<div class='oog_flex_container'>";//row 3
-			g_v_ext += "<input size='5' type=\"number\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" id=\"bet_" + glad_id + "\">";
-			g_v_ext += ("<button id=\"betbut_" + glad_id + "\" onclick=\"sendGladBet('" 
+			g_v_ext += "<input type=\"number\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" class='bet_input' id=\"bet_" + glad_id + "\">";
+			g_v_ext += ("<button class='bet_send_btn' id=\"betbut_" + glad_id + "\" onclick=\"sendGladBet('" 
 							+ glad_id
 							+ "', document.getElementById('bet_" 
 							+ glad_id 
-							+ "').value, '"+glad_name+"')\">Place Bet</button>");
-			
-			g_v_ext += "</div>";
+							+ "').value, '"+glad_name+"')\">Bet</button>");
+		g_v_ext +=  "</div>";
+		
+		g_v_ext += "<div class='glad_pic'>";
+		g_v_ext += "<img class='glad_img' src='/static/glad_img.png'>";
+		g_v_ext += "</div>";
+							
+							
+		//Button to send gift // Current only trap
+		if (logged_in === true){
+			g_v_ext += ("<button class='gift_send_btn' onclick=\"sendGladGift('"+glad_name+"', '" 
+							+ glad_id
+							+ "', 'gift')\">Send Trap</button>");
 		}
-						
+			
+			
+		}
+		g_v_ext += "</div>";			
 		g_v_ext += "</div>";//End hidden div
 		
 	}
@@ -371,19 +413,20 @@ function initArenaGlads(arena_build){
 	//Catch up on activity feed
 	////////////////////////////////
 	var af_div = document.getElementById("activity_feed");
-	var init_activity_feed = arena_grid.activity_log;
+	var init_activity_feed = arena_build.activity_log;
 	if (init_activity_feed !== undefined) {
 		global_activity_feed = init_activity_feed;
 		var af_div_fill = "";
 		for (var activity in init_activity_feed) {
 			af_div_fill = ("<p class=\"oog_afheader\">" + init_activity_feed[activity][0] 
 							+ "</p><p class=\"oog_afinfo\">" + init_activity_feed[activity][1] 
-							+ "</p>" + af_div_fill);
+							+ "</p><hr>" + af_div_fill);
 		}
 		af_div.innerHTML = af_div_fill;
 	}
 	
 }//end create func
+
 
 
 
@@ -410,7 +453,7 @@ function sendGladBet(glad_id, bet, glad_name){
 		});
 	}
 	else{
-		console.log("too little cash")
+		console.log("too little cash");
 	}
 }
 

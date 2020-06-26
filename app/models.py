@@ -53,29 +53,32 @@ class Gladiator(db.Model):
 		
 		
 
-
+'''
 followers = db.Table('followers',
 			db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
 			db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 			)
+'''
 
 class User(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(64), index=True, unique=True)
 	email = db.Column(db.String(120), index=True, unique=True)
 	password_hash = db.Column(db.String(128))
-	about_me = db.Column(db.String(140))
-	last_seen = db.Column(db.DateTime, default=datetime.utcnow)
-	money = db.Column(db.Integer, index=True)
+	money = db.Column(db.Integer)
+	money_rank = db.Column(db.Integer)
 	
-	posts = db.relationship('Post', backref='author', lazy='dynamic')
+	#posts = db.relationship('Post', backref='author', lazy='dynamic')
 	gladiators = db.relationship('Gladiator', backref='owner', lazy='dynamic')
 	hosted_games = db.relationship('Tournament', backref='host', lazy='dynamic')
+	
+	'''
 	followed = db.relationship(
 		'User', secondary=followers,
 		primaryjoin=(followers.c.follower_id == id),
 		secondaryjoin=(followers.c.followed_id == id),
 		backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+	'''
 	
 	
 	def addMoney(self, value):
@@ -105,6 +108,7 @@ class User(UserMixin, db.Model):
 		digest = md5(self.email.lower().encode('utf-8')).hexdigest()
 		return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
 	
+	'''
 	def follow(self, user):
 		if not self.is_following(user):
 			self.followed.append(user)
@@ -123,11 +127,7 @@ class User(UserMixin, db.Model):
 				followers.c.follower_id == self.id)
 		own = Post.query.filter_by(user_id=self.id)
 		return followed.union(own).order_by(Post.timestamp.desc())
-	
-	'''def get_friends(self):
-		print(self.followed)
-		print(self.followers)
-		return set(self.followed) & set(self.followers)'''
+	'''
 	
 	def get_reset_password_token(self, expires_in=600):
 		return jwt.encode(
@@ -144,7 +144,7 @@ class User(UserMixin, db.Model):
 		return User.query.get(id)
 		
 
-
+'''
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	body = db.Column(db.String(140))
@@ -153,6 +153,7 @@ class Post(db.Model):
 	
 	def __repr__(self):
 		return '<Post {}>'.format(self.body)
+'''
 
 
 

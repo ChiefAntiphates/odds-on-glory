@@ -5,17 +5,22 @@
 	<link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat Subrayada' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Blinker' rel='stylesheet'>
+	
+	
 	{% if title %}
 	<title>{{ title }} - OoG</title>
 	{% else %}
 	<title>Odds-On Glory</title>
 	{% endif %}
+
 </head>
 
 <body>
 
+
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 {{ moment.include_moment() }}
 
 <div class="nav_holder">
@@ -59,6 +64,7 @@
 		</div>
 	{% endblock %}
 </div>
+
 
 </body>
 </html>

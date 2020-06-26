@@ -21,6 +21,7 @@ class Arena:
 		self.width = width
 		self.duration = 12 # Units of 30 minutes - 48 units in one day
 		self.active = False
+		self.gladding = True
 		self.gladiators = []
 		self.runners = []
 		self.dead_gladiators = []
@@ -29,6 +30,7 @@ class Arena:
 		self.scorch_level = 0
 		self.edge_tiles = []
 		self.af = ActivityFeed()
+		self.af.updateActivityFeed("ENTRY PHASE", "Enter your gladiator before time runs out!")
 		self.socketio = socketio
 		self.nspace = nspace
 		
@@ -38,60 +40,6 @@ class Arena:
 				if (tile.x_pos == 0) or (tile.y_pos == 0) or (tile.x_pos == self.width-1) or (tile.y_pos == self.height-1): 
 					tile.edge = True
 					self.edge_tiles.append(tile)
-					
-		
-		
-		#################
-		###Tk Activity###
-		'''
-		self.window = tk.Tk()
-		
-		self.frame = tk.Frame(self.window)
-		self.frame.grid(row=0, column=1, rowspan=2, sticky="N")
-		tk.Grid.columnconfigure(self.window, 1, weight=1)
-		
-		self.activity_frame = tk.Frame(self.window)
-		self.activity_frame.grid(row=0, column=2, sticky="N", padx=75)
-		
-		self.battles_frame = tk.Frame(self.window)
-		self.battles_frame.grid(row=1, column=2, sticky="N", padx=75)
-		
-		self.gladiator_frame = tk.Frame(self.window)
-		self.gladiator_frame.grid(row=0, column=0, padx=40, sticky="N")
-		
-		self.dead_gladiator_frame = tk.Frame(self.window)
-		self.dead_gladiator_frame.grid(row=1, column=0, padx=40, sticky="N")
-		
-		
-		self.datetext = tk.Label(self.activity_frame, text="")
-		self.datetext.pack()
-		self.timetext = tk.Label(self.activity_frame, text="")
-		self.timetext.pack()
-		tk.Label(self.battles_frame, text="Active Battles", font='Calibri 10 bold').pack()
-		tk.Label(self.activity_frame, text="Activity Feed", font='Calibri 10 bold').pack()
-		tk.Label(self.activity_frame, text="-------------", font='Calibri 10 bold').pack()
-		
-		#End Tk Activity#
-		#################
-		'''
-		 # semi tk related because Activity requires frame
-		
-		
-	#########################	
-	################TK STUFF##
-	'''def reset(self):##tk stuff
-		self.window.destroy()
-		try:
-			del sys.modules["main"]
-		except KeyError:
-			pass
-		import main
-	def advance(self):
-		#while pause:
-			#pass
-		self.window.quit()'''
-	#########################
-	#########################
 	
 	
 	
@@ -124,14 +72,7 @@ class Arena:
 		for runner in sorted(self.runners, key=lambda x: x.speed, reverse=True):
 			runner.executeTurn()
 		##Move all runners simultaneuosly (in perception)
-		#time.sleep(0.4)
 		
-		##Add to a queue with game ID?????? Use get function to pop from queue 
-		###########################tk stuff##
-		#self.window.after(TIMER, self.advance)#timer
-		#self.window.mainloop()
-		#interfacePrintGrid(self)
-		########################
 			json_obj = pushInfoToJSON(self)
 			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 			self.socketio.sleep(TIMER/2)
@@ -140,14 +81,7 @@ class Arena:
 		for gladiator in sorted(self.gladiators, key=lambda x: x.speed, reverse=True):
 			##Maybe when high volume do a couple of turns simultaneuosly
 			gladiator.executeTurn()
-			#time.sleep(0.4)
 			
-			###tk stuff## here if update after each glad action##
-			#self.window.after(TIMER, self.advance)#timer
-			#self.window.mainloop()
-			#interfacePrintGrid(self)
-			#print(self.odds_on)
-			############################################
 			json_obj = pushInfoToJSON(self)
 			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 			self.socketio.sleep(TIMER)
