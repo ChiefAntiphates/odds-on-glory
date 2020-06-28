@@ -47,7 +47,7 @@ class GameHandler:
 			elif (density=='normal'):
 				self.capacity=14
 			else:
-				self.capacity=16
+				self.capacity=15
 				
 		self.socketio = socketio
 		self.nspace = nspace
