@@ -1,4 +1,5 @@
 import time
+import json
 import random as r
 from flask_socketio import SocketIO, emit
 from fractions import Fraction
@@ -13,7 +14,7 @@ from app.models import User, Tournament
 from app.models import Gladiator as dbGladiator
 
 GLAD_ADD_TIME = 10
-BETTING_PHASE_TIME = 20
+BETTING_PHASE_TIME = 40
 
 
 #import tkinter as tk
@@ -21,13 +22,39 @@ BETTING_PHASE_TIME = 20
 
 class GameHandler:
 	
-	def __init__(self, socketio, nspace, game_id): ##add size params
+	def __init__(self, socketio, nspace, game_id, size, density): ##add size params
+		
+		if (size=='small'):
+			self.arena = Arena(8, 5, socketio, nspace)
+			if (density=='sparse'):
+				self.capacity=4
+			elif (density=='normal'):
+				self.capacity=6
+			else:
+				self.capacity=9
+		elif (size=='medium'):
+			self.arena = Arena(10, 7, socketio, nspace)
+			if (density=='sparse'):
+				self.capacity=7
+			elif (density=='normal'):
+				self.capacity=10
+			else:
+				self.capacity=13
+		else:
+			self.arena = Arena(13, 8, socketio, nspace)
+			if (density=='sparse'):
+				self.capacity=11
+			elif (density=='normal'):
+				self.capacity=14
+			else:
+				self.capacity=17
+				
 		self.socketio = socketio
 		self.nspace = nspace
 		self.game_id = game_id
-		self.arena = Arena(8, 8, socketio, nspace) ##add size params
-		self.capacity = 8 #How many gladiators you want
+		
 		self.bets = []
+		self.user_activity = []
 	
 		##Workflow should be as follows
 		'''
@@ -56,6 +83,11 @@ class GameHandler:
 		punter.spendMoney(int(bet_value))
 		db.session.commit()
 		
+		self.user_activity.append("%s bet %s on %s." % (punter.username, bet_value, gladiator.name))
+		
+		#move to one socket update for general activity
+		self.socketio.emit('useractivityupdate', {'all_bets': self.convertBetsToJSON(), 'user_activity': self.user_activity}, namespace=self.nspace)
+		
 	
 	def sendGift(self, glad_id, gift, cost, sender_id): ##And runner as param #Currently all gifts are traps
 		gladiator = next((x for x in self.arena.gladiators if int(x.id) == int(glad_id)), None)
@@ -65,6 +97,12 @@ class GameHandler:
 		db.session.commit()
 		runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
 		self.arena.addRunner(runner)
+		
+		
+		self.user_activity.append("%s sent %s a trap." % (sender.username, gladiator.name))
+		
+		#move to one socket update for general activity
+		self.socketio.emit('useractivityupdate', {'all_bets': self.convertBetsToJSON(), 'user_activity': self.user_activity}, namespace=self.nspace)
 	
 	
 	
@@ -143,8 +181,21 @@ class GameHandler:
 				punter = User.query.filter_by(id=bet.punter_id).first()
 				punter.addMoney(bet.betReturn)
 				db.session.commit()
-		
-		
+			
+	def convertBetsToJSON(self):
+		print("doing this")
+		bets_json = {"bets": []}
+		for bet in self.bets:
+			if bet.gladiator.alive:
+				bet_info = {}
+				bet_info["punter_id"] = bet.punter_id
+				bet_info["gladiator"] = bet.gladiator.name
+				bet_info["glad_id"] = bet.gladiator.id
+				bet_info["odds"] = bet.odds_info[2]
+				bet_info["value"] = bet.bet
+				bet_info["return"] = bet.betReturn
+				bets_json["bets"].append(bet_info)
+		return bets_json
 		
 		
 		

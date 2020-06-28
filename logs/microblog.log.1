@@ -1,13 +1,14 @@
-2020-06-23 12:53:43,332 ERROR: Exception on /register [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1283, in _execute_context
-    self.dialect.do_execute(
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\default.py", line 590, in do_execute
-    cursor.execute(statement, parameters)
-sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
-
-The above exception was the direct cause of the following exception:
-
+2020-06-26 20:48:57,830 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-26 20:49:26,971 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-26 20:50:53,033 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-26 20:52:03,501 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-26 20:52:35,557 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-26 20:56:31,806 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-26 20:59:53,715 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 09:36:19,440 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 09:47:34,968 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 10:57:36,967 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 10:57:59,326 ERROR: Exception on /send_glad_bet [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -21,72 +22,51 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 239, in register
-    if form.validate_on_submit():
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_wtf\form.py", line 100, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\form.py", line 318, in validate
-    return super(Form, self).validate(extra)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\form.py", line 150, in validate
-    if not field.validate(self, extra):
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\fields\core.py", line 226, in validate
-    stop_validation = self._run_validation_chain(form, chain)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\fields\core.py", line 246, in _run_validation_chain
-    validator(form, self)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\forms.py", line 24, in validate_username
-    user = User.query.filter(func.lower(username)==func.lower(username.data)).first()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3375, in first
-    ret = list(self[0:1])
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3149, in __getitem__
-    return list(res)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3481, in __iter__
-    return self._execute_and_instances(context)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3506, in _execute_and_instances
-    result = conn.execute(querycontext.statement, self._params)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1020, in execute
-    return meth(self, multiparams, params)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 298, in _execute_on_connection
-    return connection._execute_clauseelement(self, multiparams, params)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1133, in _execute_clauseelement
-    ret = self._execute_context(
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1323, in _execute_context
-    self._handle_dbapi_exception(
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1517, in _handle_dbapi_exception
-    util.raise_(
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\util\compat.py", line 178, in raise_
-    raise exception
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1283, in _execute_context
-    self.dialect.do_execute(
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\default.py", line 590, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.InterfaceError: (sqlite3.InterfaceError) Error binding parameter 0 - probably unsupported type.
-[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.money AS user_money 
-FROM user 
-WHERE lower(?) = lower(?)
- LIMIT ? OFFSET ?]
-[parameters: (<wtforms.fields.core.StringField object at 0x00000247F9B0A760>, 'Test', 1, 0)]
-(Background on this error at: http://sqlalche.me/e/rvf5)
-2020-06-23 13:08:02,252 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-24 15:15:17,515 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-24 15:51:22,825 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-24 17:18:56,979 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-24 21:41:01,547 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-25 23:34:37,455 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-25 23:45:26,013 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-25 23:46:36,951 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 00:02:55,290 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 00:03:17,166 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 09:55:43,466 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 09:55:54,439 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 10:20:12,586 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 10:46:15,962 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 10:47:12,798 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 11:14:51,419 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 11:25:18,041 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 11:25:51,113 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 11:30:14,434 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 11:30:37,282 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
-2020-06-26 11:30:44,651 ERROR: Exception on /host_game [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 108, in send_glad_bet
+    game.sendBet(glad_id, bet_amount, current_user.id)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 61, in sendBet
+    self.user_activity.append("%s bet %s on %s" % (punter.name, bet_value, gladiator.name))
+AttributeError: 'User' object has no attribute 'name'
+2020-06-27 10:58:24,021 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 11:26:49,568 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 11:49:03,886 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 11:58:33,277 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 12:01:52,047 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 12:02:19,704 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 12:12:05,696 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:14:16,966 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:20:18,560 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:25:09,352 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:31:34,340 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:35:21,319 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:39:54,175 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:40:52,654 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:41:38,917 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:44:40,261 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:44:59,089 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 13:49:36,363 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 14:13:12,925 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:08:47,904 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:09:49,840 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:11:09,554 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:31:54,784 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:32:12,159 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:34:55,361 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:35:33,515 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:36:28,840 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:37:16,162 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:37:50,904 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:48:07,183 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:50:55,677 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:51:54,256 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:52:17,235 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:54:52,212 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:56:10,494 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 21:57:07,166 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 22:01:51,138 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 22:06:21,230 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 22:06:27,664 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-27 22:06:41,068 ERROR: Exception on /host_game [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -102,12 +82,7 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 61, in host_game
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 60, in host_game
     game_handler = GameHandler(socketio, game.code, game.id)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 28, in __init__
-    self.arena = Arena(8, 8, socketio, nspace) ##add size params
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\arena.py", line 33, in __init__
-    self.af.updateActivityFeed("ENTRY PHASE", "Enter your gladiator before time runs out!")
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\activity_feed.py", line 55, in updateActivityFeed
-    self.activity.append([header, message, style])
-NameError: name 'style' is not defined
+TypeError: __init__() missing 2 required positional arguments: 'size' and 'density'
+2020-06-27 22:07:03,925 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]

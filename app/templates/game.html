@@ -15,6 +15,9 @@
 		//console.log(user_id);
 		var game_code = '{{ game_code }}';
 		var json_arena = JSON.parse({{ json_arena|tojson }});
+		var init_bets = {{ game_bets|tojson }};
+		var init_ua = {{ init_ua|safe }};
+		console.log(init_ua);
 		
 		if (logged_in === true){
 			var gladiator_options = JSON.parse({{ glads|tojson }});
@@ -31,14 +34,15 @@
 	<div class="oog_flex_container">
 		<div id="glad_info"></div>
 		<table id="arena_grid"></table>
-		<div id="activity_feed"></div>
+		<div id="activity_feed" title="Activity Feed"></div>
 	</div>
 	<div id="add_glad_but"></div>
 	<div class="oog_flex_container">
-		<div id="user_activity"></div>
+		<div id="user_activity" title="User Activity"></div>
 		<div id="glad_extended"></div>
-		<div id="own_bets"></div>
+		<div id="own_bets" title="Your Bets"></div>
 	</div>
+	<div class="top_border_only"></div>
 	
 	
 	

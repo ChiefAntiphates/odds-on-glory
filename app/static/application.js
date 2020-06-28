@@ -1,6 +1,8 @@
 //var global_glad_list = [];
 var global_activity_feed = [];
 var global_dead_gladiators = [];
+var global_own_bets = [];
+var global_user_activity = [];
 
 $(document).ready(function(){
 	//console.log(game_code)
@@ -20,9 +22,9 @@ $(document).ready(function(){
 	}
 	
 	
-	//Add gladiator button - removed at start of betting phase <!> except it's not!!!
-	if ((gladding === true) && (Object.keys(gladiator_options).length > 0)){
-		if (logged_in === true){
+	//Add gladiator button - removed at start of betting phase 
+	if (logged_in === true){
+		if ((gladding === true) && (Object.keys(gladiator_options).length > 0)){
 			let selbut = "";
 			selbut += "<select id='glad_select'>";
 			var no_glads = Object.keys(gladiator_options).length;
@@ -193,7 +195,6 @@ $(document).ready(function(){
 			for (i=af_diff; i>0; i--){
 				let header = document.createElement("p");
 				header.className = "oog_afheader";
-				console.log(activity_feed[af_len-i][0]);
 				header.innerHTML = activity_feed[af_len-i][0];
 				
 				let info = document.createElement("p");
@@ -215,6 +216,12 @@ $(document).ready(function(){
 		var dead_gladiators = arena.dead_gladiators;
 		for (dead_glad in dead_gladiators){
 			if (global_dead_gladiators.includes(dead_gladiators[dead_glad].id) !== true){
+				
+				var paras = document.getElementsByClassName(dead_gladiators[dead_glad].id);
+				while(paras[0]) {
+					paras[0].parentNode.removeChild(paras[0]);
+				}
+				
 				global_dead_gladiators.push(dead_gladiators[dead_glad].id)
 				document.getElementById("hidden_div_" + dead_gladiators[dead_glad].id).remove();
 				let dead_div = document.getElementById(dead_gladiators[dead_glad].id);
@@ -266,6 +273,52 @@ $(document).ready(function(){
 		}
 		
     });//end arena update
+	
+	
+	//On any user activity
+	socket.on('useractivityupdate', function(msg) {
+		//Display own bets
+		let own_bets_div = document.getElementById("own_bets");
+		//Set each new bet with a class of glad id so that it can be deleted when glad dies
+		console.log(msg.user_activity);
+		let all_bets = msg.all_bets.bets;
+		for (bet in all_bets) {
+			console.log(user_id);
+			console.log(all_bets[bet].punter_id);
+			if (all_bets[bet].punter_id !== Number(user_id)){
+				delete all_bets[bet];
+				console.log("delete")
+			}
+		}
+		let all_bets_len = Object.keys(all_bets).length;
+		let diff = (all_bets_len - Object.keys(global_own_bets).length);
+		if (diff > 0){
+			global_own_bets = all_bets;
+			for (i=diff; i>0; i--){
+				let bet_info = document.createElement("p");
+				bet_info.className = all_bets[all_bets_len-i].glad_id;
+				bet_info.innerHTML = all_bets[all_bets_len-i].value+" on "+all_bets[all_bets_len-i].gladiator;
+				own_bets_div.insertBefore(bet_info, own_bets_div.firstChild);
+			}
+		}
+		
+		
+		//Display all user activity
+		let user_activity_div = document.getElementById("user_activity");
+		let user_activity_list = msg.user_activity;
+		console.log(user_activity_list);
+		let u_a_len = user_activity_list.length;
+		let diff2 = (u_a_len - global_user_activity.length);
+		if (diff2 > 0){
+			global_user_activity = user_activity_list;
+			for (i=diff2; i>0; i--){
+				console.log(user_activity_list[u_a_len-i]);
+				let activity = document.createElement("p");
+				activity.innerHTML = user_activity_list[u_a_len-i];
+				user_activity_div.insertBefore(activity, user_activity_div.firstChild);
+			}
+		}
+	});//end user activity update
 	
 });///End DOC ready
 
@@ -355,30 +408,30 @@ function initArenaGlads(arena_build){
 		
 		g_v_ext += "<p class='status' id='status_" + glad_id +"'></p>";
 
-		g_v_ext += "<div class='bet_div'>";
 		if (logged_in === true){
+			g_v_ext += "<div class='bet_div'>";
 			g_v_ext += "<input type=\"number\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" class='bet_input' id=\"bet_" + glad_id + "\">";
 			g_v_ext += ("<button class='bet_send_btn' id=\"betbut_" + glad_id + "\" onclick=\"sendGladBet('" 
 							+ glad_id
 							+ "', document.getElementById('bet_" 
 							+ glad_id 
 							+ "').value, '"+glad_name+"')\">Bet</button>");
-		g_v_ext +=  "</div>";
+			g_v_ext +=  "</div>";
+			
+			
+			//Button to send gift // Current only trap
+			if (logged_in === true){
+				g_v_ext += ("<button class='gift_send_btn' onclick=\"sendGladGift('"+glad_name+"', '" 
+								+ glad_id
+								+ "', 'gift')\">Send Trap</button>");
+			}
+			
+		}
 		
 		g_v_ext += "<div class='glad_pic'>";
 		g_v_ext += "<img class='glad_img' src='/static/glad_img.png'>";
 		g_v_ext += "</div>";
-							
-							
-		//Button to send gift // Current only trap
-		if (logged_in === true){
-			g_v_ext += ("<button class='gift_send_btn' onclick=\"sendGladGift('"+glad_name+"', '" 
-							+ glad_id
-							+ "', 'gift')\">Send Trap</button>");
-		}
 			
-			
-		}
 		g_v_ext += "</div>";			
 		g_v_ext += "</div>";//End hidden div
 		
@@ -425,6 +478,44 @@ function initArenaGlads(arena_build){
 		af_div.innerHTML = af_div_fill;
 	}
 	
+	
+	/////////////////////////
+	//Catch up on own bets//
+	///////////////////////
+	let all_bets = init_bets.bets;
+	for (bet in all_bets) {
+		console.log(user_id);
+		console.log(all_bets[bet].punter_id);
+		if (all_bets[bet].punter_id !== Number(user_id)){
+			delete all_bets[bet];
+			console.log("delete")
+		}
+	}
+	global_own_bets = all_bets;
+	let own_bets_div = document.getElementById("own_bets");
+	let own_bets_fill = "";
+	for (bet in all_bets){
+		console.log(all_bets[bet]);
+		console.log(all_bets[bet].gladiator);
+		own_bets_fill = "<p class='"+all_bets[bet].glad_id+"'>"+all_bets[bet].value+" on "+all_bets[bet].gladiator+"</p>" + own_bets_fill;
+	}
+	own_bets_div.innerHTML = own_bets_fill;
+	
+	
+	/////////////////////////////
+	//Catch up on user activity//
+	////////////////////////////
+	global_user_activity = init_ua;
+	console.log(init_ua);
+	let user_activity_div = document.getElementById("user_activity");
+	let ua_fill = "";
+	for (activity in init_ua){
+		console.log(activity);
+		ua_fill = "<p>"+init_ua[activity]+"</p>" + ua_fill;
+	}
+	user_activity_div.innerHTML = ua_fill;
+	
+	
 }//end create func
 
 
@@ -458,7 +549,7 @@ function sendGladBet(glad_id, bet, glad_name){
 }
 
 
-//Send gladiator gift
+//Send gladiator gift //check that they're alive still maybe
 function sendGladGift(glad_name, glad_id, gift){
 	var gift_value = 50;
 	let can_buy = enoughMoney(gift_value);

@@ -7,4 +7,4 @@ if __name__ == '__main__':
 
 @app.shell_context_processor
 def make_shell_context():
-	return {'db': db, 'User': User, 'Post': Post, 'Gladiator': Gladiator, 'Tournament': Tournament}
+	return {'db': db, 'User': User, 'Gladiator': Gladiator, 'Tournament': Tournament}

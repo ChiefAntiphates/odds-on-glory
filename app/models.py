@@ -15,8 +15,10 @@ def load_user(id):
 class Tournament(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	code = db.Column(db.String(120), index=True, unique=True)
+	size = db.Column(db.String(16))
+	density = db.Column(db.String(16))
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	#Introduce "state" idea
+	#Introduce "state" idea like in progress or betting/gladding phase
 
 	def __repr__(self):
 		return '<Game {}>'.format(self.id)

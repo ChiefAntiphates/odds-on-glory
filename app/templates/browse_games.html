@@ -2,15 +2,36 @@
 
 
 {% block app_content %}	
-
-<h1>Ongoing games</h1>
+	{% if not current_user.is_anonymous %}
+	<h2>Host New Arena</h2>
 	
+	<form id='set_game_form' action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+		<div class = "flex_browseform">
+			<p>
+				{{ form.size.label }}<br>
+				{{ form.size }}<br>
+			</p>
+			<p>
+				{{ form.density.label }}<br>
+				{{ form.density }}<br>
+			</p>
+		</div>
+		<p class="form_submitbrowse">{{ form.submit() }}</p>
+	</form>
+	
+	<hr>
+	{% endif %}
+	
+	<h2>Active Arenas</h2>
 	
 	{% for game in games %}
-	<div class="glad_sale">
-		<a href="{{ url_for('game', game_id=game.id) }}">Game ref: {{ game.id }}</a>
-		<br>
+	<div class="arena_listing">
+		<a href="{{ url_for('game', game_id=game.id) }}">
+		<b>Arena {{ game.id }}</b><br>{{ game.host.username }} hosting a {{ game.size }} | {{ game.density }} arena
+		</a>
 	</div>
+	<br>
 	{% endfor %}
 
 	

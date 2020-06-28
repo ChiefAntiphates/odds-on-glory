@@ -15,7 +15,7 @@ class Trap:
 		if reduced_health < 0.01:
 			reduced_health = 0
 		gladiator.health = reduced_health
-		gladiator.arena.af.updateActivityFeed("%s TRIGGERED A TRAP" % gladiator.name, 
+		gladiator.arena.af.updateActivityFeed(ActivityFeed.TRAP_TRIG % gladiator.name, 
 					"They triggered %s's trap!" % self.owner.name)
 		if reduced_health == 0:
 			gladiator.removeBody(self.owner, ActivityFeed.TRAPS)

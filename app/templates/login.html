@@ -3,7 +3,7 @@
 
 {% block app_content %}
 	<h1>Sign In</h1>
-	<form action="" method="post" novalidate>
+	<form id='login_form' action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
             {{ form.username.label }}<br>
@@ -24,4 +24,12 @@
     </form>
 	<p><a href="{{ url_for('register') }}">New user? Register here</a></p>
 	<p><a href="{{ url_for('reset_password_request') }}">Forgot your password?</a></p>
+	
+	<script type="text/javascript" src="{{ url_for('static', filename='sha256.js') }}"></script>
+	<script type="text/javascript">
+		document.getElementById('login_form').onsubmit = function() {
+			var p1 = document.getElementById('password');
+			p1.value = sha256(p1.value);
+		};
+	</script>
 {% endblock %}

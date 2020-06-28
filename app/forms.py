@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from sqlalchemy import func
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
@@ -68,6 +68,12 @@ class ResetPasswordForm(FlaskForm):
 	password2 = PasswordField(
 		'Repeat Password', validators=[DataRequired(), EqualTo('password')])
 	submit = SubmitField('Reset Password')
+
+
+class SetGameForm(FlaskForm):
+	size = SelectField('Size:', choices=[('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')])
+	density = SelectField('Density:', choices=[('sparse', 'Sparse'), ('normal', 'Normal'), ('packed', 'Packed')])
+	submit = SubmitField('Host Game')
 
 
 

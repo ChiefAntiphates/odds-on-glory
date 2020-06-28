@@ -224,7 +224,7 @@ class Gladiator:
 		trap = self.inventory[Gladiator.I_TRAPS][0]
 		self.tile.setTrapToTile(trap)
 		self.inventory[Gladiator.I_TRAPS].remove(trap)
-		self.arena.af.updateActivityFeed("%s SET A TRAP" % self.name, 
+		self.arena.af.updateActivityFeed(ActivityFeed.TRAP_SET % self.name, 
 													"They set down a trap")
 		
 	def fatalAccident(self):

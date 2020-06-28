@@ -1,113 +1,99 @@
-2020-06-17 08:29:00,609 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:30:19,644 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:30:48,957 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:31:58,687 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:32:43,039 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:33:30,841 ERROR: Exception on /finish_game [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-06-23 12:52:04,314 ERROR: Exception on /register [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 106, in finish_game
-    game = Tournament.query.filter_by(id=game.id).first_or_404()
-AttributeError: 'GameHandler' object has no attribute 'id'
-2020-06-17 08:34:11,781 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:34:51,236 ERROR: Exception on /finish_game [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 239, in register
+    if form.validate_on_submit():
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_wtf\form.py", line 100, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\form.py", line 318, in validate
+    return super(Form, self).validate(extra)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\form.py", line 150, in validate
+    if not field.validate(self, extra):
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\fields\core.py", line 226, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\fields\core.py", line 246, in _run_validation_chain
+    validator(form, self)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\forms.py", line 23, in validate_username
+    user = User.query.filter(func.lower(username)==username.data.lower()).first()
+NameError: name 'func' is not defined
+2020-06-23 12:52:27,009 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-23 12:52:53,404 ERROR: Exception on /register [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 106, in finish_game
-    game = Tournament.query.filter_by(id=game.id).first_or_404()
-AttributeError: 'GameHandler' object has no attribute 'id'
-2020-06-17 08:36:36,891 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:37:23,181 ERROR: Exception on /finish_game [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 106, in finish_game
-    game = Tournament.query.filter_by(id=game_id).first_or_404()
-NameError: name 'game_id' is not defined
-2020-06-17 08:37:35,734 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:45:47,546 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:46:13,055 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:46:47,540 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:49:05,841 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 08:57:37,351 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 09:00:54,465 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 09:01:25,411 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 09:01:50,731 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 86, in send_glad_bet
-    game.sendBet(glad_id, bet_amount, current_user.id)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 53, in sendBet
-    self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id))
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 13, in __init__
-    self.bet = int(bet)
-ValueError: invalid literal for int() with base 10: '3.5'
-2020-06-17 09:03:09,179 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 09:04:17,892 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
-2020-06-17 09:05:30,377 ERROR: Exception on /send_glad_bet [POST] [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 86, in send_glad_bet
-    game.sendBet(glad_id, bet_amount, current_user.id)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 53, in sendBet
-    self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id))
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 14, in __init__
-    self.betReturn = calculateBetReturn(numer, denom, self.bet)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\bank.py", line 65, in calculateBetReturn
-    return round((numer/(denom/bet))) + bet
-ZeroDivisionError: division by zero
-2020-06-17 09:06:23,747 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:52]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 239, in register
+    if form.validate_on_submit():
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_wtf\form.py", line 100, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\form.py", line 318, in validate
+    return super(Form, self).validate(extra)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\form.py", line 150, in validate
+    if not field.validate(self, extra):
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\fields\core.py", line 226, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\wtforms\fields\core.py", line 246, in _run_validation_chain
+    validator(form, self)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\forms.py", line 24, in validate_username
+    user = User.query.filter(func.lower(username)==username.data.lower()).first()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3375, in first
+    ret = list(self[0:1])
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3149, in __getitem__
+    return list(res)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3481, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3506, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1020, in execute
+    return meth(self, multiparams, params)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1133, in _execute_clauseelement
+    ret = self._execute_context(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1323, in _execute_context
+    self._handle_dbapi_exception(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1517, in _handle_dbapi_exception
+    util.raise_(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\util\compat.py", line 178, in raise_
+    raise exception
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.InterfaceError: (sqlite3.InterfaceError) Error binding parameter 0 - probably unsupported type.
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.money AS user_money 
+FROM user 
+WHERE lower(?) = ?
+ LIMIT ? OFFSET ?]
+[parameters: (<wtforms.fields.core.StringField object at 0x00000209F10DF040>, 'test', 1, 0)]
+(Background on this error at: http://sqlalche.me/e/rvf5)
+2020-06-23 12:53:22,076 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]

@@ -29,6 +29,21 @@ hr {
   display: none;
 }
 
+.flex_browseform {
+  display: flex;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.flex_browseform p {
+  padding: 0 0.3em;
+  margin: 0;
+}
+
+.form_submitbrowse {
+  padding: 0.3em;
+  margin: 0;
+}
+
 /*Nav bar*/
 .nav_holder {
   /*
@@ -281,6 +296,29 @@ https://codepen.io/divinector/pen/qgZKYQ
   grid-template-columns: repeat(2, 1fr);
 }
 
+.arena_listing {
+  display: inline-block;
+  border-left: 2px solid #6b060b;
+  padding-left: 0.5em;
+  margin-bottom: 1em;
+}
+.arena_listing a {
+  text-decoration: none;
+  color: #000000;
+}
+.arena_listing a:hover {
+  cursor: pointer;
+}
+
+.arena_listing:hover {
+  background-color: #6b060b;
+  transition: 2s;
+}
+.arena_listing:hover a {
+  color: #ffffff;
+  transition: 2.5s;
+}
+
 /* 
 ARENA/GAME CSS BELOW
 */
@@ -320,8 +358,10 @@ ARENA/GAME CSS BELOW
 
 .oog_flex_container {
   display: flex;
+  align-items: center;
   flex-wrap: nowrap;
-  padding: 6px;
+  padding-top: 0.5em;
+  padding-bottom: 0;
 }
 
 .oog_flex_container p {
@@ -357,7 +397,7 @@ ARENA/GAME CSS BELOW
 }
 
 #glad_extended {
-  width: 46%;
+  width: 40%;
   margin: 0 auto;
 }
 #glad_extended .hidden_glad {
@@ -403,7 +443,7 @@ ARENA/GAME CSS BELOW
   background-color: #ccc;
   width: 100%;
   height: 1.3em;
-  border: solid 1.5px black;
+  border: solid 0.1em black;
   background: rgba(120, 7, 7, 0.8);
 }
 #glad_extended .hidden_glad .glad_info_grid .align_div .health_box .health_bar {
@@ -492,16 +532,34 @@ ARENA/GAME CSS BELOW
 grid-row: 1;*/
 #user_activity {
   margin: 0 auto;
-  border: 2px solid blue;
+  overflow: auto;
   width: 22%;
+  height: 10em;
   padding-top: 5px;
+  margin-left: 4em;
+}
+#user_activity p {
+  padding-top: 0;
+  margin-top: 0;
+  padding-left: 0.2em;
+  border-left: 2px solid #328ba8;
 }
 
 #own_bets {
   margin: 0 auto;
+  text-align: right;
+  overflow: auto;
   width: 22%;
+  height: 10em;
   padding-top: 5px;
-  border: 1px solid red;
+  margin-right: 4em;
+}
+#own_bets p {
+  padding-top: 0;
+  padding-right: 0.2em;
+  margin-top: 0;
+  border-right: 2px solid #e3ac34;
+  font-family: Courier Prime, Bitter, sans-serif;
 }
 
 #activity_feed {
@@ -587,6 +645,14 @@ grid-row: 1;*/
   margin: 0em 0em 0.3em 0em;
   padding: 0;
   font-size: 0.88em;
+}
+
+.top_border_only {
+  border-top: 2px solid black;
+  margin: 0 auto;
+  padding: 0;
+  width: 98%;
+  height: 0.1em;
 }
 
 /*# sourceMappingURL=styles.css.map */

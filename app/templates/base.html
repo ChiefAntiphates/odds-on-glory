@@ -5,6 +5,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat Subrayada' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Blinker' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Courier Prime' rel='stylesheet'>
 	
 	
 	{% if title %}
@@ -28,10 +29,11 @@
 		<div>
 			<a id="title" href="{{ url_for('browse_games') }}">Odds-On Glory</a>
 		{% if current_user.is_anonymous %}
+			<a href="{{ url_for('browse_games') }}">Colosseum</a>
 			<a href="{{ url_for('login') }}">Login</a></div>
 		{% else %}
 			<a href="{{ url_for('marketplace') }}">Market</a>
-			<a href="{{ url_for('browse_games') }}">Arena</a>
+			<a href="{{ url_for('browse_games') }}">Colosseum</a>
 			<a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
 			<a href="{{ url_for('logout') }}">Logout</a>
 		</div>

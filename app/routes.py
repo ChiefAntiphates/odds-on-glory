@@ -14,7 +14,7 @@ from app.game_files.nameslist import nameslist
 from app.game_files.bioslist import bios
 from app.game_files.quoteslist import quotes
 from app.game_files.heightlist import heights
-from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, \
+from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, SetGameForm,\
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
 						
 from app.game_files.game_handler import GameHandler						
@@ -44,27 +44,40 @@ def before_request():
 		code = 301
 		return redirect(url, code=code)
 
-
-
-
-@app.route('/host_game', methods=['GET','POST'])
-@login_required
-def host_game():
-	game = Tournament(host=current_user)
-	db.session.add(game)
-	db.session.commit()
-	game = current_user.hosted_games.order_by(Tournament.id.desc()).first()
-	game.set_code()
-	db.session.commit()
 	
-	global active_games
-	game_handler = GameHandler(socketio, game.code, game.id)
-	active_games[game.code] = game_handler
 	
-	#Start game running
-	thread = Thread()
-	thread = socketio.start_background_task(game_handler.preGame)
-	return redirect(url_for('game', game_id=game.id))
+@app.route('/browse_games', methods=['GET','POST'])
+def browse_games():
+	form = SetGameForm()
+	if form.validate_on_submit():
+		
+		game = Tournament(host=current_user, size=form.size.data, density=form.density.data)
+		db.session.add(game)
+		db.session.commit()
+		game.set_code()
+		db.session.commit()
+		
+		global active_games
+		game_handler = GameHandler(socketio, game.code, game.id, form.size.data, form.density.data)
+		active_games[game.code] = game_handler
+		
+		#Start game running
+		thread = Thread()
+		thread = socketio.start_background_task(game_handler.preGame)
+		return redirect(url_for('game', game_id=game.id))
+		
+		
+	page = request.args.get('page', 1, type=int)
+	games = Tournament.query.paginate(page, app.config['POSTS_PER_PAGE'], False)
+	next_url = url_for('browse_games', page=games.next_num) \
+											if games.has_next else None
+	prev_url = url_for('browse_games', page=games.prev_num) \
+											if games.has_prev else None
+	return render_template('browse_games.html', games=games.items, form=form,
+										next_url=next_url, prev_url=prev_url)
+
+
+
 
 @app.route('/game/<game_id>', methods=['GET', 'POST'])
 def game(game_id):
@@ -78,11 +91,11 @@ def game(game_id):
 	if current_user.is_authenticated:
 		glads = current_user.getAvailGlads()
 	return render_template('game.html', game_code=game.code, json_arena=json_arena,
-								current_user=current_user, 
-								glads=glads)
+								current_user=current_user, game_bets=game_obj.convertBetsToJSON(),
+								init_ua=json.dumps(game_obj.user_activity), glads=glads)
 
 
-	
+#See what happens if i just try navigating here	
 @app.route('/add_gladiator_to_arena', methods=['POST'])
 def add_gladiator_to_arena():
 	json_glad = json.loads(request.form.get('gladiator'))
@@ -193,17 +206,7 @@ def marketplace():
 										next_url=next_url, prev_url=prev_url)
 
 
-@app.route('/browse_games')
-@login_required
-def browse_games():
-	page = request.args.get('page', 1, type=int)
-	games = Tournament.query.paginate(page, app.config['POSTS_PER_PAGE'], False)
-	next_url = url_for('browse_games', page=games.next_num) \
-											if games.has_next else None
-	prev_url = url_for('browse_games', page=games.prev_num) \
-											if games.has_prev else None
-	return render_template('browse_games.html', games=games.items, 
-										next_url=next_url, prev_url=prev_url)
+
 										
 
 
@@ -228,7 +231,7 @@ def login():
 @app.route('/logout')
 def logout():
 	logout_user()
-	return redirect(url_for('index'))
+	return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET', 'POST'])

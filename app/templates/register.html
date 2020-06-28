@@ -2,7 +2,7 @@
 
 {% block app_content %}
 	<h1>Register</h1>
-    <form action="" method="post">
+    <form id='submit_form' action="" method="post">
         {{ form.hidden_tag() }}
         <p>
             {{ form.username.label }}<br>
@@ -34,4 +34,13 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
+	<script type="text/javascript" src="{{ url_for('static', filename='sha256.js') }}"></script>
+	<script type="text/javascript">
+		document.getElementById('submit_form').onsubmit = function() {
+			var p1 = document.getElementById('password');
+			p1.value = sha256(p1.value);
+			var p2 = document.getElementById('password2');
+			p2.value = sha256(p2.value);
+		};
+	</script>
 {% endblock %}
