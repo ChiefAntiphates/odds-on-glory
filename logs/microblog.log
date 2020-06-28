@@ -38,3 +38,67 @@ NameError: name 'size' is not defined
 2020-06-28 10:11:55,828 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
 2020-06-28 10:50:42,720 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
 2020-06-28 10:50:50,605 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-28 20:45:58,829 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-28 20:47:07,122 ERROR: Exception on /login [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: user.last_bonus
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 219, in login
+    user = User.query.filter_by(username=form.username.data).first()
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3375, in first
+    ret = list(self[0:1])
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3149, in __getitem__
+    return list(res)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3481, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3506, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1020, in execute
+    return meth(self, multiparams, params)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1133, in _execute_clauseelement
+    ret = self._execute_context(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1323, in _execute_context
+    self._handle_dbapi_exception(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1517, in _handle_dbapi_exception
+    util.raise_(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\util\compat.py", line 178, in raise_
+    raise exception
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1283, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\sqlalchemy\engine\default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: user.last_bonus
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.money AS user_money, user.money_rank AS user_money_rank, user.last_bonus AS user_last_bonus, user.bonus_available AS user_bonus_available 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('harry', 1, 0)]
+(Background on this error at: http://sqlalche.me/e/e3q8)
+2020-06-28 20:47:29,743 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-28 20:47:33,921 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-28 20:47:52,334 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-28 20:51:14,788 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-28 20:55:20,610 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-28 20:55:40,457 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]
+2020-06-28 20:56:00,497 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:55]

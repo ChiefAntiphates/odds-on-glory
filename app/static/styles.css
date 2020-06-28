@@ -305,6 +305,7 @@ https://codepen.io/divinector/pen/qgZKYQ
 .arena_listing a {
   text-decoration: none;
   color: #000000;
+  display: block;
 }
 .arena_listing a:hover {
   cursor: pointer;

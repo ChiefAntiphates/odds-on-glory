@@ -28,7 +28,8 @@
 	{% for game in games %}
 	<div class="arena_listing">
 		<a href="{{ url_for('game', game_id=game.id) }}">
-		<b>Arena {{ game.id }}</b><br>{{ game.host.username }} hosting a {{ game.size }} | {{ game.density }} arena
+		<b>Arena {{ game.id }}</b>
+		<br>{{ game.host.username }} hosting a {{ game.size }} | {{ game.density }} arena
 		</a>
 	</div>
 	<br>

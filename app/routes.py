@@ -6,7 +6,7 @@ import random as r
 import json
 from flask_socketio import SocketIO, emit
 from threading import Thread
-from app import app, db, socketio
+from app import app, db, socketio, moment
 from app.models import User, Tournament, Gladiator
 #from app.models import User, Post, Tournament, Gladiator
 from app.email import send_password_reset_email
