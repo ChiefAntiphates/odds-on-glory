@@ -31,15 +31,15 @@ class GameHandler:
 			elif (density=='normal'):
 				self.capacity=6
 			else:
-				self.capacity=9
+				self.capacity=8
 		elif (size=='medium'):
 			self.arena = Arena(10, 7, socketio, nspace)
 			if (density=='sparse'):
 				self.capacity=7
 			elif (density=='normal'):
-				self.capacity=10
+				self.capacity=9
 			else:
-				self.capacity=13
+				self.capacity=12
 		else:
 			self.arena = Arena(13, 8, socketio, nspace)
 			if (density=='sparse'):
@@ -47,7 +47,7 @@ class GameHandler:
 			elif (density=='normal'):
 				self.capacity=14
 			else:
-				self.capacity=17
+				self.capacity=16
 				
 		self.socketio = socketio
 		self.nspace = nspace
