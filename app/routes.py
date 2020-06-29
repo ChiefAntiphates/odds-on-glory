@@ -165,6 +165,7 @@ def index():
 	print(active_games)
 	for u in User.query.all():
 		u.last_bonus=datetime.utcnow()
+	db.session.commit()
 	return render_template('index.html', title='Home')
 	
 								
