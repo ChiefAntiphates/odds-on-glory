@@ -17,7 +17,8 @@ from app.game_files.heightlist import heights
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, SetGameForm,\
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
 						
-from app.game_files.game_handler import GameHandler						
+from app.game_files.game_handler import GameHandler
+from datetime import datetime			
 #Use . to go through directories, so app.game_files.arena etc.
 
 active_games = {}##REMEMBER TO REMOVE FROM ACTIVE GAMES ONCE COMPLETE
@@ -35,10 +36,7 @@ def before_request():
 	except RuntimeError as e:
 		print(e)
 		print(active_games)
-		
-	if current_user.is_authenticated:
-		current_user.last_seen = datetime.utcnow()
-		db.session.commit()
+	
 	if request.url.startswith('http://'): #Force https
 		url = request.url.replace('http://', 'https://', 1)
 		code = 301
@@ -165,17 +163,8 @@ def buy_gladiator():
 @login_required
 def index():
 	print(active_games)
-	'''
-	form = PostForm()
-	if form.validate_on_submit():
-		post = Post(body=form.post.data, author=current_user)
-		db.session.add(post)
-		db.session.commit()
-		flash('Your post in now live')
-		return redirect(url_for('index'))
-	return render_template('index.html', title='Home', form=form, posts=posts.items,
-								next_url=next_url, prev_url=prev_url)
-	'''
+	for u in User.query.all():
+		u.last_bonus=datetime.utcnow()
 	return render_template('index.html', title='Home')
 	
 								
@@ -252,6 +241,10 @@ def register():
 @app.route('/user/<username>')
 @login_required
 def user(username):
+	print(current_user.last_bonus)
+	#print(moment(current_user.last_bonus).fromNow())
+	timestamp = moment.create(datetime.utcnow()).calendar()
+	print(timestamp)
 	user = User.query.filter_by(username=username).first_or_404()
 	page = request.args.get('page', 1, type=int)
 	glads = user.gladiators.order_by(Gladiator.id.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)

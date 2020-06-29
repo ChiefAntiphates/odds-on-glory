@@ -24,6 +24,7 @@ class GameHandler:
 	
 	def __init__(self, socketio, nspace, game_id, size, density): ##add size params
 		
+		##SORT OUT THE SIZES HERE PLEASE
 		if (size=='small'):
 			self.arena = Arena(8, 5, socketio, nspace)
 			if (density=='sparse'):
