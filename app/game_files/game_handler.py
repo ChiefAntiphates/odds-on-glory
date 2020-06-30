@@ -13,7 +13,7 @@ from app import app, db, socketio
 from app.models import User, Tournament
 from app.models import Gladiator as dbGladiator
 
-GLAD_ADD_TIME = 60
+GLAD_ADD_TIME = 10##change time
 BETTING_PHASE_TIME = 60
 
 

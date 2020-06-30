@@ -22,6 +22,7 @@ from datetime import datetime
 #Use . to go through directories, so app.game_files.arena etc.
 
 active_games = {}##REMEMBER TO REMOVE FROM ACTIVE GAMES ONCE COMPLETE
+bonus_wait = 1
 
 @app.before_request
 def before_request():
@@ -162,10 +163,6 @@ def buy_gladiator():
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-	print(active_games)
-	for u in User.query.all():
-		u.last_bonus=datetime.utcnow()
-	db.session.commit()
 	return render_template('index.html', title='Home')
 	
 								
@@ -242,11 +239,29 @@ def register():
 @app.route('/user/<username>')
 @login_required
 def user(username):
-	print(current_user.last_bonus)
-	#print(moment(current_user.last_bonus).fromNow())
-	timestamp = moment.create(datetime.utcnow()).calendar()
-	print(timestamp)
+
 	user = User.query.filter_by(username=username).first_or_404()
+	
+	bonus = False
+	if user == current_user:
+		#Playing around with timing stuff START
+		print(current_user.last_bonus)
+		print(datetime.utcnow())
+		time_since = (datetime.utcnow() - current_user.last_bonus)
+		time_since = divmod(time_since.total_seconds(), 60)
+		print(time_since[0])
+		if time_since[0] >= bonus_wait:
+			bonus = True
+		
+		####This maybe for gladiator states
+		negative_time = (current_user.last_bonus - datetime.utcnow())
+		negative_time = divmod(negative_time.total_seconds(), 60)
+		#print(negative_time[0])
+		#print(negative_time[0] < 0)
+		#Playing around with timing stuff END
+	
+	
+	
 	page = request.args.get('page', 1, type=int)
 	glads = user.gladiators.order_by(Gladiator.id.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
 	next_url = url_for('user', username=user.username, page=glads.next_num) \
@@ -254,8 +269,26 @@ def user(username):
 	prev_url = url_for('user', username=user.username, page=glads.prev_num) \
 												if glads.has_prev else None
 	form = EmptyForm()
-	return render_template('user.html', user=user, glads=glads.items, 
+	return render_template('user.html', user=user, glads=glads.items, bonus=bonus,
 										form=form, next_url=next_url, prev_url=prev_url)
+
+
+
+@app.route('/claim_bonus', methods=['GET', 'POST'])
+@login_required
+def claim_bonus():
+	time_since = (datetime.utcnow() - current_user.last_bonus)
+	time_since = divmod(time_since.total_seconds(), 60)
+	print(time_since[0])
+	if time_since[0] >= bonus_wait:
+		print(current_user.last_bonus)
+		current_user.last_bonus = datetime.utcnow()
+		current_user.money = current_user.money + 50
+		db.session.commit()
+		print(current_user.last_bonus)
+	else:
+		print("something went wrong")
+	return str(current_user.money)
 
 
 		

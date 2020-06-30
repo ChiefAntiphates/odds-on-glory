@@ -325,15 +325,43 @@ ARENA/GAME CSS BELOW
 */
 #overlay {
   position: fixed;
+  padding: 0.2em;
   left: 41%;
   width: 18%;
-  height: 15%;
+  top: 30%;
   z-index: 2;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0.2em;
   font-weight: bold;
   font-size: 20px;
   text-align: center;
   color: white;
+}
+
+#add_glad_but {
+  position: fixed;
+  left: 44%;
+  width: 12%;
+  top: 70%;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#add_glad_but .glad_add_but {
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 0.2em;
+  background-color: white;
+  color: #6e0303;
+  border: 0.1em solid black;
+  border-radius: 0.2em;
+}
+#add_glad_but .glad_add_but:hover {
+  cursor: pointer;
+  background-color: #6e0303;
+  color: white;
+  transition: 2s;
 }
 
 #over_text {

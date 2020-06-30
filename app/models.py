@@ -66,7 +66,6 @@ class User(UserMixin, db.Model):
 	money_rank = db.Column(db.Integer)
 	
 	last_bonus = db.Column(db.DateTime, default=datetime.utcnow)
-	bonus_available = db.Column(db.Boolean, default=False)
 	
 	gladiators = db.relationship('Gladiator', backref='owner', lazy='dynamic')
 	hosted_games = db.relationship('Tournament', backref='host', lazy='dynamic')

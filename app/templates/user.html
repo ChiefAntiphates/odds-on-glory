@@ -1,47 +1,50 @@
 {% extends "base.html" %}
 
 {% block app_content %}
+<script>
+function claimBonus(glad_id, price) { 
+	$.ajax({
+		type : "POST",
+		url : '/claim_bonus',
+		success: function(data) { //Update money on screen
+				document.getElementById("bonus_btn").remove();
+				document.getElementById("bonus_div").innerHTML = "<p>Check back each hour to claim bonus gold</p>";
+				var money_display = document.getElementById("display_money");
+				var money_display_2 = document.getElementById("user_money");
+				money_display.innerHTML = data;
+				money_display_2.innerHTML = data;
+			}
+	});
+}
+</script>
+
 	<div class="user_page_div">
 		<img class="user_avatar" src="{{ user.avatar(128) }}">
 		
 		<div class="user_page_info">
-			<!--% if user.about_me %<p>{ user.about_me }</p>% endif %-->
 			
 			<div class="flex_icon_div">
 				<img id="moneyicon" src="{{ url_for('static', filename='money-icon.png') }}">
-				<p>{{ user.money }}</p>
+				<p id="user_money">{{ user.money }}</p>
 			</div>
 			<div class="flex_icon_div">
 				<img id="powericon" src="{{ url_for('static', filename='power-icon.png') }}">
-				<p>0</p>
+				<p>0</p><!--power ranking stuff here-->
 			</div>
-			<!--
-			<p>{ user.followers.count() } followers, { user.followed.count() } following.</p>
-			-->
-			<!--<p> user.get_friends()|length  friends</p>-->
 			
-			<!--
-			% if user == current_user %
-			<p><a href="{ url_for('host_game') }">Host a new game</a></p>
-			% elif not current_user.is_following(user) %
-			<p>
-				<form action="{ url_for('follow', username=user.username) }" method="post">
-					{ form.hidden_tag() }
-					{ form.submit(value='Follow') }
-				</form>
-			</p>
-			% else %
-			<p>
-				<form action="{ url_for('unfollow', username=user.username) }" method="post">
-					{ form.hidden_tag() }
-					{ form.submit(value='Unfollow') }
-				</form>
-			</p>
-			% endif %
-			-->
 			</div>
 			<h1 class="user_title">{{ user.username }}</h1>
 	</div>
+	
+	{% if user == current_user %}
+	<div id="bonus_div" title="Last bonus receieved at {{ user.last_bonus }}">
+		{% if bonus %}
+		<button id="bonus_btn" onclick="claimBonus()">Claim Bonus</button>
+		{% else %}
+		<p>Check back each hour to claim bonus gold</p>
+		{% endif %}
+	</div>
+	{% endif %}
 	
 	<h2 class="user_glad_title">Gladiators</h2>
 	<hr>
