@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" + "?v=3">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" + "?v=4">
 	<link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat Subrayada' rel='stylesheet'>
 	<link href='https://fonts.googleapis.com/css?family=Blinker' rel='stylesheet'>
@@ -27,7 +27,7 @@
 <div class="nav_holder">
 	<nav class="navbar">
 		<div>
-			<a id="title" href="{{ url_for('browse_games') }}">Odds-On Glory</a>
+			<a id="title" href="{{ url_for('index') }}">Odds-On Glory</a>
 		{% if current_user.is_anonymous %}
 			<a href="{{ url_for('browse_games') }}">Colosseum</a>
 			<a href="{{ url_for('login') }}">Login</a></div>

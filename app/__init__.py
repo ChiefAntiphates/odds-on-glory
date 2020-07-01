@@ -9,6 +9,11 @@ from flask_socketio import SocketIO, emit
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
+import atexit
+from sqlalchemy.orm import aliased
+from sqlalchemy import func	
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 application = app = Flask(__name__)
 app.config.from_object(Config)
@@ -21,6 +26,22 @@ moment = Moment(app)
 socketio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
 
 
+
+##Updating money rankings
+from app.models import User, Tournament, Gladiator
+def update_money_rankings():
+	u1 = aliased(User)
+	subq = db.session.query(func.count(u1.id)).filter(u1.money > User.money).as_scalar()
+	db.session.query(User).update({"money_rank": subq + 1}, synchronize_session=False)
+	db.session.commit()
+	print("ranks updated")
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=update_money_rankings, trigger="interval", seconds=60)
+scheduler.start()
+
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
 
 
 

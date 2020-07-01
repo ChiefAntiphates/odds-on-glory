@@ -13,7 +13,7 @@ from app import app, db, socketio
 from app.models import User, Tournament
 from app.models import Gladiator as dbGladiator
 
-GLAD_ADD_TIME = 10##change time
+GLAD_ADD_TIME = 60##change time
 BETTING_PHASE_TIME = 60
 
 
@@ -30,25 +30,28 @@ class GameHandler:
 			if (density=='sparse'):
 				self.capacity=4
 			elif (density=='normal'):
-				self.capacity=6
+				self.capacity=7
 			else:
-				self.capacity=8
+				self.capacity=12
+				self.arena.packed = True
 		elif (size=='medium'):
 			self.arena = Arena(10, 7, socketio, nspace)
 			if (density=='sparse'):
 				self.capacity=7
 			elif (density=='normal'):
-				self.capacity=9
+				self.capacity=10
 			else:
-				self.capacity=12
+				self.capacity=14
+				self.arena.packed = True
 		else:
 			self.arena = Arena(13, 8, socketio, nspace)
 			if (density=='sparse'):
-				self.capacity=11
+				self.capacity=10
 			elif (density=='normal'):
 				self.capacity=14
 			else:
-				self.capacity=15
+				self.capacity=20
+				self.arena.packed = True
 				
 		self.socketio = socketio
 		self.nspace = nspace

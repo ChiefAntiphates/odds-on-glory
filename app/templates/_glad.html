@@ -2,15 +2,15 @@
 	<div class="glad_display_name">{{ glad.name }}</div>
 	<div class="glad_display_icon">
 		<img src="{{ url_for('static', filename='strength-icon.png') }}" title="Strength">
-		{{ glad.strength }}
+		<p style="color:hsl({{ glad.strength }}, 100%, 28%);">{{ glad.strength }}</p>
 	</div>
 	<div class="glad_display_icon">
 		<img src="{{ url_for('static', filename='running-icon.png') }}" title="Speed">
-		{{ glad.speed }}
+		<p style="color:hsl({{ glad.speed }}, 100%, 28%);">{{ glad.speed }}</p>
 	</div>
 	<div class="glad_display_icon">
 		<img src="{{ url_for('static', filename='aggro-icon.png') }}" title="Aggression">
-		{{ glad.aggro }}
+		<p style="color:hsl({{ glad.aggro }}, 100%, 28%);">{{ glad.aggro }}</p>
 	</div>
 	<div class="glad_display_height" title="Height">{{ glad.height }}</div>
 	<div class="glad_display_bio">{{ glad.bio }}</div>

@@ -8,7 +8,6 @@ from flask_socketio import SocketIO, emit
 from threading import Thread
 from app import app, db, socketio, moment
 from app.models import User, Tournament, Gladiator
-#from app.models import User, Post, Tournament, Gladiator
 from app.email import send_password_reset_email
 from app.game_files.nameslist import nameslist
 from app.game_files.bioslist import bios
@@ -18,11 +17,13 @@ from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, SetGameFor
 						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
 						
 from app.game_files.game_handler import GameHandler
-from datetime import datetime			
+from datetime import datetime
+
+
 #Use . to go through directories, so app.game_files.arena etc.
 
-active_games = {}##REMEMBER TO REMOVE FROM ACTIVE GAMES ONCE COMPLETE
-bonus_wait = 1
+active_games = {}
+bonus_wait = 1 #REMEMBER TO CHANGE FOR PROD
 
 @app.before_request
 def before_request():
@@ -163,7 +164,15 @@ def buy_gladiator():
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-	return render_template('index.html', title='Home')
+	page = request.args.get('page', 1, type=int)
+	users = User.query.order_by(User.money_rank.asc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
+	next_url = url_for('browse_games', page=users.next_num) \
+											if users.has_next else None
+	prev_url = url_for('browse_games', page=users.prev_num) \
+											if users.has_prev else None
+											
+	return render_template('index.html', users=users.items, title='Home',
+										next_url=next_url, prev_url=prev_url)
 	
 								
 @app.route('/marketplace')

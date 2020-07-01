@@ -11,7 +11,7 @@ from app.game_files.convertToJSON import pushInfoToJSON
 import sys
 
 
-TIMER = 0.5
+TIMER = 0.8 ##How long should each turn take??
 
 class Arena:
 	
@@ -19,7 +19,7 @@ class Arena:
 	def __init__(self, width, height, socketio, nspace):
 		self.height = height
 		self.width = width
-		self.duration = 12 # Units of 30 minutes - 48 units in one day
+		self.duration = 1 
 		self.active = False
 		self.gladding = True
 		self.gladiators = []
@@ -33,6 +33,7 @@ class Arena:
 		self.af.updateActivityFeed("ENTRY PHASE", "Enter your gladiator before time runs out!")
 		self.socketio = socketio
 		self.nspace = nspace
+		self.packed=False
 		
 		self.grid = [[Tile(a,b) for a in range(self.width)] for b in range(self.height)]	
 		for row in self.grid:
@@ -45,8 +46,11 @@ class Arena:
 	
 	def getGladiator(self, gladiator):
 		#ensure gladiators not placed next to each other
-		tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied) 
-			and len([tile for tile in self.getTileSurroundings(tile) if tile.occupied]) < 1])
+		if self.packed:
+			tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied)])
+		else:
+			tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied) 
+				and len([tile for tile in self.getTileSurroundings(tile) if tile.occupied]) < 1])
 		tile.setGladiatorToTile(gladiator)
 		self.gladiators.append(gladiator)
 		gladiator.setArena(self)
@@ -66,7 +70,7 @@ class Arena:
 		
 	
 	def nextTurn(self):
-		if (self.duration % 48 == 36):
+		if (self.duration % 20 == 0): #Scorch earth every 10 turns
 			self.scorchTheEarth()
 			
 		for runner in sorted(self.runners, key=lambda x: x.speed, reverse=True):

@@ -45,26 +45,18 @@ class Battle:
 		
 		else:
 			print("\nBATTLE STATS")
-			draw, attack, defend = 0.6, 0.21, 0.19
+			draw, attack, defend = 0.5, 0.27, 0.23
 			
 			print("Base values: %s" % [attack, defend, draw])
 			
 			
-			#################################
-			#Health probability modification#
-			#################################
-			attacker_health_diff = attack - (self.attacker.health * attack)
-			defender_health_diff = defend - (self.defender.health * defend)
-			attack = (self.attacker.health * attack) + defender_health_diff
-			defend = (self.defender.health * defend) + attacker_health_diff
-			
-			print("Healths: %s" %[self.attacker.health, self.defender.health])
-			print("After health difference: %s" % [attack, defend, draw])
-			
-			
-			
-			
 			print("Attack str: %s, Defend str: %s" % (self.attacker.strength, self.defender.strength))
+			
+
+			
+			
+			
+		
 			
 			###################################
 			#Strength probability modification#
@@ -76,8 +68,47 @@ class Battle:
 			defend += defend_strength_mod
 			
 			
-			print("After strength difference: %s" % [attack, defend, draw])
+			print("After strength modifier: %s" % [attack, defend, draw])
 			
+			
+			
+			###################################
+			#Strength difference modification#
+			###################################
+			if self.attacker.strength >= self.defender.strength:
+				str_diff = self.attacker.strength - self.defender.strength
+				def_steal = defend * str_diff
+				defend = defend - def_steal
+				attack = attack + def_steal
+			else:
+				str_diff = self.defender.strength - self.attacker.strength
+				att_steal = attack * str_diff
+				attack = attack - att_steal
+				defend = defend + att_steal
+			
+			print("After strength diff modifier: %s" % [attack, defend, draw])
+			
+			
+			
+			#################################
+			#Health probability modification#
+			#################################
+			if self.attacker.health >= self.defender.health:
+				h_diff = self.attacker.health - self.defender.health
+				def_steal = (defend * h_diff)/4
+				draw_steal = draw * h_diff
+				defend = defend - def_steal
+				draw = draw - draw_steal
+				attack = attack + def_steal + draw_steal
+			else:
+				h_diff = self.defender.health - self.attacker.health
+				att_steal = (attack * h_diff)/4
+				draw_steal = draw * h_diff
+				attack = attack - att_steal
+				draw = draw - draw_steal
+				defend = defend + att_steal + draw_steal
+			print("Healths: %s" %[self.attacker.health, self.defender.health])
+			print("After health difference: %s" % [attack, defend, draw])
 			
 			
 			
