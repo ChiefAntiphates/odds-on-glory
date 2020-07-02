@@ -33,10 +33,13 @@ function claimBonus(glad_id, price) {
 			</div>
 			
 			</div>
-			<h1 class="user_title">{{ user.username }}</h1>
+			<div class="user_title">
+				<h1>{{ user.username }}</h1>
+				<p>#<b>{{ user.money_rank }}</b></p>
+			</div>
 	</div>
 	
-	<p>User rank: {{ user.money_rank }}</p>
+	
 	
 	{% if user == current_user %}
 	<div id="bonus_div" title="Last bonus receieved at {{ (user.last_bonus|string)[:-7] }}">

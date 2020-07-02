@@ -59,8 +59,13 @@ class Arena:
 		print(gladiator.id)
 		
 	def addRunner(self, runner):
-		tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied)])
-		tile.setGladiatorToTile(runner)
+		try:
+			tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied)])
+			tile.setGladiatorToTile(runner)
+		except IndexError as e:
+			tile = r.choice([tile for tile in self.edge_tiles])
+			tile.setGladiatorToTile(runner)
+			
 		self.runners.append(runner)
 		runner.setArena(self)
 		runner.setPosition(tile.x_pos, tile.y_pos)

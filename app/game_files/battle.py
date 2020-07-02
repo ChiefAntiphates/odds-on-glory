@@ -93,16 +93,19 @@ class Battle:
 			#################################
 			#Health probability modification#
 			#################################
+			################################
+			#Change here to subtract from lower health an add to draw 
+			#################################
 			if self.attacker.health >= self.defender.health:
 				h_diff = self.attacker.health - self.defender.health
-				def_steal = (defend * h_diff)/4
+				def_steal = (defend * h_diff)/3
 				draw_steal = draw * h_diff
 				defend = defend - def_steal
 				draw = draw - draw_steal
 				attack = attack + def_steal + draw_steal
 			else:
 				h_diff = self.defender.health - self.attacker.health
-				att_steal = (attack * h_diff)/4
+				att_steal = (attack * h_diff)/3
 				draw_steal = draw * h_diff
 				attack = attack - att_steal
 				draw = draw - draw_steal

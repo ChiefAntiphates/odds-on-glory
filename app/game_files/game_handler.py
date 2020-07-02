@@ -74,9 +74,15 @@ class GameHandler:
 		return pushInfoToJSON(self.arena)
 		
 		
-	def addGladiator(self, name, strength, aggro, speed, ext_id=None):
+	def addGladiator(self, name, strength, aggro, speed, ext_id=None, champion="The State"):
 		if (len(self.arena.gladiators) < self.capacity):
 			self.arena.getGladiator(Gladiator(name, strength, aggro, speed, ext_id))
+		
+		
+		self.user_activity.append("%s entered %s to the arena." % (champion, name))
+		
+		self.socketio.emit('useractivityupdate', {'all_bets': self.convertBetsToJSON(), 'user_activity': self.user_activity}, namespace=self.nspace)
+		
 		#else emit an error message!!!
 	
 	
@@ -100,8 +106,8 @@ class GameHandler:
 		sender.spendMoney(int(cost))
 		db.session.commit()
 		runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
-		self.arena.addRunner(runner)
 		
+		self.arena.addRunner(runner)
 		
 		self.user_activity.append("%s sent %s a trap." % (sender.username, gladiator.name))
 		
@@ -165,10 +171,13 @@ class GameHandler:
 		if (win_id != "None"):
 			gladiator = dbGladiator.query.filter_by(id=win_id).first()
 			gladiator.available = True
+			gladiator.last_update = datetime.utcnow()
+			gladiator.battle_ready = 0
+			db.session.commit()
 			win_owner = gladiator.owner
 			win_owner.addMoney(500)
 			db.session.commit()
-			print("THIS BIT HERE")
+			print("player glad wins")
 		else:
 			print("non player glad wins")
 		game = Tournament.query.filter_by(id=self.game_id).first()
@@ -197,7 +206,7 @@ class GameHandler:
 				bet_info["glad_id"] = bet.gladiator.id
 				bet_info["odds"] = bet.odds_info[2]
 				bet_info["value"] = bet.bet
-				bet_info["return"] = bet.betReturn
+				bet_info["return_val"] = bet.betReturn
 				bets_json["bets"].append(bet_info)
 		return bets_json
 		

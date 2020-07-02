@@ -2,15 +2,39 @@
 
 
 {% block app_content %}	
-	<h1>Hello, {{ current_user.username }}!</h1>
 	
-	<h2>Leaderboard</h2>
 	
-	{% for user in users %}
+	<div class="index_holder">
+	
 	<div>
-		<p><b>#{{ user.money_rank }}</b> {{ user.username }}</p>
-		<p>{{ user.money }} gold</p>
+	{% if current_user.is_authenticated %}
+	<h1>Hello, {{ current_user.username }}!</h1>
+	{% endif %}
+	<p>video</p>
 	</div>
-	<br>
-	{% endfor %}
+	
+	<div class="leaderboard">
+		<h2>Leaderboard</h2>
+		<p id="board_notice"> The leaderboard updates every minute</p>
+		
+		{% for user in users %}
+		<div class="board_entry">
+			<p class="money">{{ user.money }}</p>
+			<p class="name"><b>{{ user.money_rank }}</b> - 
+			<a href="{{ url_for('user', username=user.username) }}">{{ user.username }}</a>
+			</p>
+		</div>
+		{% endfor %}
+		<div class="page_nav">
+			{% if prev_url %}
+			<a class="prev_url" href="{{ prev_url }}"><i class="arrow left"></i> Previous</a>
+			{% endif %}
+			{% if next_url %}
+			<a class="next_url" href="{{ next_url }}">Next <i class="arrow right"></i></a>
+			{% endif %}
+		</div>
+	</div>
+	
+	
+	</div>
 {% endblock %}

@@ -1,5 +1,8 @@
 <div class="glad_display_grid" title="&quot;{{ glad.quote }}&quot; - {{ glad.name }}">
 	<div class="glad_display_name">{{ glad.name }}</div>
+	{% if glad.battle_ready < 100 %}
+	<div class="battle_ready" title="Battle Readiness">{{ glad.battle_ready }}%</div>
+	{% endif %}
 	<div class="glad_display_icon">
 		<img src="{{ url_for('static', filename='strength-icon.png') }}" title="Strength">
 		<p style="color:hsl({{ glad.strength }}, 100%, 28%);">{{ glad.strength }}</p>
@@ -10,9 +13,10 @@
 	</div>
 	<div class="glad_display_icon">
 		<img src="{{ url_for('static', filename='aggro-icon.png') }}" title="Aggression">
-		<p style="color:hsl({{ glad.aggro }}, 100%, 28%);">{{ glad.aggro }}</p>
+		<p style="color:hsl({{ glad.aggro+260 }}, 100%, 28%);">{{ glad.aggro }}</p>
 	</div>
 	<div class="glad_display_height" title="Height">{{ glad.height }}</div>
 	<div class="glad_display_bio">{{ glad.bio }}</div>
 	<!--have quote display on hover-->
+	
 </div>

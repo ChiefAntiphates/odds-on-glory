@@ -44,6 +44,60 @@ hr {
   margin: 0;
 }
 
+.index_holder {
+  display: flex;
+  justify-content: space-between;
+}
+.index_holder .leaderboard {
+  margin-right: 3em;
+}
+.index_holder .leaderboard .board_entry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0.5em 0em;
+}
+.index_holder .leaderboard .board_entry p {
+  padding: 0 0.4em;
+  margin: 0;
+}
+.index_holder .leaderboard .board_entry .name {
+  border-left: 0.1em solid #e3ac34;
+}
+.index_holder .leaderboard .board_entry .name a {
+  text-decoration: none;
+  color: black;
+}
+.index_holder .leaderboard .board_entry .name a:hover {
+  color: white;
+  cursor: pointer;
+  background-color: #9c741f;
+  transition: 1s;
+}
+.index_holder .leaderboard .board_entry .money {
+  color: #9c741f;
+  text-align: right;
+}
+
+.page_nav a:hover {
+  pointer: cursor;
+  color: #9c741f;
+  transition: 1s;
+}
+
+.leaderboard h2 {
+  padding-bottom: 0;
+  font-size: 1.8em;
+  margin: 0;
+  text-align: center;
+}
+.leaderboard #board_notice {
+  padding-top: 0;
+  margin-top: 0;
+  font-size: 0.8em;
+  text-align: center;
+  font-style: italic;
+}
+
 /*Nav bar*/
 .nav_holder {
   /*
@@ -193,6 +247,12 @@ https://codepen.io/divinector/pen/qgZKYQ
   font-size: 1.1em;
   padding-top: 0.3em;
 }
+.glad_display_grid .battle_ready {
+  position: absolute;
+  color: #910e04;
+  font-weight: 600;
+  padding: 0.2em 0.4em;
+}
 .glad_display_grid .glad_display_icon {
   white-space: nowrap;
   align-items: center;
@@ -259,11 +319,21 @@ https://codepen.io/divinector/pen/qgZKYQ
   align-items: center;
 }
 .user_page_div .user_title {
-  margin: 0.3em 0em;
+  margin: 0.35em 0em;
   padding: 0.5em;
   width: 100%;
   text-align: right;
+}
+.user_page_div .user_title h1 {
   font-size: 2.5em;
+  padding: 0;
+  margin: 0.1em 0;
+}
+.user_page_div .user_title p {
+  padding: 0;
+  margin: 0;
+  color: #9c741f;
+  font-size: 1.5em;
 }
 .user_page_div .flex_icon_div {
   display: flex;
@@ -592,13 +662,24 @@ grid-row: 1;*/
   width: 22%;
   height: 10em;
   padding-top: 5px;
-  margin-left: 4em;
+  margin-left: 2em;
 }
 #user_activity p {
   padding-top: 0;
   margin-top: 0;
   padding-left: 0.2em;
   border-left: 2px solid #328ba8;
+  font-size: 0.97em;
+}
+#user_activity a {
+  text-decoration: none;
+  color: black;
+}
+#user_activity a:hover {
+  color: white;
+  cursor: pointer;
+  background-color: #9c741f;
+  transition: 1s;
 }
 
 #own_bets {
@@ -616,6 +697,7 @@ grid-row: 1;*/
   margin-top: 0;
   border-right: 2px solid #e3ac34;
   font-family: Courier Prime, Bitter, sans-serif;
+  font-size: 0.9em;
 }
 
 #activity_feed {

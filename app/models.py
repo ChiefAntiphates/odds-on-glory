@@ -42,13 +42,19 @@ class Gladiator(db.Model):
 	available = db.Column(db.Boolean)#False if in Arena
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	
+	elims = db.Column(db.Integer, index=True)
+	
+	battle_ready = db.Column(db.Integer, index=True, default=100)
+	last_update = db.Column(db.DateTime, default=datetime.utcnow)#last fight
+	
 	def __repr__(self):
 		return '<Gladiator {}>'.format(self.name)
 		
 	
 	def getJSON(self):
 		return {"id": self.id, "name": self.name, "strength": self.strength,
-					"speed": self.speed, "aggro": self.aggro}
+					"speed": self.speed, "aggro": self.aggro, 
+					"battle_ready": self.battle_ready}
 	
 	def getPrice(self):
 		return round((self.speed*0.6)+(self.strength*3)+(self.aggro*0.2))

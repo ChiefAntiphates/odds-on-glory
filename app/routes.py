@@ -14,7 +14,7 @@ from app.game_files.bioslist import bios
 from app.game_files.quoteslist import quotes
 from app.game_files.heightlist import heights
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, SetGameForm,\
-						EditProfileForm, EmptyForm, PostForm, ResetPasswordRequestForm
+						EmptyForm, PostForm, ResetPasswordRequestForm
 						
 from app.game_files.game_handler import GameHandler
 from datetime import datetime
@@ -23,7 +23,7 @@ from datetime import datetime
 #Use . to go through directories, so app.game_files.arena etc.
 
 active_games = {}
-bonus_wait = 1 #REMEMBER TO CHANGE FOR PROD
+BONUS_WAIT = 60 #REMEMBER TO CHANGE FOR PROD
 
 @app.before_request
 def before_request():
@@ -68,7 +68,7 @@ def browse_games():
 		
 		
 	page = request.args.get('page', 1, type=int)
-	games = Tournament.query.paginate(page, app.config['POSTS_PER_PAGE'], False)
+	games = Tournament.query.order_by(Tournament.id.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
 	next_url = url_for('browse_games', page=games.next_num) \
 											if games.has_next else None
 	prev_url = url_for('browse_games', page=games.prev_num) \
@@ -88,8 +88,20 @@ def game(game_id):
 	game_obj = active_games[game.code]
 	json_arena = game_obj.getJSON()
 	glads = None
+	
 	if current_user.is_authenticated:
+		#reassess battle readiness
+		glads_temp = current_user.gladiators.filter(Gladiator.battle_ready < 100)
+		for g in glads_temp:
+			ready_score = (datetime.utcnow() - g.last_update)
+			ready_score = divmod(ready_score.total_seconds(), 60)
+			g.battle_ready = int(ready_score[0])
+			if g.battle_ready > 100:
+				g.battle_ready = 100
+			db.session.commit()
+				
 		glads = current_user.getAvailGlads()
+		
 	return render_template('game.html', game_code=game.code, json_arena=json_arena,
 								current_user=current_user, game_bets=game_obj.convertBetsToJSON(),
 								init_ua=json.dumps(game_obj.user_activity), glads=glads)
@@ -107,7 +119,7 @@ def add_gladiator_to_arena():
 	global active_games
 	game = active_games[game_code_key]
 	game.addGladiator(glad.name, glad.strength, glad.aggro,
-							glad.speed, glad.id)
+							glad.speed, glad.id, current_user.username)
 	return "done"
 
 
@@ -162,13 +174,12 @@ def buy_gladiator():
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
-@login_required
 def index():
 	page = request.args.get('page', 1, type=int)
-	users = User.query.order_by(User.money_rank.asc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
-	next_url = url_for('browse_games', page=users.next_num) \
+	users = User.query.order_by(User.money_rank.asc()).paginate(page, 20, False)
+	next_url = url_for('index', page=users.next_num) \
 											if users.has_next else None
-	prev_url = url_for('browse_games', page=users.prev_num) \
+	prev_url = url_for('index', page=users.prev_num) \
 											if users.has_prev else None
 											
 	return render_template('index.html', users=users.items, title='Home',
@@ -209,17 +220,17 @@ def marketplace():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if current_user.is_authenticated:
-		return redirect(url_for('marketplace'))
+		return redirect(url_for('index'))
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
 		if user is None or not user.check_password(form.password.data):
 			flash('Invalid username or password')
-			return redirect(url_for('login'))
+			return redirect(url_for('index'))
 		login_user(user, remember=form.remember_me.data)
 		next_page = request.args.get('next')
 		if not next_page or url_parse(next_page).netloc != '':
-			next_page = url_for('marketplace')
+			next_page = url_for('index')
 		return redirect(next_page)
 	return render_template('login.html', title='Sign In', form=form)
 	
@@ -246,7 +257,6 @@ def register():
 	
 	
 @app.route('/user/<username>')
-@login_required
 def user(username):
 
 	user = User.query.filter_by(username=username).first_or_404()
@@ -254,20 +264,31 @@ def user(username):
 	bonus = False
 	if user == current_user:
 		#Playing around with timing stuff START
-		print(current_user.last_bonus)
-		print(datetime.utcnow())
+
 		time_since = (datetime.utcnow() - current_user.last_bonus)
 		time_since = divmod(time_since.total_seconds(), 60)
-		print(time_since[0])
-		if time_since[0] >= bonus_wait:
+
+		if time_since[0] >= BONUS_WAIT:
 			bonus = True
-		
-		####This maybe for gladiator states
-		negative_time = (current_user.last_bonus - datetime.utcnow())
-		negative_time = divmod(negative_time.total_seconds(), 60)
-		#print(negative_time[0])
-		#print(negative_time[0] < 0)
-		#Playing around with timing stuff END
+	
+	
+	###Gladiator readiness###
+	
+	if current_user.is_authenticated:
+		glads_temp = user.gladiators.filter(Gladiator.battle_ready < 100)
+		for g in glads_temp:
+			ready_score = (datetime.utcnow() - g.last_update)
+			ready_score = divmod(ready_score.total_seconds(), 60)
+			print(g.name)
+			print(g.battle_ready)
+			g.battle_ready = int(ready_score[0])
+			if g.battle_ready > 100:
+				g.battle_ready = 100
+			db.session.commit()
+			print(g.battle_ready)
+			print(g.last_update)
+			print("\n")
+	###Gladiator readiness###
 	
 	
 	
@@ -289,7 +310,7 @@ def claim_bonus():
 	time_since = (datetime.utcnow() - current_user.last_bonus)
 	time_since = divmod(time_since.total_seconds(), 60)
 	print(time_since[0])
-	if time_since[0] >= bonus_wait:
+	if time_since[0] >= BONUS_WAIT:
 		print(current_user.last_bonus)
 		current_user.last_bonus = datetime.utcnow()
 		current_user.money = current_user.money + 50

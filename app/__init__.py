@@ -34,7 +34,7 @@ def update_money_rankings():
 	subq = db.session.query(func.count(u1.id)).filter(u1.money > User.money).as_scalar()
 	db.session.query(User).update({"money_rank": subq + 1}, synchronize_session=False)
 	db.session.commit()
-	print("ranks updated")
+	#print("ranks updated")
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=update_money_rankings, trigger="interval", seconds=60)

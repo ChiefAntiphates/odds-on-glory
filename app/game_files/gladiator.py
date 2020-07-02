@@ -1,5 +1,6 @@
 import time
 import random as r
+from datetime import datetime
 from numpy.random import choice as np_choice
 from app.game_files.tile import *
 from app.game_files.battle import *
@@ -22,6 +23,12 @@ class Gladiator:
 	I_TRAPS = "A TRAP"
 	I_WEAPONS = "A WEAPON"
 	I_MEDICINE = "MEDICINE"
+	
+	ELIM_SLAYER_MAPPING = {
+		id(ActivityFeed.SLAYER_MESSAGES): ActivityFeed.ELIM_MESSAGES,
+		id(ActivityFeed.SELF_ATTACKS): ActivityFeed.SELF_ELIM_ATTACKS,
+		id(ActivityFeed.TRAPS): ActivityFeed.ELIM_TRAPS,
+	}
 	
 	
 	
@@ -121,19 +128,57 @@ class Gladiator:
 		self.killed_by = slayer	
 		self.alive = False
 		
-		msg_choice = r.choice(cod)
-		if cod in [ActivityFeed.SLAYER_MESSAGES, ActivityFeed.TRAPS]:
-			self.arena.af.updateActivityFeed(
-				msg_choice[0] % {'winner': slayer.name, 'loser': self.name},
-				msg_choice[1] % {'winner': slayer.name, 'loser': self.name})
-		else:
-			self.arena.af.updateActivityFeed(msg_choice[0] % self.name, msg_choice[1] % self.name)
-		
-		##DELETE GLADIATOR FROM DATABASE
-		if (self.ext_id != None):
-			dbGladiator.query.filter_by(id=self.ext_id).delete()
+		def standard_kill(msg=cod):
+			msg_choice = r.choice(msg)
+			if msg in [ActivityFeed.SELF_ATTACKS, ActivityFeed.SELF_ELIM_ATTACKS]:
+				self.arena.af.updateActivityFeed(msg_choice[0] % self.name, msg_choice[1] % self.name)
+			
+			else:
+				self.arena.af.updateActivityFeed(
+					msg_choice[0] % {'winner': slayer.name, 'loser': self.name},
+					msg_choice[1] % {'winner': slayer.name, 'loser': self.name})
+					
+					
+		def reset_glad(glad):
+			glad.last_update = datetime.utcnow()
+			glad.available = True
+			glad.battle_ready = 0
 			db.session.commit()
 		
+		
+		if (self.ext_id != None):
+			
+			db_glad=dbGladiator.query.filter_by(id=self.ext_id).first()
+			
+			if db_glad.battle_ready < 100:
+				perma_death_chance = 100-db_glad.battle_ready
+				rand_int = r.randint(1,100)
+				print(perma_death_chance)
+				print(rand_int)
+				if perma_death_chance >= rand_int:
+					standard_kill()
+					dbGladiator.query.filter_by(id=self.ext_id).delete()
+					db.session.commit()
+					print("guy died")
+					
+				else: #put in func
+					reset_glad(db_glad)#survive
+					cod2 = Gladiator.ELIM_SLAYER_MAPPING[id(cod)]
+					standard_kill(cod2)
+					print("guy didnt die")
+			else:
+				reset_glad(db_glad)#survive
+				cod2 = Gladiator.ELIM_SLAYER_MAPPING[id(cod)]
+				print(cod2)
+				print("it was 100 whats happ")
+				standard_kill(cod2)
+			#Set dictionary for cod_slayer -> cod_elim
+			
+		else:
+			standard_kill()
+		
+		
+
 		
 	def detectNearbyGladiators(self):
 		success = False
@@ -298,8 +343,8 @@ class Gladiator:
 		
 		##Place trap
 		if (len(self.inventory[Gladiator.I_TRAPS]) > 0) and (self.arena.duration > 20) and not(self.tile.edge):
-			action_prob.append([self.placeTrap, remaining_prob * 0.35])
-			remaining_prob = remaining_prob - (remaining_prob * 0.35)
+			action_prob.append([self.placeTrap, remaining_prob * 0.45])
+			remaining_prob = remaining_prob - (remaining_prob * 0.45)
 		
 		##Fatal accident
 		action_prob.append([self.fatalAccident, remaining_prob * 0.0004])
