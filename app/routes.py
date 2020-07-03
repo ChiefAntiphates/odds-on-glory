@@ -23,7 +23,7 @@ from datetime import datetime
 #Use . to go through directories, so app.game_files.arena etc.
 
 active_games = {}
-BONUS_WAIT = 60 #REMEMBER TO CHANGE FOR PROD
+BONUS_WAIT = 60 #In minutes
 
 @app.before_request
 def before_request():
@@ -48,24 +48,18 @@ def before_request():
 	
 @app.route('/browse_games', methods=['GET','POST'])
 def browse_games():
+	
+	if len(active_games) < 1:
+		game = initGame()
+		
+
 	form = SetGameForm()
 	if form.validate_on_submit():
 		
-		game = Tournament(host=current_user, size=form.size.data, density=form.density.data)
-		db.session.add(game)
-		db.session.commit()
-		game.set_code()
-		db.session.commit()
+		game = initGame(host=current_user, size=form.size.data, density=form.density.data)
 		
-		global active_games
-		game_handler = GameHandler(socketio, game.code, game.id, form.size.data, form.density.data)
-		active_games[game.code] = game_handler
 		
-		#Start game running
-		thread = Thread()
-		thread = socketio.start_background_task(game_handler.preGame)
 		return redirect(url_for('game', game_id=game.id))
-		
 		
 	page = request.args.get('page', 1, type=int)
 	games = Tournament.query.order_by(Tournament.id.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
@@ -87,6 +81,7 @@ def game(game_id):
 		return render_template('404.html')#Maybe put custom error here
 	game_obj = active_games[game.code]
 	json_arena = game_obj.getJSON()
+
 	glads = None
 	
 	if current_user.is_authenticated:
@@ -362,10 +357,31 @@ def reset_password(token):
 
 
 
+def initGame(host=None, size='medium', density='normal'):
+	game = Tournament(host=host, size=size, density=density)
+	db.session.add(game)
+	db.session.commit()
+	game.set_code()
+	db.session.commit()
+	
+	global active_games
+	game_handler = GameHandler(socketio, game.code, game.id, size, density)
+	active_games[game.code] = game_handler
+	
+	#Start game running
+	thread = Thread()
+	thread = socketio.start_background_task(game_handler.preGame)
+	
+	return game
 
 
 
 
 
-		
+
+
+
+
+
+
 

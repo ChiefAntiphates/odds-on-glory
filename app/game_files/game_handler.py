@@ -13,8 +13,8 @@ from app import app, db, socketio
 from app.models import User, Tournament
 from app.models import Gladiator as dbGladiator
 
-GLAD_ADD_TIME = 60##change time
-BETTING_PHASE_TIME = 60
+GLAD_ADD_TIME = 20##change time
+BETTING_PHASE_TIME = 20
 
 
 #import tkinter as tk
@@ -90,6 +90,7 @@ class GameHandler:
 	def sendBet(self, glad_id, bet_value, punter_id):
 		gladiator = next((x for x in self.arena.gladiators if int(x.id) == int(glad_id)), None)
 		self.bets.append(Bet(self.arena, gladiator, bet_value, punter_id)) 
+		
 		punter = User.query.filter_by(id=punter_id).first()
 		punter.spendMoney(int(bet_value))
 		db.session.commit()
@@ -144,6 +145,7 @@ class GameHandler:
 		for i in range(BETTING_PHASE_TIME):
 			self.socketio.emit('arenabetting', {'timer': BETTING_PHASE_TIME-i-1}, namespace=self.nspace)
 			self.socketio.sleep(1)
+			
 		self.startGames()
 	
 	
@@ -154,33 +156,40 @@ class GameHandler:
 		while len(self.arena.gladiators) > 1:
 			self.arena.nextTurn()
 		
+		
 		print("game over")
-		if len(self.arena.gladiators) > 0:
-			self.arena.af.updateActivityFeed("WINNER", "%s wins!" % self.arena.gladiators[0].name)
-			self.payOut(self.arena.gladiators[0])
+		if len(self.arena.gladiators) < 1:
+			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
+		
 			#betting stuff
 		else:
-			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
-		json_obj = pushInfoToJSON(self.arena)
-		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
-		#Final emit to clean up
-		win_id = self.arena.gladiators[0].ext_id
-		if (self.arena.gladiators[0].ext_id == None):
-			win_id = "None"
-		
-		self.socketio.emit('arenafinish', {'winner': win_id}, namespace=self.nspace)
-		if (win_id != "None"):
-			gladiator = dbGladiator.query.filter_by(id=win_id).first()
-			gladiator.available = True
-			gladiator.last_update = datetime.utcnow()
-			gladiator.battle_ready = 0
-			db.session.commit()
-			win_owner = gladiator.owner
-			win_owner.addMoney(500)
-			db.session.commit()
-			print("player glad wins")
-		else:
-			print("non player glad wins")
+			self.arena.af.updateActivityFeed("WINNER", "%s wins!" % self.arena.gladiators[0].name)
+			self.payOut(self.arena.gladiators[0])
+			json_obj = pushInfoToJSON(self.arena)
+			
+			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
+			#Final emit to clean up
+			win_id = self.arena.gladiators[0].ext_id
+			if (self.arena.gladiators[0].ext_id == None):
+				win_id = "None"
+			
+			self.socketio.emit('arenafinish', {'winner': win_id}, namespace=self.nspace)
+			if (win_id != "None"):
+				gladiator = dbGladiator.query.filter_by(id=win_id).first()
+				gladiator.available = True
+				gladiator.last_update = datetime.utcnow()
+				gladiator.battle_ready = 0
+				db.session.commit()
+				win_owner = gladiator.owner
+				winnings = 500
+				win_owner.addMoney(winnings)
+				db.session.commit()
+				self.socketio.emit('gladwon', {'glad': gladiator.name, 'winnings': winnings}, 
+								namespace="/"+str(gladiator.owner.id))
+				print("player glad wins")
+			else:
+				print("non player glad wins")
+				
 		game = Tournament.query.filter_by(id=self.game_id).first()
 		db.session.delete(game)
 		db.session.commit()
@@ -195,19 +204,21 @@ class GameHandler:
 				punter = User.query.filter_by(id=bet.punter_id).first()
 				punter.addMoney(bet.betReturn)
 				db.session.commit()
+				self.socketio.emit('betwin', {'glad': bet.gladiator.name, 'winnings': bet.betReturn}, 
+							namespace="/"+str(bet.punter_id))
 			
 	def convertBetsToJSON(self):
 		bets_json = {"bets": []}
 		for bet in self.bets:
-			if bet.gladiator.alive:
-				bet_info = {}
-				bet_info["punter_id"] = bet.punter_id
-				bet_info["gladiator"] = bet.gladiator.name
-				bet_info["glad_id"] = bet.gladiator.id
-				bet_info["odds"] = bet.odds_info[2]
-				bet_info["value"] = bet.bet
-				bet_info["return_val"] = bet.betReturn
-				bets_json["bets"].append(bet_info)
+			bet_info = {}
+			bet_info["punter_id"] = bet.punter_id
+			bet_info["gladiator"] = bet.gladiator.name
+			bet_info["glad_id"] = bet.gladiator.id
+			bet_info["alive"] = bet.gladiator.alive
+			bet_info["odds"] = bet.odds_info[2]
+			bet_info["value"] = bet.bet
+			bet_info["return_val"] = bet.betReturn
+			bets_json["bets"].append(bet_info)
 		return bets_json
 		
 		

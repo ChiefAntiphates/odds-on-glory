@@ -35,12 +35,14 @@ class Battle:
 		self.arena.active_battles.append(self)
 		self.attacker.setBattle(self)
 		self.defender.setBattle(self)
+		self.tile.addBattleToTile()
 	
 	
 	def basic_fight(self):
 		if not(self.attacker.alive) or not(self.defender.alive):
 			self.attacker.endBattle(self)
 			self.defender.endBattle(self)
+			self.tile.endBattleTile()
 			self.arena.active_battles.remove(self)
 		
 		else:
@@ -129,13 +131,22 @@ class Battle:
 			self.defence_damage = defend
 			np_choice([self.noWin, self.attackerWin, self.defenderWin], 1, 
 											p=[draw, attack, defend])[0]()
+			
+			
+			
 			try:
 				print(self.winner.name)
 			except AttributeError as e:
 				print("draw")
-			print("\n")
+			
+			
+			self.tile.endBattleTile()
+		
 			self.attacker.endBattle(self)
 			self.defender.endBattle(self)
+			
+			
+			
 			
 			self.arena.active_battles.remove(self)
 	

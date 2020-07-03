@@ -11,8 +11,8 @@ from app.game_files.convertToJSON import pushInfoToJSON
 import sys
 
 
-TIMER = 0.8 ##How long should each turn take??
-
+TIMER = 0.7 ##How long should each turn take??
+SCORCH = 1 #How many turns before scorchTheEarth
 class Arena:
 	
 	'''CONSTRUCTOR'''
@@ -75,7 +75,7 @@ class Arena:
 		
 	
 	def nextTurn(self):
-		if (self.duration % 20 == 0): #Scorch earth every 10 turns
+		if (self.duration % SCORCH == 0): #Scorch earth every 10 turns
 			self.scorchTheEarth()
 			
 		for runner in sorted(self.runners, key=lambda x: x.speed, reverse=True):

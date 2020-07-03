@@ -469,14 +469,14 @@ ARENA/GAME CSS BELOW
 .oog_td_style {
   border: 2px solid black;
   width: 50px;
-  min-width: 50px;
-  max-width: 50px;
+  max-width: 50px !important;
   height: 50px;
-  min-height: 50px;
-  max-height: 50px;
+  max-height: 50px !important;
+  background-size: 50px 50px;
   background-color: #edc168;
   outline-offset: -4px;
   overflow: hidden;
+  white-space: nowrap;
   background-repeat: no-repeat;
   text-align: center;
   color: black;

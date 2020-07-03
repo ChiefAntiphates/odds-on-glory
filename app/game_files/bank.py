@@ -41,7 +41,7 @@ def calculateOdds(gladiators):
 	return final_gladiator_odds
 
 def traitOddsModifiers(glads_odds, attribute, modifier):
-	total = 0
+	total = 0.1
 	for glad, share in glads_odds:
 		total += glad.getAttribute(attribute)
 	average = total/len(glads_odds)

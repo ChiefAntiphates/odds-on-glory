@@ -5,14 +5,15 @@ var global_own_bets = [];
 var global_user_activity = [];
 
 $(document).ready(function(){
-	////console.log(game_code)
+	//////console.log(game_code)
     //connect to the socket server.
     var socket = io.connect('https://' + document.domain + ':' + location.port + game_code);
     var arena_active = json_arena.active;
     var gladding = json_arena.gladding;
-	////console.log('{{ game_code|safe }}');
+	//////console.log('{{ game_code|safe }}');
 	//Upon connecting build arena incase missed the update
 	initArenaGlads(json_arena)
+	
 	
 	
 	
@@ -25,7 +26,7 @@ $(document).ready(function(){
 	//Add gladiator button - removed at start of betting phase 
 	if (logged_in === true){
 		if ((gladding === true) && (Object.keys(gladiator_options).length > 0) && (user_barred === 0)){
-			//console.log(gladiator_options);
+			////console.log(gladiator_options);
 			
 			
 			
@@ -45,11 +46,11 @@ $(document).ready(function(){
 					buttons: swal_glad_options,
 				})
 				.then((value) => {
-					//console.log(value);
+					////console.log(value);
 					if (value !== null) {
 						for (gladiator in gladiator_options){
 							if (Number(gladiator_options[gladiator].id) === Number(value)){
-								//console.log("yay");
+								////console.log("yay");
 								var glad = gladiator_options[gladiator];
 								break;
 							}
@@ -72,7 +73,7 @@ $(document).ready(function(){
 						.then((isConfirm) => {
 							if (isConfirm) {
 								if ((gladding === true)){
-									//console.log(glad);
+									////console.log(glad);
 									$.ajax({
 										type : "POST",
 										url : '/add_gladiator_to_arena',
@@ -90,10 +91,10 @@ $(document).ready(function(){
 									elem.parentNode.removeChild(elem);//Remove add gladiator button
 									
 								}else {
-									//console.log("outta time!!");
+									////console.log("outta time!!");
 								}
 							} else {
-								//console.log("Gladiator not entered");
+								////console.log("Gladiator not entered");
 							}
 						});
 					}//end if null
@@ -143,7 +144,7 @@ $(document).ready(function(){
 	socket.on('arenabetting', function(msg) {
 		let timer = document.getElementById("over_text");
 		timer.innerHTML = "BETTING PHASE<br>Game begins in:<br>"+msg.timer;
-		////console.log(msg.timer);
+		//////console.log(msg.timer);
 		if (msg.timer === 0){
 			let time_hold = document.getElementById("overlay");
 			time_hold.remove();
@@ -184,7 +185,7 @@ $(document).ready(function(){
     //Upon Socket arena update event
     socket.on('arenaupdate', function(msg) {
 		var arena = JSON.parse(msg.json_obj);
-		////console.log(arena);
+		//////console.log(arena);
 		
 		
 		//Update tiles//NOTE: Convert to canvas at some point
@@ -197,7 +198,7 @@ $(document).ready(function(){
 				//table_td.innerHTML = tile.occupant_initials.join("<br>");
 				table_td_inner = "";
 				for (g in tile.occupant_initials){
-					if (g !== '0'){
+					if (g === '1'){
 						table_td_inner += "<br>";
 					}
 					if(tile.occupant_owners[g] === Number(user_id)){
@@ -210,9 +211,18 @@ $(document).ready(function(){
 				}
 				table_td.innerHTML = table_td_inner;
 				
-				if (tile.corpse_present === true){
+				if (tile.battle_present === true){
+					table_td.style.backgroundImage = "url('"+battle_img_url+"')";
+				}
+				else if (tile.corpse_present === true){
 					table_td.style.backgroundImage = "url('"+cross_img_url+"')";
 				}
+				else{
+					table_td.style.backgroundImage = "none";
+				}
+				
+				
+				
 				if  (tile.hostile === true) { //if hostile
 					table_td.style.backgroundColor = "#821111"; 
 					table_td.style.outline = null;
@@ -228,7 +238,7 @@ $(document).ready(function(){
 		//Update activity feed
 		var af_div = document.getElementById("activity_feed");
 		var activity_feed = arena.activity_log;
-		////console.log(activity_feed);
+		//////console.log(activity_feed);
 		var af_len = Object.keys(activity_feed).length;
 		var af_diff = (af_len - Object.keys(global_activity_feed).length);
 		if (af_diff > 0){
@@ -319,26 +329,28 @@ $(document).ready(function(){
 	
 	//On any user activity
 	socket.on('useractivityupdate', function(msg) {
-		//console.log("user activity update");
+		////console.log("user activity update");
 		//Display own bets
 		let own_bets_div = document.getElementById("own_bets");
 		//Set each new bet with a class of glad id so that it can be deleted when glad dies
-		//console.log("start");
+		////console.log("start");
 		let all_bets = msg.all_bets.bets;
 		
-		//console.log(all_bets);
+		////console.log(all_bets);
 		
 		let all_bets_len = Object.keys(all_bets).length;
-		//console.log("all bets len");
-		//console.log(all_bets_len);
+		////console.log("all bets len");
+		////console.log(all_bets_len);
 		let diff = (all_bets_len - Object.keys(global_own_bets).length);
-		//console.log("diff");
-		//console.log(diff);
+		////console.log("diff");
+		////console.log(diff);
 		//console.log(all_bets);
-		if (diff > 0){
+		//console.log(global_own_bets);
+		
+		if (diff > 0){ 
 			global_own_bets = all_bets;
 			for (i=diff; i>0; i--){
-				if (all_bets[all_bets_len-i].punter_id === Number(user_id)){
+				if ((all_bets[all_bets_len-i].punter_id === Number(user_id)) && (all_bets[all_bets_len-i].alive=== true)){
 					
 					let bet_info = document.createElement("p");
 					bet_info.className = all_bets[all_bets_len-i].glad_id;
@@ -360,7 +372,7 @@ $(document).ready(function(){
 		if (diff2 > 0){
 			global_user_activity = user_activity_list;
 			for (i=diff2; i>0; i--){
-				//console.log(user_activity_list[u_a_len-i]);
+				////console.log(user_activity_list[u_a_len-i]);
 				let activity = document.createElement("p");
 				let activity_split = user_activity_list[u_a_len-i].split(" ");
 				if(activity_split[1] !== "State"){
@@ -393,13 +405,13 @@ function initArenaGlads(arena_build){
 	for (var tile_row in arena_build.tile_rows) {
 		var tr = "<tr>";
 		for (var tiles_parser in arena_build.tile_rows[tile_row].tiles){
-			////console.log(tile_row, arena_build.tile_rows[tile_row].tiles[tiles_parser])
+			//////console.log(tile_row, arena_build.tile_rows[tile_row].tiles[tiles_parser])
 			var td = "<td class=oog_td_style>";
 			//td += arena_build.tile_rows[tile_row].tiles[tiles_parser].occupant_initials.join("\n");
 			let tile = arena_build.tile_rows[tile_row].tiles[tiles_parser];
 			
 			for (g in tile.occupant_initials){
-				if (g !== '0'){
+				if (g === '1'){
 					td += "<br>";
 				}
 				if(tile.occupant_owners[g] === Number(user_id)){
@@ -452,8 +464,8 @@ function initArenaGlads(arena_build){
 		let glad_name = gladiator_obj.name;
 		let glad_id = gladiator_obj.id;
 		g_v_content += "<div class='oog_click_div glad_sidebar";
-		//console.log(gladiator_obj.owner_id);//HEREHERHEHRERHER
-		//console.log(Number(user_id));//haven't tested this yet - this is for colours
+		////console.log(gladiator_obj.owner_id);//HEREHERHEHRERHER
+		////console.log(Number(user_id));//haven't tested this yet - this is for colours
 		if (gladiator_obj.owner_id === Number(user_id)){
 		g_v_content += " owned_glad_sidebar";
 		}
@@ -570,10 +582,10 @@ function initArenaGlads(arena_build){
 	let own_bets_div = document.getElementById("own_bets");
 	let own_bets_fill = "";
 	for (bet in all_bets){
-		if (all_bets[bet].punter_id === Number(user_id)){
+		if ((all_bets[bet].punter_id === Number(user_id)) && (all_bets[bet].alive=== true)){
 			
-			//console.log(all_bets[bet]);
-			//console.log(all_bets[bet].gladiator);
+			////console.log(all_bets[bet]);
+			////console.log(all_bets[bet].gladiator);
 			own_bets_fill = "<p class='"+all_bets[bet].glad_id+"'><b>"+all_bets[bet].value+"</b> on <b>"+all_bets[bet].gladiator+
 								"</b> "+all_bets[bet].odds + "<br>Returns: " + all_bets[bet].return_val +
 								"</p>" + own_bets_fill;
@@ -588,7 +600,7 @@ function initArenaGlads(arena_build){
 	
 	if (global_user_activity == 0) {
 		global_user_activity = init_ua;
-		//console.log(init_ua);
+		////console.log(init_ua);
 		let user_activity_div = document.getElementById("user_activity");
 		
 		let ua_fill = "";
@@ -634,7 +646,7 @@ function sendGladBet(glad_id, bet, glad_name){
 		});
 	}
 	else{
-		//console.log("too little cash");
+		////console.log("too little cash");
 	}
 }
 
@@ -671,11 +683,11 @@ function sendGladGift(glad_name, glad_id, gift){
 					timer: 2500
 				});
 			}else{
-				//console.log("decided against it")
+				////console.log("decided against it")
 			}
 		});
 	} else{
-		//console.log("not enough dosh")
+		////console.log("not enough dosh")
 	}
 	
 }
@@ -697,7 +709,7 @@ function showGladInfo(div_id){
 function enoughMoney(cost) {
 	let user_money = Number(display_money.innerHTML)
 	if (user_money < cost) {
-		//console.log("put a swal here saying not enough cash");
+		////console.log("put a swal here saying not enough cash");
 		return false;
 	}else{
 		return true;

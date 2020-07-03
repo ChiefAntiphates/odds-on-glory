@@ -131,11 +131,13 @@ class Gladiator:
 		self.alive = False
 		
 		def standard_kill(msg=cod):
-			msg_choice = r.choice(msg)
-			if msg in [ActivityFeed.SELF_ATTACKS, ActivityFeed.SELF_ELIM_ATTACKS]:
+			
+			if msg in [ActivityFeed.SELF_ATTACKS, ActivityFeed.SELF_ELIM_ATTACKS, ActivityFeed.UNKNOWN]:
+				msg_choice = r.choice(msg)
 				self.arena.af.updateActivityFeed(msg_choice[0] % self.name, msg_choice[1] % self.name)
 			
 			else:
+				msg_choice = r.choice(msg)
 				self.arena.af.updateActivityFeed(
 					msg_choice[0] % {'winner': slayer.name, 'loser': self.name},
 					msg_choice[1] % {'winner': slayer.name, 'loser': self.name})
@@ -161,6 +163,8 @@ class Gladiator:
 					standard_kill()
 					dbGladiator.query.filter_by(id=self.ext_id).delete()
 					db.session.commit()
+					self.arena.socketio.emit('gladdied', {'glad': self.name}, 
+							namespace="/"+str(self.owner_id))
 					print("guy died")
 					
 				else: #put in func
@@ -171,8 +175,7 @@ class Gladiator:
 			else:
 				reset_glad(db_glad)#survive
 				cod2 = Gladiator.ELIM_SLAYER_MAPPING[id(cod)]
-				print(cod2)
-				print("it was 100 whats happ")
+				
 				standard_kill(cod2)
 			#Set dictionary for cod_slayer -> cod_elim
 			
@@ -188,8 +191,9 @@ class Gladiator:
 		occupied_tiles = []
 		lowest_health = 1.0
 		low_health_tile = None
+		
 		for tile in nearby_tiles:
-			if tile.occupied:
+			if (len([occ for occ in tile.occupants if (occ not in self.allies)])>0):
 				occupied_tiles.append(tile)
 				success = True
 				if len(tile.occupants) == 1:
@@ -345,8 +349,8 @@ class Gladiator:
 		
 		##Place trap
 		if (len(self.inventory[Gladiator.I_TRAPS]) > 0) and (self.arena.duration > 20) and not(self.tile.edge):
-			action_prob.append([self.placeTrap, remaining_prob * 0.45])
-			remaining_prob = remaining_prob - (remaining_prob * 0.45)
+			action_prob.append([self.placeTrap, remaining_prob * 0.65])
+			remaining_prob = remaining_prob - (remaining_prob * 0.65)
 		
 		##Fatal accident
 		action_prob.append([self.fatalAccident, remaining_prob * 0.0004])
@@ -512,11 +516,14 @@ class Runner(Gladiator):
 		self.alive = False
 		
 		msg_choice = r.choice(cod)
+		
 		if cod in [ActivityFeed.SLAYER_MESSAGES, ActivityFeed.TRAPS]:
+			msg_choice = r.choice(cod)
 			self.arena.af.updateActivityFeed(
 				msg_choice[0] % {'winner': slayer.name, 'loser': self.name},
 				msg_choice[1] % {'winner': slayer.name, 'loser': self.name})
 		else:
+			msg_choice = r.choice(cod)
 			self.arena.af.updateActivityFeed(msg_choice[0] % self.name, msg_choice[1] % self.name)
 		
 		

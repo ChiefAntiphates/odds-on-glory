@@ -29,7 +29,12 @@
 	<div class="arena_listing">
 		<a href="{{ url_for('game', game_id=game.id) }}">
 		<b>Arena {{ game.id }}</b>
-		<br>{{ game.host.username }} hosting a {{ game.size }} | {{ game.density }} arena
+		<br>
+		{% if game.host %}
+		{{ game.host.username }} hosting a {{ game.size }} | {{ game.density }} arena
+		{% else %}
+		The State hosting a {{ game.size }} | {{ game.density }} arena
+		{% endif %}
 		</a>
 	</div>
 	<br>

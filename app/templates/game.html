@@ -3,17 +3,11 @@
 <!-- dont extend base.html -instead have a custom base with different margins -->
 
 {% block game_content %}	
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     
 	<script type="text/javascript">
-		var user_id = '{{ current_user.id }}';
-		if (user_id === "") {//not logged in
-			var logged_in = false;
-		}else{
-			var logged_in = true;
-		}
+		
 		var user_barred = {{ barred }};
-		console.log(user_barred);
+		
 		//console.log(user_id);
 		var game_code = '{{ game_code }}';
 		var json_arena = JSON.parse({{ json_arena|tojson }});
@@ -25,6 +19,7 @@
 		}
 		
 		var cross_img_url = "{{ url_for('static', filename='cross.png') }}";
+		var battle_img_url = "{{ url_for('static', filename='battle.png') }}";
 		var strength_icon = "{{ url_for('static', filename='strength-icon.png') }}";
 		var running_icon = "{{ url_for('static', filename='running-icon.png') }}";
 		var aggro_icon = "{{ url_for('static', filename='aggro-icon.png') }}";

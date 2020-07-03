@@ -15,6 +15,8 @@ class Tile:
 		self.y_pos = y_co
 		self.edge = False
 		self.hostile = False
+		self.battles=0
+		self.battle_active = False
 		
 		self.trap_present = False
 		self.trap = None
@@ -65,4 +67,13 @@ class Tile:
 	def removeItemsFromBodies(self):
 		for body in self.corpses:
 			body.clearInventory()
+			
+	def addBattleToTile(self):
+		self.battle_active = True
+		self.battles += 1;
+		
+	def endBattleTile(self):
+		self.battles -= 1;
+		if self.battles < 1:
+				self.battle_active = False
 	
