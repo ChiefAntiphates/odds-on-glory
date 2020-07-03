@@ -33,7 +33,7 @@ class Gladiator:
 	
 	
 	'''CONSTRUCTOR'''
-	def __init__(self, name, strength, aggro, speed, ext_id=None):
+	def __init__(self, name, strength, aggro, speed, ext_id=None, owner_id=None, owner_name="The State"):
 		self.name = name
 		
 		#Gladiator Base Attributes
@@ -69,6 +69,8 @@ class Gladiator:
 		self.delayed_fun = None
 		
 		self.id = id(self)
+		self.owner_id = owner_id
+		self.owner_name = owner_name
 		##self.owner = FOR WHEN WE GET SERIOUS
 		
 		#Inventory

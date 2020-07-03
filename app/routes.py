@@ -102,7 +102,13 @@ def game(game_id):
 				
 		glads = current_user.getAvailGlads()
 		
-	return render_template('game.html', game_code=game.code, json_arena=json_arena,
+		barred=0
+		if current_user.id in game_obj.barred_users:
+			barred=1
+		
+		print(barred)
+		
+	return render_template('game.html', game_code=game.code, json_arena=json_arena, barred=barred,
 								current_user=current_user, game_bets=game_obj.convertBetsToJSON(),
 								init_ua=json.dumps(game_obj.user_activity), glads=glads)
 
@@ -119,7 +125,7 @@ def add_gladiator_to_arena():
 	global active_games
 	game = active_games[game_code_key]
 	game.addGladiator(glad.name, glad.strength, glad.aggro,
-							glad.speed, glad.id, current_user.username)
+							glad.speed, glad.id, current_user.username, current_user.id)
 	return "done"
 
 

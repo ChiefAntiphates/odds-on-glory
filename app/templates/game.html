@@ -12,6 +12,8 @@
 		}else{
 			var logged_in = true;
 		}
+		var user_barred = {{ barred }};
+		console.log(user_barred);
 		//console.log(user_id);
 		var game_code = '{{ game_code }}';
 		var json_arena = JSON.parse({{ json_arena|tojson }});

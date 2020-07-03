@@ -24,7 +24,7 @@ $(document).ready(function(){
 	
 	//Add gladiator button - removed at start of betting phase 
 	if (logged_in === true){
-		if ((gladding === true) && (Object.keys(gladiator_options).length > 0)){
+		if ((gladding === true) && (Object.keys(gladiator_options).length > 0) && (user_barred === 0)){
 			//console.log(gladiator_options);
 			
 			
@@ -193,7 +193,23 @@ $(document).ready(function(){
 			for (var tiles_parser in arena.tile_rows[tile_row].tiles){
 				var tile = arena.tile_rows[tile_row].tiles[tiles_parser]
 				var table_td = table.rows[tile_row].cells[tiles_parser]
-				table_td.innerHTML = tile.occupant_initials.join("<br>");
+				
+				//table_td.innerHTML = tile.occupant_initials.join("<br>");
+				table_td_inner = "";
+				for (g in tile.occupant_initials){
+					if (g !== '0'){
+						table_td_inner += "<br>";
+					}
+					if(tile.occupant_owners[g] === Number(user_id)){
+						table_td_inner += "<span class='own_glad_inline'>";
+						table_td_inner += tile.occupant_initials[g];
+						table_td_inner += "</span>";
+					}else{
+						table_td_inner += tile.occupant_initials[g];
+					}
+				}
+				table_td.innerHTML = table_td_inner;
+				
 				if (tile.corpse_present === true){
 					table_td.style.backgroundImage = "url('"+cross_img_url+"')";
 				}
@@ -379,7 +395,22 @@ function initArenaGlads(arena_build){
 		for (var tiles_parser in arena_build.tile_rows[tile_row].tiles){
 			////console.log(tile_row, arena_build.tile_rows[tile_row].tiles[tiles_parser])
 			var td = "<td class=oog_td_style>";
-			td += arena_build.tile_rows[tile_row].tiles[tiles_parser].occupant_initials.join("\n");
+			//td += arena_build.tile_rows[tile_row].tiles[tiles_parser].occupant_initials.join("\n");
+			let tile = arena_build.tile_rows[tile_row].tiles[tiles_parser];
+			
+			for (g in tile.occupant_initials){
+				if (g !== '0'){
+					td += "<br>";
+				}
+				if(tile.occupant_owners[g] === Number(user_id)){
+					td += "<span class='own_glad_inline'>";
+					td += tile.occupant_initials[g];
+					td += "</span>";
+				}else{
+					td += tile.occupant_initials[g];
+				}
+			}
+			
 			td += "</td>";
 			tr += td;
 		}
@@ -420,8 +451,13 @@ function initArenaGlads(arena_build){
 		let gladiator_obj = arena_build.gladiators[gladiator];
 		let glad_name = gladiator_obj.name;
 		let glad_id = gladiator_obj.id;
-		g_v_content += ("<div class='oog_click_div glad_sidebar' id='" + glad_id
-						+ "' onclick=\"showGladInfo('hidden_div_" + glad_id +"');\">");
+		g_v_content += "<div class='oog_click_div glad_sidebar";
+		//console.log(gladiator_obj.owner_id);//HEREHERHEHRERHER
+		//console.log(Number(user_id));//haven't tested this yet - this is for colours
+		if (gladiator_obj.owner_id === Number(user_id)){
+		g_v_content += " owned_glad_sidebar";
+		}
+		g_v_content += "' id='" + glad_id + "' onclick=\"showGladInfo('hidden_div_" + glad_id +"');\">";
 		g_v_content += "<div class='glad_sidebar_top'><p>" + glad_name + "</p>";
 		let odds_split = gladiator_obj.odds.split("/")
 		g_v_content += "<p class='disp_odds' id='disp_odds_"+glad_id+"'><sup>"+odds_split[0]+"</sup>&frasl;<sub>"+odds_split[1]+"</sub></p></div>";
@@ -431,8 +467,15 @@ function initArenaGlads(arena_build){
 		//Extended (hidden) gladiator info
 		g_v_ext += "<div class='oog_hide hidden_glad' id='hidden_div_" + glad_id +"'>";
 		g_v_ext += "<div class='glad_info_grid'>";//Start grid
-		g_v_ext +="<div class='glad_name'><p>" + glad_name +"</p></div>";
-		g_v_ext +="<div class='align_div'><div class='health_box'><div class='health_bar' id='health_bar_"+glad_id +"'>100%";
+		g_v_ext += "<div class='glad_name_holder'><p class='glad_name'>" + glad_name + "</p>";
+		if(gladiator_obj.owner_name !== "The State"){
+			g_v_ext += "<a href='/user/"+gladiator_obj.owner_name+"' class='own_name'>"+gladiator_obj.owner_name+"</a>"
+		}else{
+			g_v_ext += "<p class='own_name'>"+gladiator_obj.owner_name+"</p>"
+		}
+		g_v_ext += "</div>";
+		
+		g_v_ext += "<div class='align_div'><div class='health_box'><div class='health_bar' id='health_bar_"+glad_id +"'>100%";
 		g_v_ext += "</div></div></div>";
 		
 		g_v_ext += "<div class='odds_div'><p class='odds' id='odds_" + glad_id +"'>"+"<sup>"+odds_split[0]+"</sup>&frasl;<sub>"+odds_split[1]+"</sub></p></div>";

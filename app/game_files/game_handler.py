@@ -59,6 +59,7 @@ class GameHandler:
 		
 		self.bets = []
 		self.user_activity = []
+		self.barred_users = set()
 	
 		##Workflow should be as follows
 		'''
@@ -74,11 +75,11 @@ class GameHandler:
 		return pushInfoToJSON(self.arena)
 		
 		
-	def addGladiator(self, name, strength, aggro, speed, ext_id=None, champion="The State"):
+	def addGladiator(self, name, strength, aggro, speed, ext_id=None, champion="The State", owner_id=None):
 		if (len(self.arena.gladiators) < self.capacity):
-			self.arena.getGladiator(Gladiator(name, strength, aggro, speed, ext_id))
+			self.arena.getGladiator(Gladiator(name, strength, aggro, speed, ext_id, owner_id, champion))
 		
-		
+		self.barred_users.add(owner_id)
 		self.user_activity.append("%s entered %s to the arena." % (champion, name))
 		
 		self.socketio.emit('useractivityupdate', {'all_bets': self.convertBetsToJSON(), 'user_activity': self.user_activity}, namespace=self.nspace)
@@ -196,7 +197,6 @@ class GameHandler:
 				db.session.commit()
 			
 	def convertBetsToJSON(self):
-		print("doing this")
 		bets_json = {"bets": []}
 		for bet in self.bets:
 			if bet.gladiator.alive:

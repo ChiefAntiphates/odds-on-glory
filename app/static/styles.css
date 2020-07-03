@@ -425,7 +425,7 @@ ARENA/GAME CSS BELOW
   padding: 0.2em;
   left: 41%;
   width: 18%;
-  top: 30%;
+  top: 12%;
   z-index: 2;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 0.2em;
@@ -522,6 +522,11 @@ ARENA/GAME CSS BELOW
   border-bottom: 2px solid black;
 }
 
+.own_glad_inline {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 #glad_extended {
   width: 40%;
   margin: 0 auto;
@@ -539,19 +544,32 @@ ARENA/GAME CSS BELOW
   grid-gap: 2px;
   grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
 }
-#glad_extended .hidden_glad .glad_info_grid .glad_name {
+#glad_extended .hidden_glad .glad_info_grid .glad_name_holder {
   grid-column: 1/4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   padding: 0;
   margin: 0;
 }
-#glad_extended .hidden_glad .glad_info_grid .glad_name p {
+#glad_extended .hidden_glad .glad_info_grid .glad_name_holder .glad_name {
   padding: 0;
   margin: 0;
   font-weight: bold;
   font-size: 1.4em;
+}
+#glad_extended .hidden_glad .glad_info_grid .glad_name_holder .own_name {
+  padding: 0;
+  margin: 0;
+  font-size: 0.8em;
+}
+#glad_extended .hidden_glad .glad_info_grid .glad_name_holder a {
+  text-decoration: none;
+  color: black;
+}
+#glad_extended .hidden_glad .glad_info_grid .glad_name_holder a:hover {
+  color: white;
+  cursor: pointer;
+  background-color: #9c741f;
+  transition: 1s;
 }
 #glad_extended .hidden_glad .glad_info_grid button:hover {
   background-color: #e3ac34;
@@ -747,6 +765,10 @@ grid-row: 1;*/
 
 .af_survive {
   color: #23730a;
+}
+
+.owned_glad_sidebar {
+  background: #e8b017 !important;
 }
 
 .glad_sidebar {

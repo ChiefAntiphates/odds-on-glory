@@ -24,6 +24,7 @@ def pushInfoToJSON(arena):
 			json_tile["y_co"] = [tile.y_pos]
 			json_tile["occupant_initials"] = [x.initial for x in tile.occupants]	
 			json_tile["occupant_names"] = [x.name for x in tile.occupants]
+			json_tile["occupant_owners"] = [x.owner_id for x in tile.occupants]
 			json_tile["corpse_initials"] = [x.initial for x in tile.corpses]	
 			json_tile["corpse_names"] = [x.name for x in tile.corpses]
 			json_tile["corpse_present"] = len(tile.corpses)>0
@@ -48,6 +49,8 @@ def pushInfoToJSON(arena):
 		json_glad["kill_count"] = glad.kill_count
 		json_glad["kills"] = [x.name for x in glad.kills]
 		json_glad["state"] = glad.state
+		json_glad["owner_id"] = glad.owner_id
+		json_glad["owner_name"] = glad.owner_name
 		arena_info["gladiators"].append(json_glad)
 		
 	for glad in arena.dead_gladiators:
