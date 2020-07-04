@@ -12,7 +12,7 @@ import sys
 
 
 TIMER = 0.7 ##How long should each turn take??
-SCORCH = 1 #How many turns before scorchTheEarth
+SCORCH = 20 #How many turns before scorchTheEarth
 class Arena:
 	
 	'''CONSTRUCTOR'''
@@ -75,7 +75,7 @@ class Arena:
 		
 	
 	def nextTurn(self):
-		if (self.duration % SCORCH == 0): #Scorch earth every 10 turns
+		if (self.duration % SCORCH == 0): #Scorch earth every SCORCH turns
 			self.scorchTheEarth()
 			
 		for runner in sorted(self.runners, key=lambda x: x.speed, reverse=True):
@@ -136,7 +136,6 @@ class Arena:
 		self.addRunner(Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)]))
 	'''				
 	
-		
 	
 	
 	
@@ -145,4 +144,3 @@ class Arena:
 	
 	
 	
-			

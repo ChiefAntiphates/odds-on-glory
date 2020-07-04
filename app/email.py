@@ -27,3 +27,12 @@ def send_password_reset_email(user):
 				html_body=render_template('email/reset_password.html',
 										user=user, token=token))
 
+def send_report_issue_email(user, issue):
+	send_email('ISSUE REPORTED by ['+user.username+'] - OddsOnGlory',
+				sender=app.config['ADMINS'][0],
+				recipients=[app.config['ADMINS'][1]],
+				text_body=render_template('email/report_issue.txt',
+										user=user, issue=issue),
+				html_body=render_template('email/report_issue.html',
+										user=user, issue=issue))
+

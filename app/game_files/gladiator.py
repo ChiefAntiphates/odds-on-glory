@@ -380,7 +380,7 @@ class Gladiator:
 	def statChanges(self):
 		##HEALTH REDUCTION DUE TO HOSTILE AREA
 		if self.tile.hostile and self.prev_tile.hostile:
-			self.health -= 0.2
+			self.health -= 0.1
 
 		#INCREASE AGGRO GRADUALLY IF NOT FOUGHT IN LONG TIME
 		if self.state == Gladiator.FIGHT:

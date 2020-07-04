@@ -1,0 +1,5 @@
+{{ user.username }} sent the following issue:
+
+{{ issue }}
+
+END {{ user.email }}

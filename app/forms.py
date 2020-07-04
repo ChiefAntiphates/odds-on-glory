@@ -2,11 +2,12 @@ from flask_wtf import FlaskForm
 from sqlalchemy import func
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
+from wtforms.widgets import TextArea
 from app.models import User
 
 
 class LoginForm(FlaskForm):
-	username = StringField('Username', validators=[DataRequired()])
+	username = StringField('Username or Email', validators=[DataRequired()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	remember_me = BooleanField('Remember Me')
 	submit = SubmitField('Sign In')
@@ -26,6 +27,10 @@ class RegistrationForm(FlaskForm):
 			raise ValidationError('Username taken. Please choose a different username.')
 		if " " in username.data:
 			raise ValidationError('Usernames can be only one word.')
+		if len(username.data) > 20:
+			raise ValidationError('Usernames cannot be longer than 20 characters.')
+		if not(username.data.isalnum()):
+			raise ValidationError('Usernames must only contains letters or numbers.')
 	
 	def validate_email(self, email):
 		user = User.query.filter_by(email=email.data).first()
@@ -39,12 +44,12 @@ class EmptyForm(FlaskForm):
 	submit = SubmitField('Submit')
 	
 
-#This can be replaced as the activity log
-class PostForm(FlaskForm):
-	post = TextAreaField('Say something', validators=[
-		DataRequired(), Length(min=1, max=140)])
-	submit = SubmitField('Submit')
-	
+
+class ReportIssueForm(FlaskForm):
+	description = StringField('Description', widget=TextArea(), validators=[DataRequired()])
+	submit = SubmitField('Send Report')
+
+
 	
 class ResetPasswordRequestForm(FlaskForm):
 	email = StringField('Email', validators=[DataRequired(), Email()])

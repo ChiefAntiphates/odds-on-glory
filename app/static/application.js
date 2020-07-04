@@ -17,12 +17,6 @@ $(document).ready(function(){
 	
 	
 	
-	if (arena_active === true) {
-		let time_hold = document.getElementById("overlay");
-		time_hold.remove();
-	}
-	
-	
 	//Add gladiator button - removed at start of betting phase 
 	if (logged_in === true){
 		if ((gladding === true) && (Object.keys(gladiator_options).length > 0) && (user_barred === 0)){
@@ -134,20 +128,41 @@ $(document).ready(function(){
 		}
 		glad_view.innerHTML = g_v_content;
 		
+		
+		
 		let timer = document.getElementById("over_text");
-		timer.innerHTML = "Time left to add gladiators:<br>"+msg.timer;
+		if (timer !== null){
+			timer.innerHTML = "ENTRY PHASE<br>Time left to add gladiators:<br>"+msg.timer;
+		}else{
+			//<div id="overlay"><span id="over_text"></span></div>
+			setOverlay();
+			let timer2 = document.getElementById("over_text");
+			timer2.innerHTML = "ENTRY PHASE<br>Time left to add gladiators:<br>"+msg.timer;
+		}
 		
 	});
 	
 	
 	//Update countdown in betting phase
 	socket.on('arenabetting', function(msg) {
+		
+		
 		let timer = document.getElementById("over_text");
-		timer.innerHTML = "BETTING PHASE<br>Game begins in:<br>"+msg.timer;
-		//////console.log(msg.timer);
+		if (timer !== null){
+			timer.innerHTML = "BETTING PHASE<br>Game begins in:<br>"+msg.timer;
+		}else{
+			//<div id="overlay"><span id="over_text"></span></div>
+			setOverlay();
+			let timer2 = document.getElementById("over_text");
+			timer2.innerHTML = "BETTING PHASE<br>Game begins in:<br>"+msg.timer;
+		}
+		
+		
 		if (msg.timer === 0){
 			let time_hold = document.getElementById("overlay");
-			time_hold.remove();
+			if (time_hold !== null) {
+				time_hold.remove();
+			}
 		}
 		
 	});
@@ -156,6 +171,7 @@ $(document).ready(function(){
 	//Socket response to initialise the betting phase
 	socket.on('arenainitial', function(msg) {
 		arena_active = true;
+		gladding = false;
 		elem = document.getElementById("add_glad_but")
 		if (elem !== null){
 			elem.parentNode.removeChild(elem);//Remove add gladiator button
@@ -167,6 +183,16 @@ $(document).ready(function(){
 	
 	//Socket response to game finishing //Remove buttons etc.
 	socket.on('arenafinish', function(msg) {
+		
+		let paras_bet = document.getElementsByClassName('bet_div');
+		while(paras_bet[0]) {
+			paras_bet[0].parentNode.removeChild(paras_bet[0]);
+		}
+		let paras_gift = document.getElementsByClassName('gift_send_btn');
+		while(paras_gift[0]) {
+			paras_gift[0].parentNode.removeChild(paras_gift[0]);
+		}
+		
 		if (logged_in === true) {
 			$.ajax({ //Here we will also sell or return the winning gladiator
 				type : "POST",
@@ -294,6 +320,9 @@ $(document).ready(function(){
 			let health = document.getElementById("health_bar_"+glad_id);
 			health.innerHTML =  Math.round(Number(gladiator_obj.health)*100)+"%";
 			health.style.width = (Number(gladiator_obj.health)*100)+"%";
+			
+			let kill_count = document.getElementById("kills_"+glad_id);
+			kill_count.innerHTML = gladiator_obj.kill_count;
 			
 			let odds_split = gladiator_obj.odds.split("/");
 			
@@ -501,6 +530,8 @@ function initArenaGlads(arena_build){
 		g_v_ext +=  "</div>";
 		
 		g_v_ext += "<p class='status' id='status_" + glad_id +"'></p>";
+		
+		g_v_ext += "<div class='kills'><img src='"+skull_icon+"'><p id='kills_"+glad_id+"'>"+gladiator_obj.kill_count+"</p></div>";
 
 		if (logged_in === true){
 			g_v_ext += "<div class='bet_div'>";
@@ -701,7 +732,9 @@ function showGladInfo(div_id){
 		all_hide[i].style.display = "none";
 	}
 	var x = document.getElementById(div_id);
-	x.style.display = 'block';
+	if (x !== null){
+		x.style.display = 'block';
+	}
 }
 
 
@@ -716,7 +749,12 @@ function enoughMoney(cost) {
 	}
 }
 
-
+function setOverlay(){
+	let overlay = document.createElement("div");
+	overlay.setAttribute("id", "overlay");
+	overlay.innerHTML = "<span id='over_text'></span>";
+	document.getElementById("game_container").appendChild(overlay);
+}
 
 
 

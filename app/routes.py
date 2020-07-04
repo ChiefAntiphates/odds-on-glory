@@ -8,13 +8,13 @@ from flask_socketio import SocketIO, emit
 from threading import Thread
 from app import app, db, socketio, moment
 from app.models import User, Tournament, Gladiator
-from app.email import send_password_reset_email
+from app.email import send_password_reset_email, send_report_issue_email
 from app.game_files.nameslist import nameslist
 from app.game_files.bioslist import bios
 from app.game_files.quoteslist import quotes
 from app.game_files.heightlist import heights
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, SetGameForm,\
-						EmptyForm, PostForm, ResetPasswordRequestForm
+						EmptyForm, ResetPasswordRequestForm, ReportIssueForm
 						
 from app.game_files.game_handler import GameHandler
 from datetime import datetime
@@ -84,6 +84,8 @@ def game(game_id):
 
 	glads = None
 	
+	
+	barred=0
 	if current_user.is_authenticated:
 		#reassess battle readiness
 		glads_temp = current_user.gladiators.filter(Gladiator.battle_ready < 100)
@@ -97,7 +99,7 @@ def game(game_id):
 				
 		glads = current_user.getAvailGlads()
 		
-		barred=0
+		
 		if current_user.id in game_obj.barred_users:
 			barred=1
 		
@@ -225,9 +227,11 @@ def login():
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
+		if user is None:
+			user = User.query.filter_by(email=form.username.data).first()
 		if user is None or not user.check_password(form.password.data):
 			flash('Invalid username or password')
-			return redirect(url_for('index'))
+			return redirect(url_for('login'))
 		login_user(user, remember=form.remember_me.data)
 		next_page = request.args.get('next')
 		if not next_page or url_parse(next_page).netloc != '':
@@ -322,8 +326,21 @@ def claim_bonus():
 	return str(current_user.money)
 
 
+
+@app.route('/report_issue', methods=['GET', 'POST'])
+def report_issue():
+	
+	form = ReportIssueForm()
+	if form.validate_on_submit():
+		user = current_user
+		if user:
+			send_report_issue_email(user, form.description.data)
+		flash('Issue reported. Thank you!')
+		return redirect(url_for('index'))
 		
-		
+	return render_template('send_report.html', title="Report Issue", form=form)
+	
+	
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
 	if current_user.is_authenticated:

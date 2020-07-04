@@ -17,6 +17,13 @@ hr {
   margin: 0;
 }
 
+.flex_wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .main {
   margin-top: 6em;
 }
@@ -96,6 +103,39 @@ hr {
   font-size: 0.8em;
   text-align: center;
   font-style: italic;
+}
+
+/*footer*/
+.footer_holder {
+  background: linear-gradient(27deg, #151515 2.5px, transparent 2.5px) 0 2.5px, linear-gradient(207deg, #151515 2.5px, transparent 2.5px) 5px 0px, linear-gradient(27deg, #222 2.5px, transparent 2.5px) 0px 5px, linear-gradient(207deg, #222 2.5px, transparent 2.5px) 5px 2.5px, linear-gradient(90deg, #1b1b1b 5px, transparent 5px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+  background-color: #131313;
+  background-size: 10px 10px;
+  padding: 0.6em 0px 0.6em 0px;
+  width: 100%;
+}
+.footer_holder .footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 4em 0 4em;
+}
+.footer_holder .footer .report_issue {
+  background: #e6e6e6;
+  color: #590808;
+  margin: 0 1em;
+  padding: 0.5em;
+  border: 0.1em solid black;
+  border-radius: 0.2em;
+  text-decoration: none;
+}
+.footer_holder .footer .report_issue:hover {
+  background: #590808;
+  color: #e6e6e6;
+  cursor: pointer;
+  transition: 1s;
+}
+.footer_holder .footer p {
+  color: white;
 }
 
 /*Nav bar*/
@@ -642,6 +682,25 @@ ARENA/GAME CSS BELOW
   margin: 0;
   text-align: center;
 }
+#glad_extended .hidden_glad .glad_info_grid .kills {
+  grid-column: 4;
+  grid-row: 3;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+#glad_extended .hidden_glad .glad_info_grid .kills img {
+  width: 1.2em;
+  height: 1.2em;
+  padding: 0em 0.1em 0em 0em;
+}
+#glad_extended .hidden_glad .glad_info_grid .kills p {
+  padding: 0;
+  margin: 0;
+}
 #glad_extended .hidden_glad .glad_info_grid .bet_div {
   display: flex;
   grid-column: 1/3;
@@ -805,14 +864,6 @@ grid-row: 1;*/
   margin: 0em 0em 0.3em 0em;
   padding: 0;
   font-size: 0.88em;
-}
-
-.top_border_only {
-  border-top: 2px solid black;
-  margin: 0 auto;
-  padding: 0;
-  width: 98%;
-  height: 0.1em;
 }
 
 /*# sourceMappingURL=styles.css.map */

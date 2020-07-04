@@ -20,13 +20,14 @@
 		
 		var cross_img_url = "{{ url_for('static', filename='cross.png') }}";
 		var battle_img_url = "{{ url_for('static', filename='battle.png') }}";
+		var skull_icon = "{{ url_for('static', filename='skull.png') }}";
 		var strength_icon = "{{ url_for('static', filename='strength-icon.png') }}";
 		var running_icon = "{{ url_for('static', filename='running-icon.png') }}";
 		var aggro_icon = "{{ url_for('static', filename='aggro-icon.png') }}";
 	</script>
 	
 	<script src="{{ url_for('static', filename='application.js') }}" + "?v=4"></script>
-	<div id="overlay"><span id="over_text"><br></span></div>
+
 	<div class="oog_flex_container">
 		<div id="glad_info"></div>
 		<table id="arena_grid"></table>
@@ -38,7 +39,6 @@
 		<div id="glad_extended"></div>
 		<div id="own_bets" title="Your Bets"></div>
 	</div>
-	<div class="top_border_only"></div>
 	
 	
 	

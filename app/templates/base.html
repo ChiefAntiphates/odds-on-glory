@@ -14,7 +14,7 @@
 	{% else %}
 	<title>Odds-On Glory</title>
 	{% endif %}
-
+	<link rel="shortcut icon" href="#" />
 </head>
 
 <body>
@@ -57,26 +57,38 @@ if (user_id === "") {//not logged in
 	</nav>
 </div>
 
-<div class="main">
+<div class="flex_wrapper">
 
-	{% block content %}
-		<div class="container">
-			{% with messages = get_flashed_messages() %}
-			{% if messages %}
-				{% for message in messages %}
-				<div class="alert alert-info" role="alert">{{ message }}</div>
-				{% endfor %}
+	<div class="main">
+
+		{% block content %}
+			<div class="container">
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					{% for message in messages %}
+					<div class="alert alert-info" role="alert">{{ message }}</div>
+					{% endfor %}
+				{% endif %}
+				{% endwith %}
+				{% block app_content %}{% endblock %}
+			</div>
+			<!-- block content just game URLs-->
+			<div class="container-fluid" id="game_container">
+				{% block game_content %}{% endblock %}
+			</div>
+		{% endblock %}
+	</div>
+
+	<div class="footer_holder">
+		<div class="footer">
+			{% if current_user.is_authenticated %}
+			<a class="report_issue" href="{{ url_for('report_issue') }}">Report Issue</a>
 			{% endif %}
-			{% endwith %}
-			{% block app_content %}{% endblock %}
+			<p> patreon</p>
 		</div>
-		<!-- block content just game URLs-->
-		<div class="container-fluid" id="game_container">
-			{% block game_content %}{% endblock %}
-		</div>
-	{% endblock %}
-</div>
+	</div>
 
+</div>
 
 </body>
 </html>

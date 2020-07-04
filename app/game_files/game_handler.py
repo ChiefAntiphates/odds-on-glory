@@ -29,29 +29,38 @@ class GameHandler:
 			self.arena = Arena(8, 5, socketio, nspace)
 			if (density=='sparse'):
 				self.capacity=4
+				self.prize=150
 			elif (density=='normal'):
 				self.capacity=7
+				self.prize=250
 			else:
 				self.capacity=12
 				self.arena.packed = True
+				self.prize=600
 		elif (size=='medium'):
 			self.arena = Arena(10, 7, socketio, nspace)
 			if (density=='sparse'):
 				self.capacity=7
+				self.prize=250
 			elif (density=='normal'):
 				self.capacity=10
+				self.prize=500
 			else:
 				self.capacity=14
 				self.arena.packed = True
+				self.prize=800
 		else:
 			self.arena = Arena(13, 8, socketio, nspace)
 			if (density=='sparse'):
 				self.capacity=10
+				self.prize=500
 			elif (density=='normal'):
 				self.capacity=14
+				self.prize=800
 			else:
-				self.capacity=20
+				self.capacity=24
 				self.arena.packed = True
+				self.prize=2500
 				
 		self.socketio = socketio
 		self.nspace = nspace
@@ -156,8 +165,11 @@ class GameHandler:
 		while len(self.arena.gladiators) > 1:
 			self.arena.nextTurn()
 		
+		json_obj = pushInfoToJSON(self.arena)
+		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 		
 		print("game over")
+		
 		if len(self.arena.gladiators) < 1:
 			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
 		
@@ -165,9 +177,8 @@ class GameHandler:
 		else:
 			self.arena.af.updateActivityFeed("WINNER", "%s wins!" % self.arena.gladiators[0].name)
 			self.payOut(self.arena.gladiators[0])
-			json_obj = pushInfoToJSON(self.arena)
 			
-			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
+			
 			#Final emit to clean up
 			win_id = self.arena.gladiators[0].ext_id
 			if (self.arena.gladiators[0].ext_id == None):
@@ -181,10 +192,9 @@ class GameHandler:
 				gladiator.battle_ready = 0
 				db.session.commit()
 				win_owner = gladiator.owner
-				winnings = 500
-				win_owner.addMoney(winnings)
+				win_owner.addMoney(self.prize)
 				db.session.commit()
-				self.socketio.emit('gladwon', {'glad': gladiator.name, 'winnings': winnings}, 
+				self.socketio.emit('gladwon', {'glad': gladiator.name, 'winnings': self.prize, 'money': win_owner.money}, 
 								namespace="/"+str(gladiator.owner.id))
 				print("player glad wins")
 			else:
@@ -204,7 +214,7 @@ class GameHandler:
 				punter = User.query.filter_by(id=bet.punter_id).first()
 				punter.addMoney(bet.betReturn)
 				db.session.commit()
-				self.socketio.emit('betwin', {'glad': bet.gladiator.name, 'winnings': bet.betReturn}, 
+				self.socketio.emit('betwin', {'glad': bet.gladiator.name, 'winnings': bet.betReturn, 'money': punter.money}, 
 							namespace="/"+str(bet.punter_id))
 			
 	def convertBetsToJSON(self):
