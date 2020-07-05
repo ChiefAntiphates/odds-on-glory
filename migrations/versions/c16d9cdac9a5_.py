@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: bd05b3f71b2c
+Revision ID: c16d9cdac9a5
 Revises: 
-Create Date: 2020-06-23 12:45:32.693868
+Create Date: 2020-07-05 09:33:32.302415
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'bd05b3f71b2c'
+revision = 'c16d9cdac9a5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,10 +24,11 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
     sa.Column('money', sa.Integer(), nullable=True),
+    sa.Column('money_rank', sa.Integer(), nullable=True),
+    sa.Column('last_bonus', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
-    op.create_index(op.f('ix_user_money'), 'user', ['money'], unique=False)
     op.create_index(op.f('ix_user_username'), 'user', ['username'], unique=True)
     op.create_table('gladiator',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -40,16 +41,23 @@ def upgrade():
     sa.Column('quote', sa.String(length=140), nullable=True),
     sa.Column('available', sa.Boolean(), nullable=True),
     sa.Column('owner_id', sa.Integer(), nullable=True),
+    sa.Column('elims', sa.Integer(), nullable=True),
+    sa.Column('battle_ready', sa.Integer(), nullable=True),
+    sa.Column('last_update', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_gladiator_aggro'), 'gladiator', ['aggro'], unique=False)
+    op.create_index(op.f('ix_gladiator_battle_ready'), 'gladiator', ['battle_ready'], unique=False)
+    op.create_index(op.f('ix_gladiator_elims'), 'gladiator', ['elims'], unique=False)
     op.create_index(op.f('ix_gladiator_name'), 'gladiator', ['name'], unique=False)
     op.create_index(op.f('ix_gladiator_speed'), 'gladiator', ['speed'], unique=False)
     op.create_index(op.f('ix_gladiator_strength'), 'gladiator', ['strength'], unique=False)
     op.create_table('tournament',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('code', sa.String(length=120), nullable=True),
+    sa.Column('size', sa.String(length=16), nullable=True),
+    sa.Column('density', sa.String(length=16), nullable=True),
     sa.Column('owner_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -65,10 +73,11 @@ def downgrade():
     op.drop_index(op.f('ix_gladiator_strength'), table_name='gladiator')
     op.drop_index(op.f('ix_gladiator_speed'), table_name='gladiator')
     op.drop_index(op.f('ix_gladiator_name'), table_name='gladiator')
+    op.drop_index(op.f('ix_gladiator_elims'), table_name='gladiator')
+    op.drop_index(op.f('ix_gladiator_battle_ready'), table_name='gladiator')
     op.drop_index(op.f('ix_gladiator_aggro'), table_name='gladiator')
     op.drop_table('gladiator')
     op.drop_index(op.f('ix_user_username'), table_name='user')
-    op.drop_index(op.f('ix_user_money'), table_name='user')
     op.drop_index(op.f('ix_user_email'), table_name='user')
     op.drop_table('user')
     # ### end Alembic commands ###
