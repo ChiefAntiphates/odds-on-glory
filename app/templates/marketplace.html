@@ -8,27 +8,40 @@ function buyGlad(glad_id, price) { //Maybe use socket emmissions to remove/add b
 	let user_money = Number(money_display.innerHTML)
 	console.log(price);
 	if (user_money < price) {
-		console.log("put a swal here saying not enough cash");
+		toastr.error("Not Enough Money", {timeOut: 1000, extendedTimeOut: 1000})
 	}else{
 		$.ajax({
 			type : "POST",
 			url : '/buy_gladiator',
 			data: {glad_id: glad_id},
 			success: function(data) { //Update money on screen
-					money_display.innerHTML = data;
-					let bought_glad = document.getElementById("buy_"+glad_id);
-					bought_glad.style.opacity = '0'
-					setTimeout(function(){
-						bought_glad.remove();
-					}, 1000);
+					if (money_display.innerHTML !== data){
+						money_display.innerHTML = data;
+						toastr.success("Gladiator Purchased", {timeOut: 1000, extendedTimeOut: 1000})
+					}else{
+						toastr.error("Gladiator Not Purchased", {timeOut: 1000, extendedTimeOut: 1000})
+					}
 				}
 		});
 	}
 }
+
+var socket = io.connect('https://' + document.domain + ':' + location.port + "/marketplace");
+socket.on('gladpurchase', function(msg) {
+	let bought_glad = document.getElementById("buy_"+msg.glad);
+	bought_glad.style.opacity = '0'
+	setTimeout(function(){
+		bought_glad.remove();
+	}, 1000);
+});
 </script>
 
 
-	<h1>Market | Recruit Gladiators</h1>
+	<h1 class="market_header">Market | Recruit Gladiators</h1>
+	<p class="market_instructions">
+		Gladiators will disappear as others purchase them<br>
+		Refresh the page for new gladiators to take their place
+	</p>
 	
 	<div class="glad_shop_holder">
 		{% for glad in glads %}

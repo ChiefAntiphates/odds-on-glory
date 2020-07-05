@@ -13,6 +13,17 @@ h1 {
   padding: 0.15em 0.5em 0.15em 0.5em;
 }
 
+.market_header {
+  padding: 0.15em 0em 0.15em 0.5em;
+  margin-bottom: 0;
+}
+
+.market_instructions {
+  padding: 0em 0em 0em 0.5em;
+  margin: 0em 0em 1em 0.78em;
+  font-size: 0.95em;
+}
+
 hr {
   margin: 0;
 }
@@ -54,6 +65,17 @@ hr {
 .index_holder {
   display: flex;
   justify-content: space-between;
+}
+.index_holder .welcome {
+  padding: 0;
+}
+.index_holder .how_to_play_p {
+  padding-bottom: 0.2em;
+  margin-bottom: 0em;
+}
+.index_holder .how_to_play_vid {
+  padding-top: 0.2em;
+  margin-top: 0em;
 }
 .index_holder .leaderboard {
   margin-right: 3em;
@@ -720,7 +742,7 @@ ARENA/GAME CSS BELOW
   grid-column: 5;
   grid-row: 1/5;
   display: flex;
-  justify-content: right;
+  justify-content: flex-end;
   align-items: center;
 }
 #glad_extended .hidden_glad .glad_info_grid .glad_pic .glad_img {

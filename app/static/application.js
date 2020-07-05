@@ -676,9 +676,6 @@ function sendGladBet(glad_id, bet, glad_name){
 			timer: 3000
 		});
 	}
-	else{
-		////console.log("too little cash");
-	}
 }
 
 
@@ -717,8 +714,6 @@ function sendGladGift(glad_name, glad_id, gift){
 				////console.log("decided against it")
 			}
 		});
-	} else{
-		////console.log("not enough dosh")
 	}
 	
 }
@@ -742,7 +737,7 @@ function showGladInfo(div_id){
 function enoughMoney(cost) {
 	let user_money = Number(display_money.innerHTML)
 	if (user_money < cost) {
-		////console.log("put a swal here saying not enough cash");
+		toastr.error("Not Enough Money", {timeOut: 1000, extendedTimeOut: 1000})
 		return false;
 	}else{
 		return true;

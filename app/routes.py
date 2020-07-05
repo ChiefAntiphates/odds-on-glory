@@ -78,7 +78,7 @@ def game(game_id):
 	game = Tournament.query.filter_by(id=game_id).first_or_404()
 	global active_games
 	if game.code not in active_games:
-		return render_template('404.html')#Maybe put custom error here
+		return render_template('inactive_game.html')
 	game_obj = active_games[game.code]
 	json_arena = game_obj.getJSON()
 
@@ -163,11 +163,16 @@ def buy_gladiator():
 	glad_id = request.form.get('glad_id')
 	gladiator = Gladiator.query.filter_by(id=glad_id).first()
 	if gladiator != None:
-		gladiator.owner = current_user
-		current_user.spendMoney(gladiator.getPrice())
-		db.session.commit()
-	else:
-		pass #put some error return message
+		if gladiator.owner == None:#Check nobody else purchased first
+			gladiator.owner = current_user
+			current_user.spendMoney(gladiator.getPrice())
+			db.session.commit()
+			socketio.emit('gladpurchase', {'glad': gladiator.id}, 
+							namespace="/marketplace")
+		else:
+			print("glad unavailable")
+			##stuff here to return to user bad
+
 	return str(current_user.money)
 
 
@@ -179,7 +184,7 @@ def buy_gladiator():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
 	page = request.args.get('page', 1, type=int)
-	users = User.query.order_by(User.money_rank.asc()).paginate(page, 20, False)
+	users = User.query.filter(User.money_rank != None).order_by(User.money_rank.asc()).paginate(page, 20, False)
 	next_url = url_for('index', page=users.next_num) \
 											if users.has_next else None
 	prev_url = url_for('index', page=users.prev_num) \
@@ -252,7 +257,7 @@ def register():
 		return redirect(url_for('index'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data, money=800)
+		user = User(username=form.username.data, email=form.email.data, money=600)
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()

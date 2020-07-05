@@ -13,6 +13,7 @@ function claimBonus(glad_id, price) {
 				var money_display_2 = document.getElementById("user_money");
 				money_display.innerHTML = data;
 				money_display_2.innerHTML = data;
+				toastr.success("50 gold added", {timeOut: 1000, extendedTimeOut: 1000})
 			}
 	});
 }
