@@ -172,10 +172,11 @@ class GameHandler:
 		
 		if len(self.arena.gladiators) < 1:
 			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
-		
+			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 			#betting stuff
 		else:
 			self.arena.af.updateActivityFeed("WINNER", "%s wins!" % self.arena.gladiators[0].name)
+			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 			self.payOut(self.arena.gladiators[0])
 			
 			
