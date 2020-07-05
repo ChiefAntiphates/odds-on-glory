@@ -184,7 +184,7 @@ def buy_gladiator():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
 	page = request.args.get('page', 1, type=int)
-	users = User.query.order_by(User.money_rank.asc()).paginate(page, 20, False)
+	users = User.query.order_by(User.money_rank.asc()).paginate(page, 20, False)#hello
 	next_url = url_for('index', page=users.next_num) \
 											if users.has_next else None
 	prev_url = url_for('index', page=users.prev_num) \
