@@ -14,7 +14,7 @@ from app.models import User, Tournament
 from app.models import Gladiator as dbGladiator
 
 GLAD_ADD_TIME = 60##change time
-BETTING_PHASE_TIME = 60
+BETTING_PHASE_TIME = 30
 
 
 #import tkinter as tk
@@ -165,16 +165,18 @@ class GameHandler:
 		while len(self.arena.gladiators) > 1:
 			self.arena.nextTurn()
 		
-		json_obj = pushInfoToJSON(self.arena)
+		
 		
 		print("game over")
 		
 		if len(self.arena.gladiators) < 1:
 			self.arena.af.updateActivityFeed("GAME OVER", "So everyone died. There are no winners.")
+			json_obj = pushInfoToJSON(self.arena)
 			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 			#betting stuff
 		else:
 			self.arena.af.updateActivityFeed("WINNER", "%s wins!" % self.arena.gladiators[0].name)
+			json_obj = pushInfoToJSON(self.arena)
 			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 			self.payOut(self.arena.gladiators[0])
 			
