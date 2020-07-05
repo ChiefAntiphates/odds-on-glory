@@ -681,7 +681,7 @@ function sendGladBet(glad_id, bet, glad_name){
 
 //Send gladiator gift //check that they're alive still maybe
 function sendGladGift(glad_name, glad_id, gift){
-	var gift_value = 50;
+	var gift_value = 30;
 	let can_buy = enoughMoney(gift_value);
 	if (can_buy === true){
 		swal({
