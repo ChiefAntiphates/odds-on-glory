@@ -21,7 +21,6 @@ def upgrade():
     op.add_column('gladiator', sa.Column('battle_ready', sa.Integer(), nullable=True))
     op.add_column('gladiator', sa.Column('elims', sa.Integer(), nullable=True))
     op.add_column('gladiator', sa.Column('last_fight', sa.DateTime(), nullable=True))
-    op.create_index(op.f('ix_gladiator_battle_ready'), 'gladiator', ['battle_ready'], unique=False)
     op.create_index(op.f('ix_gladiator_elims'), 'gladiator', ['elims'], unique=False)
     # ### end Alembic commands ###
 
