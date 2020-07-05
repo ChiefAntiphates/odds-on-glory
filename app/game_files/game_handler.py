@@ -166,7 +166,6 @@ class GameHandler:
 			self.arena.nextTurn()
 		
 		json_obj = pushInfoToJSON(self.arena)
-		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
 		
 		print("game over")
 		
