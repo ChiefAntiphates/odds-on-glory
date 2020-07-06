@@ -28,10 +28,10 @@
 	{% for game in games %}
 	<div class="arena_listing">
 		<a href="{{ url_for('game', game_id=game.id) }}">
-		<b>Arena {{ game.id }}</b>
+		<b>{{ game.name }}</b> enim arenam
 		<br>
 		{% if game.host %}
-		{{ game.host.username }} hosting a {{ game.size }} | {{ game.density }} arena
+		{{ game.host.username }} hosting a <b>{{ game.size }}</b> | <b>{{ game.density }}</b> arena
 		{% else %}
 		The State hosting a {{ game.size }} | {{ game.density }} arena
 		{% endif %}

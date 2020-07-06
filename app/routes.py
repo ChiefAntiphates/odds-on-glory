@@ -13,6 +13,7 @@ from app.game_files.nameslist import nameslist
 from app.game_files.bioslist import bios
 from app.game_files.quoteslist import quotes
 from app.game_files.heightlist import heights
+from app.game_files.dieties import arena_names
 from app.forms import LoginForm, RegistrationForm, ResetPasswordForm, SetGameForm,\
 						EmptyForm, ResetPasswordRequestForm, ReportIssueForm
 						
@@ -382,8 +383,11 @@ def reset_password(token):
 
 def initGame(host=None, size='medium', density='normal'):
 	game = Tournament(host=host, size=size, density=density)
+	
 	db.session.add(game)
 	db.session.commit()
+	game_name = arena_names[len(arena_names)%game.id]
+	game.name = game_name
 	game.set_code()
 	db.session.commit()
 	

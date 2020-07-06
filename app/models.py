@@ -3,6 +3,7 @@ from time import time
 import jwt
 import json
 from app import db, login, app
+
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from hashlib import md5
@@ -18,6 +19,7 @@ class Tournament(db.Model):
 	size = db.Column(db.String(16))
 	density = db.Column(db.String(16))
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	name = db.Column(db.String(32))
 	#Introduce "state" idea like in progress or betting/gladding phase
 
 	def __repr__(self):

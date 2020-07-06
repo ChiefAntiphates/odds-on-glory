@@ -11,7 +11,7 @@ from app.game_files.convertToJSON import pushInfoToJSON
 import sys
 
 
-TIMER = 0.7 ##How long should each turn take??
+TIMER = 0.6 ##How long should each turn take??
 SCORCH = 20 #How many turns before scorchTheEarth
 class Arena:
 	
@@ -78,22 +78,37 @@ class Arena:
 		if (self.duration % SCORCH == 0): #Scorch earth every SCORCH turns
 			self.scorchTheEarth()
 			
+			
 		for runner in sorted(self.runners, key=lambda x: x.speed, reverse=True):
 			runner.executeTurn()
 		##Move all runners simultaneuosly (in perception)
-		
-			json_obj = pushInfoToJSON(self)
-			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
-			self.socketio.sleep(TIMER/2)
+		json_obj = pushInfoToJSON(self)
+		self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
+		self.socketio.sleep(TIMER)
 		####################################################
 			
+			
+		glads_alive = len(self.gladiators)
+		break_point=1
+		if glads_alive > 20:
+			break_point = 4
+		if glads_alive > 14:
+			break_point = 3
+		elif glads_alive > 10:
+			break_point = 2
+		else:
+			break_point = 1
+			
+		count = 0
 		for gladiator in sorted(self.gladiators, key=lambda x: x.speed, reverse=True):
 			##Maybe when high volume do a couple of turns simultaneuosly
 			gladiator.executeTurn()
+			count += 1;
 			
-			json_obj = pushInfoToJSON(self)
-			self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
-			self.socketio.sleep(TIMER)
+			if (count % break_point) == 0:
+				json_obj = pushInfoToJSON(self)
+				self.socketio.emit('arenaupdate', {'json_obj': json_obj}, namespace=self.nspace)
+				self.socketio.sleep(TIMER)
 			
 		self.odds_on = calculateOdds(self.gladiators)
 		self.duration += 1

@@ -348,7 +348,7 @@ class Gladiator:
 		'''Comment in updated probabilities throughout'''
 		
 		##Place trap
-		if (len(self.inventory[Gladiator.I_TRAPS]) > 0) and (self.arena.duration > 20) and not(self.tile.edge):
+		if (len(self.inventory[Gladiator.I_TRAPS]) > 0) and not(self.tile.edge):
 			action_prob.append([self.placeTrap, remaining_prob * 0.65])
 			remaining_prob = remaining_prob - (remaining_prob * 0.65)
 		
