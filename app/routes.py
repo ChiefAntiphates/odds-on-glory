@@ -386,7 +386,7 @@ def initGame(host=None, size='medium', density='normal'):
 	
 	db.session.add(game)
 	db.session.commit()
-	game_name = arena_names[len(arena_names)%game.id]
+	game_name = arena_names[game.id%len(arena_names)]
 	game.name = game_name
 	game.set_code()
 	db.session.commit()
