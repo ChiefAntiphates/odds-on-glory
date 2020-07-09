@@ -146,7 +146,7 @@ def send_glad_gift():
 	cost = request.form.get('cost')
 	global active_games
 	game = active_games[game_code_key]
-	game.sendGift(glad_id, gift, cost, current_user.id) ##gift var currently unused
+	game.sendGift(glad_id, gift, cost, current_user.id)
 	return (str(current_user.money))
 	
 	

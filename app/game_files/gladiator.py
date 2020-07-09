@@ -5,6 +5,7 @@ from numpy.random import choice as np_choice
 from app.game_files.tile import *
 from app.game_files.battle import *
 from app.game_files.trap import *
+from app.game_files.meds import *
 from app.game_files.activity_feed import *
 
 from app import app, db, socketio
@@ -17,7 +18,7 @@ class Gladiator:
 	FIGHT = "In Battle"
 	HUNT = "Hunting"
 	TRAP = "Laying Trap"
-	HEAL = "Healing and Resting"
+	HEAL = "Healing"
 	PRAY = "Praying"
 	
 	I_TRAPS = "A TRAP"
@@ -83,7 +84,8 @@ class Gladiator:
 		#Describe time it should take to complete actions
 		#ie. wait x turns, then on x+1 action is carried out
 		self.TD_FUN = {
-			self.placeTrap: [3, Gladiator.TRAP]
+			self.placeTrap: [3, Gladiator.TRAP],
+			self.useMeds: [2, Gladiator.HEAL]
 		}
 		
 		
@@ -277,6 +279,16 @@ class Gladiator:
 		self.inventory[Gladiator.I_TRAPS].remove(trap)
 		self.arena.af.updateActivityFeed(ActivityFeed.TRAP_SET % self.name, 
 													"They set down a trap")
+	
+	def useMeds(self):
+		meds = self.inventory[Gladiator.I_MEDICINE][0]
+		self.health += meds.heal;
+		if self.health > 1.0:
+			self.health = 1.0;
+		self.arena.af.updateActivityFeed("%s HEALED themselves" % self.name, 
+													"They healed by %s" % meds.heal)
+		self.inventory[Gladiator.I_MEDICINE].remove(meds)
+		
 		
 	def fatalAccident(self):
 		self.removeBody(self, ActivityFeed.SELF_ATTACKS)
@@ -346,6 +358,11 @@ class Gladiator:
 			remaining_prob = remaining_prob - attack_chance
 		
 		'''Comment in updated probabilities throughout'''
+		
+		##Take meds
+		if (len(self.inventory[Gladiator.I_MEDICINE]) > 0):
+			action_prob.append([self.useMeds, remaining_prob * 0.95])
+			remaining_prob = remaining_prob - (remaining_prob * 0.95)
 		
 		##Place trap
 		if (len(self.inventory[Gladiator.I_TRAPS]) > 0) and not(self.tile.edge):

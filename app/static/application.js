@@ -546,10 +546,14 @@ function initArenaGlads(arena_build){
 			
 			//Button to send gift // Current only trap
 			if (logged_in === true){
-				g_v_ext += ("<button class='gift_send_btn' onclick=\"sendGladGift('"+glad_name+"', '" 
+				g_v_ext += ("<div class='trap_send'><button class='gift_send_btn' onclick=\"sendGladGift('"+glad_name+"', '" 
 								+ glad_id
-								+ "', 'gift')\">Send Trap</button>");
+								+ "', 'trap')\">Send Trap</button></div>");
+				g_v_ext += ("<div class='med_send'><button class='gift_send_btn' onclick=\"sendGladGift('"+glad_name+"', '" 
+								+ glad_id
+								+ "', 'meds')\">Send Aid</button></div>");
 			}
+			
 			
 		}
 		
@@ -685,7 +689,7 @@ function sendGladGift(glad_name, glad_id, gift){
 	let can_buy = enoughMoney(gift_value);
 	if (can_buy === true){
 		swal({
-			title:"Send "+glad_name+" a gift?",
+			title:"Send "+glad_name+" a gift?" + gift,
 			text: "This will cost you " + gift_value,
 			icon: "warning",
 			buttons: [

@@ -734,9 +734,21 @@ ARENA/GAME CSS BELOW
 #glad_extended .hidden_glad .glad_info_grid .bet_div .bet_send_btn {
   padding: 0 0.28em 0 0.2em;
 }
-#glad_extended .hidden_glad .glad_info_grid .gift_send_btn {
+#glad_extended .hidden_glad .glad_info_grid .trap_send {
   grid-column: 3;
   grid-row: 4;
+  display: table-cell;
+  vertical-align: middle;
+}
+#glad_extended .hidden_glad .glad_info_grid .med_send {
+  grid-column: 4;
+  grid-row: 4;
+  display: table-cell;
+  vertical-align: middle;
+}
+#glad_extended .hidden_glad .glad_info_grid .gift_send_btn {
+  height: 60%;
+  line-height: 60%;
 }
 #glad_extended .hidden_glad .glad_info_grid .glad_pic {
   grid-column: 5;

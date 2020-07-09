@@ -116,11 +116,18 @@ class GameHandler:
 		sender = User.query.filter_by(id=sender_id).first()
 		sender.spendMoney(int(cost))
 		db.session.commit()
-		runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
 		
+		
+		if gift == "trap":
+			runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_TRAPS, Trap(50, None)])
+			self.user_activity.append("%s sent %s a trap." % (sender.username, gladiator.name))
+		else:
+			runner = Runner(r.choice(nameslist), r.randrange(15), 0, r.randrange(30,99), gladiator, [Gladiator.I_MEDICINE, Meds(50, None)])
+			self.user_activity.append("%s sent %s medicine." % (sender.username, gladiator.name))
+			
 		self.arena.addRunner(runner)
 		
-		self.user_activity.append("%s sent %s a trap." % (sender.username, gladiator.name))
+		
 		
 		#move to one socket update for general activity
 		self.socketio.emit('useractivityupdate', {'all_bets': self.convertBetsToJSON(), 'user_activity': self.user_activity}, namespace=self.nspace)

@@ -1,7 +1,21 @@
-2020-07-01 19:10:28,328 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 19:11:19,862 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 19:12:57,086 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 19:13:06,482 ERROR: Exception on /index [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+2020-07-02 08:08:04,688 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:11:21,015 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:17:49,167 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:18:17,594 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:20:46,327 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:21:11,296 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:24:00,200 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:24:23,806 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:25:10,429 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:48:11,980 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 08:54:00,981 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 09:07:02,558 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 09:09:22,124 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 09:55:07,734 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 09:55:13,454 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 09:55:19,614 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 09:56:46,819 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 09:57:05,278 ERROR: Exception on /user/harry [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -15,28 +29,11 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 168, in index
-    users = User.query.order_by(User.money_rank.asc()).paginate(page, app.config['20'], False)
-KeyError: '20'
-2020-07-01 19:13:26,397 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 19:14:33,155 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 19:17:25,631 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 19:24:11,301 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 19:26:26,295 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 19:31:10,368 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 20:12:23,083 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 20:13:46,354 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 20:23:24,128 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 20:38:52,118 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 20:48:37,842 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 21:04:23,108 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 21:13:37,612 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-01 21:17:56,305 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-02 07:41:25,507 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-02 07:42:22,553 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-02 07:44:09,305 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 266, in user
+    glads = user.gladiators.filter_by(battle_ready < 100)
+NameError: name 'battle_ready' is not defined
+2020-07-02 09:58:14,468 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 09:58:24,262 ERROR: Exception on /user/harry [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -50,16 +47,28 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 133, in send_glad_gift
-    game.sendGift(glad_id, gift, cost, current_user.id) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 109, in sendGift
-    self.arena.addRunner(runner)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\arena.py", line 62, in addRunner
-    tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied)])
-  File "C:\Users\Harry\AppData\Local\Programs\Python\Python38\lib\random.py", line 290, in choice
-    raise IndexError('Cannot choose from an empty sequence') from None
-IndexError: Cannot choose from an empty sequence
-2020-07-02 07:44:10,602 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 266, in user
+    glads = user.gladiators.filter_by(Gladiator.battle_ready < 100)
+TypeError: filter_by() takes 1 positional argument but 2 were given
+2020-07-02 09:59:19,536 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:00:15,058 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:02:49,755 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:04:04,583 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:04:16,750 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:04:26,803 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:05:41,882 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:06:03,196 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:06:18,019 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:07:01,066 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:08:02,004 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:08:18,609 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:09:03,621 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:09:11,943 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:10:18,187 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:10:23,439 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:12:55,711 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:12:59,665 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:13:16,659 ERROR: Exception on /user/harry [GET] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -73,38 +82,11 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 133, in send_glad_gift
-    game.sendGift(glad_id, gift, cost, current_user.id) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 109, in sendGift
-    self.arena.addRunner(runner)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\arena.py", line 62, in addRunner
-    tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied)])
-  File "C:\Users\Harry\AppData\Local\Programs\Python\Python38\lib\random.py", line 290, in choice
-    raise IndexError('Cannot choose from an empty sequence') from None
-IndexError: Cannot choose from an empty sequence
-2020-07-02 07:44:11,424 ERROR: Exception on /send_glad_gift [POST] [in c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\users\harry\documents\oddsonglory\odds-on-glory\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 133, in send_glad_gift
-    game.sendGift(glad_id, gift, cost, current_user.id) ##gift var currently unused
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\game_handler.py", line 109, in sendGift
-    self.arena.addRunner(runner)
-  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\game_files\arena.py", line 62, in addRunner
-    tile = r.choice([tile for tile in self.edge_tiles if not(tile.occupied)])
-  File "C:\Users\Harry\AppData\Local\Programs\Python\Python38\lib\random.py", line 290, in choice
-    raise IndexError('Cannot choose from an empty sequence') from None
-IndexError: Cannot choose from an empty sequence
-2020-07-02 07:45:43,196 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-02 08:01:56,840 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
-2020-07-02 08:02:27,006 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+  File "C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\routes.py", line 268, in user
+    ready_score = (datetime.utcnow() - g.last_update)
+TypeError: unsupported operand type(s) for -: 'datetime.datetime' and 'NoneType'
+2020-07-02 10:13:46,516 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:14:43,471 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:18:37,392 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:28:18,616 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
+2020-07-02 10:39:52,297 INFO: OddsOnGlory Game [in C:\Users\Harry\Documents\OddsOnGlory\odds-on-glory\app\__init__.py:76]
