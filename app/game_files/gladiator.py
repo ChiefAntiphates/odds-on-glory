@@ -429,6 +429,11 @@ class Gladiator:
 		if not(type(enemy) is Runner):		
 			self.kill_count += 1
 			self.kills.append(enemy)
+			if (self.ext_id != None):
+				db_glad=dbGladiator.query.filter_by(id=self.ext_id).first()
+				db_glad.elims = db_glad.elims + 1;
+				db.session.commit()
+			
 		else:
 			print("killed a runner")
 		

@@ -315,6 +315,15 @@ https://codepen.io/divinector/pen/qgZKYQ
   font-weight: 600;
   padding: 0.2em 0.4em;
 }
+.glad_display_grid .elims {
+  position: absolute;
+  padding: 0.2em 0 0 22.8em;
+}
+.glad_display_grid .elims img {
+  width: 1em;
+  height: 1em;
+  padding: 0;
+}
 .glad_display_grid .glad_display_icon {
   white-space: nowrap;
   align-items: center;

@@ -3,6 +3,12 @@
 	{% if glad.battle_ready < 100 %}
 	<div class="battle_ready" title="Battle Readiness">{{ glad.battle_ready }}%</div>
 	{% endif %}
+	{% if glad.elims > 0 %}
+	<div class="elims" title="Eliminations">
+		<img src="{{ url_for('static', filename='skull.png') }}" title="Eliminations">
+		{{ glad.elims }}
+	</div>
+	{% endif %}
 	<div class="glad_display_icon">
 		<img src="{{ url_for('static', filename='strength-icon.png') }}" title="Strength">
 		<p style="color:hsl({{ glad.strength }}, 100%, 28%);">{{ glad.strength }}</p>
