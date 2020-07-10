@@ -44,7 +44,7 @@ class Gladiator(db.Model):
 	available = db.Column(db.Boolean)#False if in Arena
 	owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	
-	elims = db.Column(db.Integer, index=True)
+	elims = db.Column(db.Integer, index=True, default=0)
 	
 	battle_ready = db.Column(db.Integer, index=True, default=100)
 	last_update = db.Column(db.DateTime, default=datetime.utcnow)#last fight
