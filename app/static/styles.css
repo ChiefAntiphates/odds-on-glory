@@ -317,7 +317,7 @@ https://codepen.io/divinector/pen/qgZKYQ
 }
 .glad_display_grid .elims {
   position: absolute;
-  padding: 0.2em 0 0 22.8em;
+  margin: 0.2em 0 0 22.8em;
   font-weight: 600;
 }
 .glad_display_grid .elims img {
