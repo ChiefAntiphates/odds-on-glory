@@ -40,7 +40,8 @@ if (user_id === "") {//not logged in
 			<a id="title" href="{{ url_for('index') }}">Odds-On Glory</a>
 		{% if current_user.is_anonymous %}
 			<a href="{{ url_for('browse_games') }}">Colosseum</a>
-			<a href="{{ url_for('login') }}">Login</a></div>
+			<a href="{{ url_for('login') }}">Login</a>
+			<a href="{{ url_for('register') }}">Register</a></div>
 		{% else %}
 			<a href="{{ url_for('marketplace') }}">Market</a>
 			<a href="{{ url_for('browse_games') }}">Colosseum</a>
