@@ -286,7 +286,7 @@ class Gladiator:
 		if self.health > 1.0:
 			self.health = 1.0;
 		self.arena.af.updateActivityFeed("%s HEALED themselves" % self.name, 
-													"They healed by %s" % meds.heal)
+													"They healed by %s" % meds.heal*100)
 		self.inventory[Gladiator.I_MEDICINE].remove(meds)
 		
 		

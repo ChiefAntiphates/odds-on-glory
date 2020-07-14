@@ -73,6 +73,13 @@ hr {
   padding-bottom: 0.2em;
   margin-bottom: 0em;
 }
+.index_holder .how_to_play_ol {
+  width: 55%;
+}
+.index_holder .how_to_play_ol li {
+  font-size: 0.9em;
+  padding: 0.2em;
+}
 .index_holder .how_to_play_vid {
   padding-top: 0.2em;
   margin-top: 0em;
