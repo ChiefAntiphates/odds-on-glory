@@ -14,7 +14,7 @@ class Config(object):
 	MAIL_PASSWORD = 'D5WAtTiC39e28az'
 	ADMINS = ['noreply.oddsonglory@gmail.com', 'oddsonglory@gmail.com']
 	
-	POSTS_PER_PAGE = 10
+	POSTS_PER_PAGE = 11
 	
 	LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 	#LANGUAGES = ['en', 'es']
