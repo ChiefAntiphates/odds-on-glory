@@ -40,10 +40,10 @@ def before_request():
 		print(e)
 		print(active_games)
 	
-	if request.url.startswith('http://'): #Force https
-		url = request.url.replace('http://', 'https://', 1)
-		code = 301
-		return redirect(url, code=code)
+	# if request.url.startswith('http://'): #Force https
+	# 	url = request.url.replace('http://', 'https://', 1)
+	# 	code = 301
+	# 	return redirect(url, code=code)
 
 	
 	
